@@ -3,17 +3,14 @@
 # copies dotfiles to vm
 #
 class puphpet::dotfiles (
-    $match    = '^[^\.][\d\w\s].+',
+    $match    = '\.[a-zA-Z0-9]*',
     $source   = '/vagrant/files/dot/',
     $target   = '/home/vagrant/'
 ) {
 
-  file { $source:
-    replace => yes,
-    ensure  => present,
-    mode    => 0644,
-    ignore  => $match,
-    target  => $target
+  exec { 'dotfiles':
+    command => "cp -r ${source}/${match} ${target}",
+    onlyif  => "test -d ${source}",
   }
 
 }
