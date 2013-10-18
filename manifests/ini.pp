@@ -209,15 +209,13 @@ define puphpet::ini (
     default: { fail('Unrecognized PHP version') }
   }
 
-  if defined($target_file){
-    php::augeas{ "${entry}-${value}" :
-      target  => $target_file,
-      entry   => $entry,
-      value   => $value,
-      ensure  => $ensure,
-      require => File[$target_file],
-      notify  => Service[$webserver],
-    }
+  php::augeas{ "${entry}-${value}" :
+    target  => $target_file,
+    entry   => $entry,
+    value   => $value,
+    ensure  => $ensure,
+    require => File[$target_file],
+    notify  => Service[$webserver],
   }
 
 }
