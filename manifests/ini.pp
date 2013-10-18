@@ -146,12 +146,6 @@ define puphpet::ini (
           $target_dir  = '/etc/php5/mods-available'
           $target_file = "${target_dir}/${ini_filename}"
 
-          $webserver_ini_location = $real_webserver ? {
-              'apache2' => '/etc/php5/apache2/conf.d',
-              'fpm'     => '/etc/php5/fpm/conf.d',
-          }
-          $cli_ini_location = '/etc/php5/cli/conf.d'
-
           if ! defined(File[$target_file]) {
             file { $target_file:
               replace => no,
@@ -176,7 +170,38 @@ define puphpet::ini (
     '5.5', '55': {
       case $::osfamily {
         'debian': {
-          #
+          $target_dir  = '/etc/php5/mods-available'
+          $target_file = "${target_dir}/${ini_filename}"
+
+          $webserver_ini_location = $real_webserver ? {
+              'apache2' => '/etc/php5/apache2/conf.d',
+              'fpm'     => '/etc/php5/fpm/conf.d',
+          }
+          $cli_ini_location = '/etc/php5/cli/conf.d'
+
+          if ! defined(File[$target_file]) {
+            file { $target_file:
+              replace => no,
+              ensure  => present,
+              require => Package['php']
+            }
+          }
+
+          if ! defined(File["${webserver_ini_location}/${ini_filename}"]) {
+            file { "${webserver_ini_location}/${ini_filename}":
+              ensure  => link,
+              target  => $target_file,
+              require => File[$target_file],
+            }
+          }
+
+          if ! defined(File["${cli_ini_location}/${ini_filename}"]) {
+            file { "${cli_ini_location}/${ini_filename}":
+              ensure  => link,
+              target  => $target_file,
+              require => File[$target_file],
+            }
+          }
         }
         default: { fail('This OS has not yet been defined for PHP 5.5!') }
       }
