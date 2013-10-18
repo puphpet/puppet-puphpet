@@ -115,11 +115,11 @@ define puphpet::ini (
   ) {
 
   $real_webserver = $webserver ? {
-      'apache'          => 'apache2',
-      'httpd'           => 'apache2',
-      'apache2'         => 'apache2',
-      'nginx'           => 'fpm',
-      'fpm'             => 'fpm',
+      'apache'  => 'apache2',
+      'httpd'   => 'apache2',
+      'apache2' => 'apache2',
+      'nginx'   => 'fpm',
+      'fpm'     => 'fpm',
   }
 
   case $php_version {
@@ -129,7 +129,7 @@ define puphpet::ini (
           $target_dir  = '/etc/php5/conf.d'
           $target_file = "${target_dir}/${ini_filename}"
 
-          ! defined(File[$target_file]) {
+          if ! defined(File[$target_file]) {
             file { $target_file:
               replace => no,
               ensure  => present,
