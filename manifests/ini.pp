@@ -144,29 +144,6 @@ define puphpet::ini (
             ensure  => $ensure,
             require => File[$target_file]
           }
-
-          $webserver_ini_location = $real_webserver ? {
-              'apache2' => '/etc/php5/apache2/conf.d',
-              'fpm'     => '/etc/php5/fpm/conf.d',
-          }
-
-          $cli_ini_location = '/etc/php5/cli/conf.d'
-
-          if ! defined(File["${webserver_ini_location}/${ini_filename}"]) {
-            file { "${webserver_ini_location}/${ini_filename}":
-              ensure  => link,
-              target  => $target_file,
-              require => Php::Augeas["${entry}-${value}"],
-            }
-          }
-
-          if ! defined(File["${cli_ini_location}/${ini_filename}"]) {
-            file { "${cli_ini_location}/${ini_filename}":
-              ensure  => link,
-              target  => $target_file,
-              require => Php::Augeas["${entry}-${value}"],
-            }
-          }
         }
         default: { fail('This OS has not yet been defined!') }
       }
