@@ -108,7 +108,7 @@
 define puphpet::ini (
   $php_version,
   $webserver,
-  $ini_filename = 'custom.ini',
+  $ini_filename = 'zzzz_custom.ini',
   $entry,
   $value  = '',
   $ensure = present
