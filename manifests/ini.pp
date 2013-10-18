@@ -133,6 +133,7 @@ define puphpet::ini (
             file { $target_file:
               replace => no,
               ensure  => present,
+              require => Package['php']
             }
           }
 
@@ -145,8 +146,8 @@ define puphpet::ini (
           }
 
           $webserver_ini_location = $real_webserver ? {
-              'apache' => '/etc/php5/apache2/conf.d',
-              'fpm'    => '/etc/php5/fpm/conf.d',
+              'apache2' => '/etc/php5/apache2/conf.d',
+              'fpm'     => '/etc/php5/fpm/conf.d',
           }
 
           $cli_ini_location = '/etc/php5/cli/conf.d'
@@ -167,24 +168,24 @@ define puphpet::ini (
             }
           }
         }
+        default: { fail('This OS has not yet been defined!') }
       }
-      default: { fail('This OS has not yet been defined!') }
     }
     '5.4', '54': {
       case $::osfamily {
         'debian': {
           #
         }
+        default: { fail('This OS has not yet been defined!') }
       }
-      default: { fail('This OS has not yet been defined!') }
     }
     '5.5', '55': {
       case $::osfamily {
         'debian': {
           #
         }
+        default: { fail('This OS has not yet been defined!') }
       }
-      default: { fail('This OS has not yet been defined!') }
     }
     default: { fail('Unrecognized PHP version') }
   }
