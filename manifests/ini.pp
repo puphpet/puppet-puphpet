@@ -46,8 +46,8 @@
 #             /etc/php5/cli/conf.d        -> /etc/php5/conf.d/*   -> /etc/php5/mods-available/*
 #         NGINX
 #             FOLDERS: cli/  conf.d/  fpm/  mods-available/
-#             /etc/php5/fpm/conf.d/*      -> /etc/php5/conf.d/*   -> /etc/php5/mods-available/*
-#             /etc/php5/cli/conf.d/*      -> /etc/php5/conf.d/*   -> /etc/php5/mods-available/*
+#             /etc/php5/fpm/conf.d        -> /etc/php5/conf.d/*   -> /etc/php5/mods-available/*
+#             /etc/php5/cli/conf.d        -> /etc/php5/conf.d/*   -> /etc/php5/mods-available/*
 #     DEBIAN 7 - wheezy
 #         APACHE
 #             FOLDERS: apache2/  cli/  conf.d/  mods-available/  php.ini
@@ -136,24 +136,41 @@ define puphpet::ini (
               require => Package['php']
             }
           }
-
-          php::augeas{ "${entry}-${value}" :
-            target  => $target_file,
-            entry   => $entry,
-            value   => $value,
-            ensure  => $ensure,
-            require => File[$target_file]
-          }
         }
-        default: { fail('This OS has not yet been defined!') }
+        default: { fail('This OS has not yet been defined for PHP 5.3!') }
       }
     }
     '5.4', '54': {
       case $::osfamily {
         'debian': {
-          #
+          $target_dir  = '/etc/php5/mods-available'
+          $target_file = "${target_dir}/${ini_filename}"
+
+          $webserver_ini_location = $real_webserver ? {
+              'apache2' => '/etc/php5/apache2/conf.d',
+              'fpm'     => '/etc/php5/fpm/conf.d',
+          }
+          $cli_ini_location = '/etc/php5/cli/conf.d'
+
+          if ! defined(File[$target_file]) {
+            file { $target_file:
+              replace => no,
+              ensure  => present,
+              require => Package['php']
+            }
+          }
+
+          $symlink = "/etc/php5/conf.d/${ini_filename}"
+
+          if ! defined(File[$symlink]) {
+            file { $symlink:
+              ensure  => link,
+              target  => $target_file,
+              require => File[$target_file],
+            }
+          }
         }
-        default: { fail('This OS has not yet been defined!') }
+        default: { fail('This OS has not yet been defined for PHP 5.4!') }
       }
     }
     '5.5', '55': {
@@ -161,10 +178,19 @@ define puphpet::ini (
         'debian': {
           #
         }
-        default: { fail('This OS has not yet been defined!') }
+        default: { fail('This OS has not yet been defined for PHP 5.5!') }
       }
     }
     default: { fail('Unrecognized PHP version') }
+  }
+
+  php::augeas{ "${entry}-${value}" :
+    target  => $target_file,
+    entry   => $entry,
+    value   => $value,
+    ensure  => $ensure,
+    require => File[$target_file],
+    notify  => Service[$webserver],
   }
 
 }
