@@ -151,7 +151,7 @@ define puphpet::ini (
 
           $cli_ini_location = '/etc/php5/cli/conf.d'
 
-          ! defined(File["${webserver_ini_location}/${ini_filename}"]) {
+          if ! defined(File["${webserver_ini_location}/${ini_filename}"]) {
             file { "${webserver_ini_location}/${ini_filename}":
               ensure  => link,
               target  => $target_file,
@@ -159,7 +159,7 @@ define puphpet::ini (
             }
           }
 
-          ! defined(File["${cli_ini_location}/${ini_filename}"]) {
+          if ! defined(File["${cli_ini_location}/${ini_filename}"]) {
             file { "${cli_ini_location}/${ini_filename}":
               ensure  => link,
               target  => $target_file,
