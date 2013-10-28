@@ -39,6 +39,9 @@
 #             /etc/php5/fpm/conf.d        -> /etc/php5/conf.d
 #             /etc/php5/cli/conf.d        -> /etc/php5/conf.d
 # 5.4
+#     CENTOS 6
+#         APACHE
+#             /etc/php.d
 #     DEBIAN 6 - squeeze
 #         APACHE
 #             FOLDERS: apache2/  cli/  conf.d/  mods-available/  php.ini
@@ -162,6 +165,18 @@ define puphpet::ini (
               ensure  => link,
               target  => $target_file,
               require => File[$target_file],
+            }
+          }
+        }
+        'redhat': {
+          $target_dir  = '/etc/php.d'
+          $target_file = "${target_dir}/${ini_filename}"
+
+          if ! defined(File[$target_file]) {
+            file { $target_file:
+              replace => no,
+              ensure  => present,
+              require => Package['php']
             }
           }
         }
