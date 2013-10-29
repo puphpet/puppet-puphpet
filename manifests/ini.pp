@@ -123,6 +123,7 @@ define puphpet::ini (
     'apache2'  => 'apache2',
     'nginx'    => 'fpm',
     'php5-fpm' => 'fpm',
+    'php-fpm'  => 'fpm',
     'fpm'      => 'fpm',
   }
 
