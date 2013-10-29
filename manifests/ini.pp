@@ -118,12 +118,12 @@ define puphpet::ini (
   ) {
 
   $real_webserver = $webserver ? {
-      'apache'   => 'apache2',
-      'httpd'    => 'apache2',
-      'apache2'  => 'apache2',
-      'nginx'    => 'fpm',
-      'php5-fpm' => 'fpm',
-      'fpm'      => 'fpm',
+    'apache'   => 'apache2',
+    'httpd'    => 'apache2',
+    'apache2'  => 'apache2',
+    'nginx'    => 'fpm',
+    'php5-fpm' => 'fpm',
+    'fpm'      => 'fpm',
   }
 
   case $php_version {
