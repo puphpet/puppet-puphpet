@@ -14,7 +14,7 @@ class puphpet::xdebug (
   }
 
   # shortcut for xdebug CLI debugging
-  if $xdebug::params::install_cli and defined(File['/usr/bin/xdebug']) == false {
+  if $install_cli and defined(File['/usr/bin/xdebug']) == false {
     file { '/usr/bin/xdebug':
       ensure  => present,
       mode    => '+X',
