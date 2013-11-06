@@ -9,12 +9,19 @@ class puphpet::nginx(
     default  => '/etc/nginx/conf.d/default.conf',
   }
 
-  file { '/var/log/nginx/log':
+  file { [
+      '/var/log',
+      '/var/log/nginx',
+      '/var/log/nginx/log'
+    ]:
     ensure  => directory,
     recurse => true,
   }
 
-  file { ['/var/log/nginx/log/host.access.log', '/var/log/nginx/log/host.error.log']:
+  file { [
+      '/var/log/nginx/log/host.access.log',
+      '/var/log/nginx/log/host.error.log'
+    ]:
     ensure  => present,
     mode    => 0777,
     replace => 'no',
