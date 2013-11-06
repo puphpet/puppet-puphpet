@@ -25,8 +25,7 @@ class puphpet::nginx(
     ensure  => present,
     path    => $conf_file,
     replace => 'yes',
-    content => template('puphpet/nginx/default_conf.erb'),
-    notify  => Service['nginx'],
+    content => template('puphpet/nginx/default_conf.erb')
   }
 
 }
