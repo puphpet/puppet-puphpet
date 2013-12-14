@@ -221,7 +221,7 @@ define puphpet::ini (
             }
           }
 
-          if defined($webserver_ini_location) and ! defined(File["${webserver_ini_location}/${ini_filename}"]) {
+          if $webserver_ini_location != undef and ! defined(File["${webserver_ini_location}/${ini_filename}"]) {
             file { "${webserver_ini_location}/${ini_filename}":
               ensure  => link,
               target  => $target_file,
