@@ -4,12 +4,18 @@ class puphpet::xdebug (
   $ensure = present
 ) inherits puphpet::params {
 
+  if $webserver != undef {
+    $notify_service = Service[$webserver]
+  } else {
+    $notify_service = []
+  }
+
   if defined(Package[$puphpet::params::xdebug_package]) == false {
     package { 'xdebug':
       name    => $puphpet::params::xdebug_package,
       ensure  => installed,
       require => Package['php'],
-      notify  => Service[$webserver],
+      notify  => $notify_service,
     }
   }
 

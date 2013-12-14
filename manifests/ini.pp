@@ -255,7 +255,7 @@ define puphpet::ini (
     default: { fail('Unrecognized PHP version') }
   }
 
-  if defined($webserver_ini_location) {
+  if $real_webserver != undef {
     $notify_service = Service[$webserver]
   } else {
     $notify_service = []
