@@ -7,77 +7,79 @@
 #
 # 5.3
 #     DEBIAN 6 - squeeze
+#         CLI
+#             /etc/php5/cli/conf.d        -> /etc/php5/conf.d
 #         APACHE
 #             FOLDERS: apache2/  cli/  conf.d/  php.ini
 #             /etc/php5/apache2/conf.d    -> /etc/php5/conf.d
-#             /etc/php5/cli/conf.d        -> /etc/php5/conf.d
 #         NGINX
 #             FOLDERS: cli/  conf.d/  fpm/
 #             /etc/php5/fpm/conf.d        -> /etc/php5/conf.d
-#             /etc/php5/cli/conf.d        -> /etc/php5/conf.d
 #     DEBIAN 7 - wheezy
 #         APACHE
 #             NOT CORRECT; PHP 5.4 INSTALLED
 #         NGINX
 #             NOT CORRECT; PHP 5.4 INSTALLED
 #     UBUNTU 10.04 - lucid
+#         CLI
+#             /etc/php5/cli/conf.d        -> /etc/php5/conf.d
 #         APACHE
 #             FOLDERS: apache2/  cli/  conf.d/  php.ini
 #             /etc/php5/apache2/conf.d    -> /etc/php5/conf.d
-#             /etc/php5/cli/conf.d        -> /etc/php5/conf.d
 #         NGINX
 #             FOLDERS: cli/  conf.d/  fpm/
 #             /etc/php5/fpm/conf.d        -> /etc/php5/conf.d
-#             /etc/php5/cli/conf.d        -> /etc/php5/conf.d
 #     UBUNTU 12.04 - precise
+#         CLI
+#             /etc/php5/cli/conf.d        -> /etc/php5/conf.d
 #         APACHE
 #             FOLDERS: apache2/  cli/  conf.d/  php.ini
 #             /etc/php5/apache2/conf.d    -> /etc/php5/conf.d
-#             /etc/php5/cli/conf.d        -> /etc/php5/conf.d
 #         NGINX
 #             FOLDERS: cli/  conf.d/  fpm/
 #             /etc/php5/fpm/conf.d        -> /etc/php5/conf.d
-#             /etc/php5/cli/conf.d        -> /etc/php5/conf.d
 # 5.4
 #     CENTOS 6
+#         CLI
+#             /etc/php.d
 #         APACHE
 #             /etc/php.d
 #     DEBIAN 6 - squeeze
+#         CLI
+#             /etc/php5/cli/conf.d        -> /etc/php5/conf.d/*   -> /etc/php5/mods-available/*
 #         APACHE
 #             FOLDERS: apache2/  cli/  conf.d/  mods-available/  php.ini
 #             /etc/php5/apache2/conf.d    -> /etc/php5/conf.d/*   -> /etc/php5/mods-available/*
-#             /etc/php5/cli/conf.d        -> /etc/php5/conf.d/*   -> /etc/php5/mods-available/*
 #         NGINX
 #             FOLDERS: cli/  conf.d/  fpm/  mods-available/
 #             /etc/php5/fpm/conf.d        -> /etc/php5/conf.d/*   -> /etc/php5/mods-available/*
-#             /etc/php5/cli/conf.d        -> /etc/php5/conf.d/*   -> /etc/php5/mods-available/*
 #     DEBIAN 7 - wheezy
+#         CLI
+#             /etc/php5/cli/conf.d        -> /etc/php5/conf.d/*   -> /etc/php5/mods-available/*
 #         APACHE
 #             FOLDERS: apache2/  cli/  conf.d/  mods-available/  php.ini
 #             /etc/php5/apache2/conf.d    -> /etc/php5/conf.d/*   -> /etc/php5/mods-available/*
-#             /etc/php5/cli/conf.d        -> /etc/php5/conf.d/*   -> /etc/php5/mods-available/*
 #         NGINX
 #             FOLDERS: cli/  conf.d/  fpm/  mods-available/
 #             /etc/php5/fpm/conf.d        -> /etc/php5/conf.d/*   -> /etc/php5/mods-available/*
-#             /etc/php5/cli/conf.d        -> /etc/php5/conf.d/*   -> /etc/php5/mods-available/*
 #     UBUNTU 10.04 - lucid
+#         CLI
+#             /etc/php5/cli/conf.d        -> /etc/php5/conf.d/*   -> /etc/php5/mods-available/*
 #         APACHE
 #             FOLDERS: apache2/  cli/  conf.d/  mods-available/  php.ini
 #             /etc/php5/apache2/conf.d    -> /etc/php5/conf.d/*   -> /etc/php5/mods-available/*
-#             /etc/php5/cli/conf.d        -> /etc/php5/conf.d/*   -> /etc/php5/mods-available/*
 #         NGINX
 #             FOLDERS: cli/  conf.d/  fpm/  mods-available/
 #             /etc/php5/fpm/conf.d        -> /etc/php5/conf.d/*   -> /etc/php5/mods-available/*
-#             /etc/php5/cli/conf.d        -> /etc/php5/conf.d/*   -> /etc/php5/mods-available/*
 #     UBUNTU 12.04 - precise
+#         CLI
+#             /etc/php5/cli/conf.d        -> /etc/php5/conf.d/*   -> /etc/php5/mods-available/*
 #         APACHE
 #             FOLDERS: apache2/  cli/  conf.d/  mods-available/  php.ini
 #             /etc/php5/apache2/conf.d    -> /etc/php5/conf.d/*   -> /etc/php5/mods-available/*
-#             /etc/php5/cli/conf.d        -> /etc/php5/conf.d/*   -> /etc/php5/mods-available/*
 #         NGINX
 #             FOLDERS: cli/  conf.d/  fpm/  mods-available/
 #             /etc/php5/fpm/conf.d        -> /etc/php5/conf.d/*   -> /etc/php5/mods-available/*
-#             /etc/php5/cli/conf.d        -> /etc/php5/conf.d/*   -> /etc/php5/mods-available/*
 # 5.5
 #     DEBIAN 6 - squeeze
 #         APACHE
@@ -85,26 +87,27 @@
 #         NGINX
 #             NOT A VALID OPTION
 #     DEBIAN 7 - wheezy
+#         CLI
+#             /etc/php5/cli/conf.d/*      -> /etc/php5/mods-available/*
 #         APACHE
 #             FOLDERS: apache2/  cli/  mods-available/  php.ini
 #             /etc/php5/apache2/conf.d/*  -> /etc/php5/mods-available/*
-#             /etc/php5/cli/conf.d/*      -> /etc/php5/mods-available/*
 #         NGINX
 #             FOLDERS: cli/  fpm/  mods-available/
 #             /etc/php5/fpm/conf.d/*      -> /etc/php5/mods-available/*
-#             /etc/php5/cli/conf.d/*      -> /etc/php5/mods-available/*
 #     UBUNTU 10.04 - lucid
 #         APACHE
 #             NOT A VALID OPTION
 #         NGINX
 #             NOT A VALID OPTION
 #     UBUNTU 12.04 - precise
+#         CLI
+#             /etc/php5/cli/conf.d/*      -> /etc/php5/mods-available/*
 #         APACHE
 #             NOT A VALID OPTION
 #         NGINX
 #             FOLDERS: cli/  fpm/  mods-available/
 #             /etc/php5/fpm/conf.d/*      -> /etc/php5/mods-available/*
-#             /etc/php5/cli/conf.d/*      -> /etc/php5/mods-available/*
 #
 # This depends on example42/puppet-php: https://github.com/example42/puppet-php
 #
@@ -125,6 +128,7 @@ define puphpet::ini (
     'php5-fpm' => 'fpm',
     'php-fpm'  => 'fpm',
     'fpm'      => 'fpm',
+    undef      => undef,
   }
 
   case $php_version {
@@ -205,6 +209,7 @@ define puphpet::ini (
           $webserver_ini_location = $real_webserver ? {
               'apache2' => '/etc/php5/apache2/conf.d',
               'fpm'     => '/etc/php5/fpm/conf.d',
+              undef     => undef,
           }
           $cli_ini_location = '/etc/php5/cli/conf.d'
 
@@ -216,7 +221,7 @@ define puphpet::ini (
             }
           }
 
-          if ! defined(File["${webserver_ini_location}/${ini_filename}"]) {
+          if defined($webserver_ini_location) and ! defined(File["${webserver_ini_location}/${ini_filename}"]) {
             file { "${webserver_ini_location}/${ini_filename}":
               ensure  => link,
               target  => $target_file,
@@ -250,13 +255,19 @@ define puphpet::ini (
     default: { fail('Unrecognized PHP version') }
   }
 
+  if defined($webserver_ini_location) {
+    $notify_service = Service[$webserver]
+  } else {
+    $notify_service = []
+  }
+
   php::augeas{ "${entry}-${value}" :
     target  => $target_file,
     entry   => $entry,
     value   => $value,
     ensure  => $ensure,
     require => File[$target_file],
-    notify  => Service[$webserver],
+    notify  => $notify_service,
   }
 
 }
