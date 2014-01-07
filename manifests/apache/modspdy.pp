@@ -11,6 +11,14 @@ class puphpet::apache::modspdy (
     package_ensure => purged
   }
 
+  if ! defined(Class['apache::mod::fcgid']) {
+    class { 'apache::mod::fcgid': }
+  }
+
+  if ! defined(Class['apache::mod::cgi']) {
+    class { 'apache::mod::cgi': }
+  }
+
   $download_location = $::osfamily ? {
     'Debian' => '/.puphpet-stuff/mod-spdy.deb',
     'Redhat' => '/.puphpet-stuff/mod-spdy.rpm'
