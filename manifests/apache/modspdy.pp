@@ -11,56 +11,29 @@ class puphpet::apache::modspdy (
     package_ensure => 'purged'
   }
 
-  exec { 'delete php5.conf files for mod-spdy':
-    command => "rm ${apache::params::mod_dir}/php5.conf",
-    onlyif  => "test -f ${apache::params::mod_dir}/php5.conf",
-    notify  => Service['httpd']
-  }
-
-  exec { 'delete php5.load files for mod-spdy':
-    command => "rm ${apache::params::mod_dir}/php5.load",
-    onlyif  => "test -f ${apache::params::mod_dir}/php5.load",
-    notify  => Service['httpd']
-  }
-
-  if $apache::params::mod_enable_dir != undef {
-    exec { 'delete php5.conf enabled files for mod-spdy':
-      command => "rm ${apache::params::mod_enable_dir}/php5.conf",
-      onlyif  => "test -f ${apache::params::mod_enable_dir}/php5.conf",
-      notify  => Service['httpd']
-    }
-
-    exec { 'delete php5.load enabled files for mod-spdy':
-      command => "rm ${apache::params::mod_enable_dir}/php5.load",
-      onlyif  => "test -f ${apache::params::mod_enable_dir}/php5.load",
-      notify  => Service['httpd']
-    }
-  }
-
   if $::osfamily == 'Debian' {
     if ! defined(Package['php5-cgi']) {
       package { 'php5-cgi':
-        ensure  => present,
-        require => Exec['delete php5.conf files for mod-spdy']
+        ensure  => present
       }
     }
     if ! defined(Package['libapache2-mod-fcgid']) {
       package { 'libapache2-mod-fcgid':
-        ensure  => present,
-        require => Exec['delete php5.conf files for mod-spdy']
+        ensure => present,
+        notify => Service['httpd']
       }
     }
   } elsif $::osfamily == 'Redhat' {
     if ! defined(Package['php-cgi']) {
       package { 'php-cgi':
         ensure  => present,
-        require => Exec['delete php5.conf files for mod-spdy']
+        notify => Service['httpd']
       }
     }
     if ! defined(Package['mod_fcgid']) {
       package { 'mod_fcgid':
         ensure  => present,
-        require => Exec['delete php5.conf files for mod-spdy']
+        notify => Service['httpd']
       }
     }
   }
