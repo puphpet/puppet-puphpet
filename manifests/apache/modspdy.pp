@@ -8,7 +8,7 @@ class puphpet::apache::modspdy (
 ) {
 
   class { 'apache::mod::php':
-    package_ensure => purged
+    package_ensure => 'purged'
   }
 
   exec { 'delete php5.conf files for mod-spdy':
