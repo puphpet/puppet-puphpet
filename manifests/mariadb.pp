@@ -21,7 +21,7 @@ class puphpet::mariadb(
     'debian': {
       $os = downcase($::operatingsystem)
 
-      apt::source { $name:
+      apt::source { 'mariadb':
         location          => "http://mirror.jmu.edu/pub/mariadb/repo/${version}/${os}",
         release           => $release,
         repos             => 'main',
