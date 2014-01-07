@@ -45,8 +45,7 @@ class puphpet::apache::modspdy (
 
   file { [
     "${apache::params::mod_dir}/spdy.load",
-    "${apache::params::mod_dir}/spdy.conf",
-    "${apache::params::confd_dir}/pagespeed_libraries.conf"
+    "${apache::params::mod_dir}/spdy.conf"
   ] :
     purge => false,
   }
