@@ -263,7 +263,7 @@ define puphpet::ini (
     if $real_webserver == 'cgi' {
       $webserver_service = 'apache2'
     } else {
-      $webserver_service = $real_webserver
+      $webserver_service = $webserver
     }
 
     $notify_service = Service[$webserver_service]
