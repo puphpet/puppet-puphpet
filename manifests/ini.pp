@@ -260,7 +260,12 @@ define puphpet::ini (
   }
 
   if $real_webserver != undef {
-    $notify_service = Service[$webserver]
+    $webserver_service = $real_webserver ? {
+      'cgi'   => 'apache2',
+      default => $real_webserver
+    }
+
+    $notify_service = Service[$webserver_service]
   } else {
     $notify_service = []
   }
