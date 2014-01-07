@@ -128,6 +128,9 @@ define puphpet::ini (
     'php5-fpm' => 'fpm',
     'php-fpm'  => 'fpm',
     'fpm'      => 'fpm',
+    'cgi'      => 'cgi',
+    'fcgi'     => 'cgi',
+    'fcgid'    => 'cgi',
     undef      => undef,
   }
 
