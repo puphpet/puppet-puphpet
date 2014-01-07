@@ -11,6 +11,46 @@ class puphpet::apache::modspdy (
     package_ensure => purged
   }
 
+  file { 'delete php5.conf for fcgid':
+    path    => "${apache::params::mod_dir}/php5.conf",
+    ensure  => purged,
+    notify  => Service['httpd'],
+  }
+
+  file { 'delete php5.load for fcgid':
+    path    => "${apache::params::mod_dir}/php5.load",
+    ensure  => purged,
+    notify  => Service['httpd'],
+  }
+
+  if $::osfamily == 'Debian' {
+    if ! defined(Package['php5-cgi']) {
+      package { 'php5-cgi':
+        ensure  => present,
+        require => File['delete php5.load for fcgid']
+      }
+    }
+    if ! defined(Package['libapache2-mod-fcgid']) {
+      package { 'libapache2-mod-fcgid':
+        ensure  => present,
+        require => File['delete php5.load for fcgid']
+      }
+    }
+  } elsif $::osfamily == 'Redhat' {
+    if ! defined(Package['php-cgi']) {
+      package { 'php-cgi':
+        ensure  => present,
+        require => File['delete php5.load for fcgid']
+      }
+    }
+    if ! defined(Package['mod_fcgid']) {
+      package { 'mod_fcgid':
+        ensure  => present,
+        require => File['delete php5.load for fcgid']
+      }
+    }
+  }
+
   if ! defined(Class['apache::mod::fcgid']) {
     class { 'apache::mod::fcgid': }
   }
@@ -45,7 +85,8 @@ class puphpet::apache::modspdy (
 
   file { [
     "${apache::params::mod_dir}/spdy.load",
-    "${apache::params::mod_dir}/spdy.conf"
+    "${apache::params::mod_dir}/spdy.conf",
+    "${apache::params::mod_dir}/php5filter.conf"
   ] :
     purge => false,
   }
@@ -53,7 +94,8 @@ class puphpet::apache::modspdy (
   if $apache::params::mod_enable_dir != undef {
     file { [
       "${apache::params::mod_enable_dir}/spdy.load",
-      "${apache::params::mod_enable_dir}/spdy.conf"
+      "${apache::params::mod_enable_dir}/spdy.conf",
+      "${apache::params::mod_enable_dir}/php5filter.conf"
     ] :
       purge => false,
     }
