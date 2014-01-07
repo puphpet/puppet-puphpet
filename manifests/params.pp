@@ -50,4 +50,14 @@ class puphpet::params {
     'Redhat' => '/usr/share/nginx/html'
   }
 
+  $mariadb_package_client_name = $::osfamily ? {
+    'Debian' => 'mariadb-client',
+    'Redhat' => 'MariaDB-client',
+  }
+
+  $mariadb_package_server_name = $::osfamily ? {
+    'Debian' => 'mariadb-server',
+    'Redhat' => 'MariaDB-server',
+  }
+
 }
