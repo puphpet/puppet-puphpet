@@ -11,16 +11,26 @@ class puphpet::apache::modspdy (
     package_ensure => purged
   }
 
-  file { 'delete php5.conf for fcgid':
-    path    => "${apache::params::mod_dir}/php5.conf",
-    ensure  => purged,
-    notify  => Service['httpd'],
+  exec { "delete php5.conf files for mod-spdy":
+    command => "rm ${apache::params::mod_dir}/php5.conf",
+    onlyif  => "test -f ${apache::params::mod_dir}/php5.conf",
   }
 
-  file { 'delete php5.load for fcgid':
-    path    => "${apache::params::mod_dir}/php5.load",
-    ensure  => purged,
-    notify  => Service['httpd'],
+  exec { "delete php5.load files for mod-spdy":
+    command => "rm ${apache::params::mod_dir}/php5.load",
+    onlyif  => "test -f ${apache::params::mod_dir}/php5.load",
+  }
+
+  if $apache::params::mod_enable_dir != undef {
+    exec { "delete php5.conf enabled files for mod-spdy":
+      command => "rm ${apache::params::mod_enable_dir}/php5.conf",
+      onlyif  => "test -f ${apache::params::mod_enable_dir}/php5.conf",
+    }
+
+    exec { "delete php5.load enabled files for mod-spdy":
+      command => "rm ${apache::params::mod_enable_dir}/php5.load",
+      onlyif  => "test -f ${apache::params::mod_enable_dir}/php5.load",
+    }
   }
 
   if $::osfamily == 'Debian' {
