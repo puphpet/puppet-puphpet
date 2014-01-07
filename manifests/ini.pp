@@ -211,6 +211,7 @@ define puphpet::ini (
 
           $webserver_ini_location = $real_webserver ? {
               'apache2' => '/etc/php5/apache2/conf.d',
+              'cgi'     => '/etc/php5/cgi/conf.d',
               'fpm'     => '/etc/php5/fpm/conf.d',
               undef     => undef,
           }
