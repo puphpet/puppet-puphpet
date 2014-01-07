@@ -13,8 +13,9 @@ class puphpet::adminer(
   }
 
   exec{ "download adminer to ${location}":
-    command => "wget http://www.adminer.org/latest.php -o ${location}/index.php",
+    command => "wget http://www.adminer.org/latest.php -O ${location}/index.php",
     require => File[$location],
+    creates => ${location}/index.php,
     returns => [4],
   }
 
