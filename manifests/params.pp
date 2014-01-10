@@ -5,6 +5,11 @@ class puphpet::params {
     'Redhat' => 'php-pecl-xdebug'
   }
 
+  $xhprof_package = $::osfamily ? {
+    'Debian' => 'php5-xhprof',
+    'Redhat' => 'xhprof'
+  }
+
   $apache_webroot_location = $::osfamily ? {
     'Debian' => '/var/www',
     'Redhat' => '/var/www/html'
