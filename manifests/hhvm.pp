@@ -21,7 +21,7 @@ class puphpet::hhvm(
       }
 
       apt::source { 'hhvm':
-        location          => "http://dl.hhvm.com/debian ${os}",
+        location          => 'http://dl.hhvm.com/debian',
         repos             => 'main',
         required_packages => 'debian-keyring debian-archive-keyring',
         include_src       => true,
