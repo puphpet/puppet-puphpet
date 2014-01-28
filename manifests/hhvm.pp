@@ -6,10 +6,12 @@ class puphpet::hhvm(
   $nightly = false
 ) {
 
-  $package_name = $nightly ? {
+  $package_name_base = $nightly ? {
     true => $puphpet::params::hhvm_package_name_nightly,
     default => $puphpet::params::hhvm_package_name
   }
+
+  $hhvm_package_name_fcgi = $puphpet::params::hhvm_package_name_fcgi
 
   case $::operatingsystem {
     'debian': {
@@ -70,7 +72,6 @@ class puphpet::hhvm(
     }
   }
 
-  #class { 'apache::mod::fcgid': }
-  ensure_packages( [$package_name] )
+  ensure_packages( [ $package_name_base, $hhvm_package_name_fcgi ] )
 
 }

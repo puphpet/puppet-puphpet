@@ -71,4 +71,6 @@ class puphpet::params {
     'Redhat' => error('HHVM does not currently have a nightly build for RedHat/CentOS')
   }
 
+  $hhvm_package_name_fcgi = 'hhvm-fastcgi'
+
 }
