@@ -27,6 +27,16 @@ class puphpet::hhvm(
         include_src       => false,
         require           => Apt::Key['hhvm']
       }
+
+      apt::source { 'debian_non_free':
+        location          => 'http://security.debian.org/',
+        release           => 'wheezy/updates',
+        repos             => 'main non-free',
+        required_packages => 'debian-keyring debian-archive-keyring',
+        key               => '55BE302B',
+        key_server        => 'subkeys.pgp.net',
+        pin               => '-10',
+      }
     }
     'centos': {
       yum::managed_yumrepo { 'hop5 repository':
@@ -44,5 +54,3 @@ class puphpet::hhvm(
   ensure_packages( [$package_name, $fcgi] )
 
 }
-
-# hhvm-fastcgi
