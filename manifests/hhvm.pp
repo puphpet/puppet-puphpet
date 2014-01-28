@@ -43,7 +43,8 @@ class puphpet::hhvm(
         exec { "add non-free to ${value}":
           cwd     => '/etc/apt',
           command => "'perl -p -e 's/${value}\n/${value} non-free\n/' ${sources_list}'",
-          unless  => "grep -Fxq '${value} non-free' ${sources_list}"
+          unless  => "grep -Fxq '${value} non-free' ${sources_list}",
+          path => [ '/bin/', '/sbin/', '/usr/bin/', '/usr/sbin/' ]
         }
       }
     }
