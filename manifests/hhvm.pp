@@ -24,8 +24,8 @@ class puphpet::hhvm(
         location          => "http://dl.hhvm.com/debian ${os}",
         repos             => 'main',
         required_packages => 'debian-keyring debian-archive-keyring',
-        key               => '16d09fb4',
-        include_src       => true
+        include_src       => true,
+        require           => Apt::Key['hhvm']
       }
     }
     'centos': {
