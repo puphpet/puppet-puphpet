@@ -33,6 +33,7 @@ class puphpet::hhvm(
         release           => 'wheezy/updates',
         repos             => 'main non-free',
         required_packages => 'debian-keyring debian-archive-keyring',
+        include_src       => true,
         key               => '55BE302B',
         key_server        => 'subkeys.pgp.net',
         pin               => '-10',
@@ -49,8 +50,8 @@ class puphpet::hhvm(
     }
   }
 
-  class { 'apache::mod::fcgid': }
+  #class { 'apache::mod::fcgid': }
 
-  ensure_packages( [$package_name, $fcgi] )
+  ensure_packages( [$package_name] )
 
 }
