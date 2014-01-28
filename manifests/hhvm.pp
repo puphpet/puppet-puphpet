@@ -51,6 +51,8 @@ class puphpet::hhvm(
     }
   }
 
+  $os = downcase($::operatingsystem)
+
   case $::osfamily {
     'debian': {
       apt::key { 'hhvm':
