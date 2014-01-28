@@ -11,21 +11,10 @@ class puphpet::hhvm(
     default => $puphpet::params::hhvm_package_name
   }
 
-  case $::osfamily {
+  case $::operatingsystem {
     'debian': {
-      $os = downcase($::operatingsystem)
-
-      apt::key { 'hhvm':
-        key        => '16d09fb4',
-        key_source => 'http://dl.hhvm.com/conf/hhvm.gpg.key',
-      }
-
-      apt::source { 'hhvm':
-        location          => "http://dl.hhvm.com/${os}",
-        repos             => 'main',
-        required_packages => 'debian-keyring debian-archive-keyring',
-        include_src       => false,
-        require           => Apt::Key['hhvm']
+      if $::lsbdistcodename != 'wheezy' {
+        error('Sorry, HHVM currently only works with Debian 7+.')
       }
 
       $sources_list = '/etc/apt/sources.list'
@@ -44,10 +33,12 @@ class puphpet::hhvm(
           cwd     => '/etc/apt',
           command => "perl -p -i -e 's#${value}#${value} non-free#gi' ${sources_list}",
           unless  => "grep -Fxq '${value} non-free' ${sources_list}",
-          path    => [ '/bin/', '/sbin/', '/usr/bin/', '/usr/sbin/' ],
+          path    => '/usr/bin/',
           notify  => Exec['apt_update']
         }
       }
+
+      class { 'apache::mod::fastcgi': }
     }
     'centos': {
       yum::managed_yumrepo { 'hop5 repository':
@@ -56,6 +47,23 @@ class puphpet::hhvm(
         enabled  => 1,
         gpgcheck => 0,
         priority => 1
+      }
+    }
+  }
+
+  case $::osfamily {
+    'debian': {
+      apt::key { 'hhvm':
+        key        => '16d09fb4',
+        key_source => 'http://dl.hhvm.com/conf/hhvm.gpg.key',
+      }
+
+      apt::source { 'hhvm':
+        location          => "http://dl.hhvm.com/${os}",
+        repos             => 'main',
+        required_packages => 'debian-keyring debian-archive-keyring',
+        include_src       => false,
+        require           => Apt::Key['hhvm']
       }
     }
   }
