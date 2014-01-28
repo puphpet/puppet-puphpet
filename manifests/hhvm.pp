@@ -40,8 +40,9 @@ class puphpet::hhvm(
   }
 
   class { 'apache::mod::fcgid': }
-  class { 'apache::mod::proxy': }
 
   ensure_packages( [$package_name, $fcgi] )
 
 }
+
+# hhvm-fastcgi
