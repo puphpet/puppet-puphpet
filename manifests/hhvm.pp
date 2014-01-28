@@ -28,15 +28,23 @@ class puphpet::hhvm(
         require           => Apt::Key['hhvm']
       }
 
-      apt::source { 'debian_non_free':
-        location          => 'http://security.debian.org/',
-        release           => 'wheezy/updates',
-        repos             => 'main non-free',
-        required_packages => 'debian-keyring debian-archive-keyring',
-        include_src       => true,
-        key               => '55BE302B',
-        key_server        => 'subkeys.pgp.net',
-        pin               => '-10',
+      $sources_list = '/etc/apt/sources.list'
+
+      $deb_srcs = [
+        'deb http://http.us.debian.org/debian wheezy main',
+        'deb-src http://http.us.debian.org/debian wheezy main',
+        'deb http://security.debian.org/ wheezy/updates main',
+        'deb-src http://security.debian.org/ wheezy/updates main',
+        'deb http://http.us.debian.org/debian wheezy-updates main',
+        'deb-src http://http.us.debian.org/debian wheezy-updates main'
+      ]
+
+      each( $deb_srcs ) |$value| {
+        exec { "add non-free to ${value}":
+          cwd     => '/etc/apt',
+          command => "'perl -p -e 's/${value}\n/${value} non-free\n/' ${sources_list}'",
+          unless  => "grep -Fxq '${value} non-free' ${sources_list}"
+        }
       }
     }
     'centos': {
@@ -51,7 +59,7 @@ class puphpet::hhvm(
   }
 
   #class { 'apache::mod::fcgid': }
-
+alert($package_name)
   ensure_packages( [$package_name] )
 
 }
