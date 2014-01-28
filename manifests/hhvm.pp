@@ -21,7 +21,7 @@ class puphpet::hhvm(
       }
 
       apt::source { 'hhvm':
-        location          => 'http://dl.hhvm.com/debian',
+        location          => "http://dl.hhvm.com/${os}",
         repos             => 'main',
         required_packages => 'debian-keyring debian-archive-keyring',
         include_src       => false,
@@ -39,6 +39,9 @@ class puphpet::hhvm(
     }
   }
 
-  ensure_packages( [$package_name] )
+  class { 'apache::mod::fastcgi': }
+  class { 'apache::mod::proxy': }
+
+  ensure_packages( [$package_name, $fcgi] )
 
 }
