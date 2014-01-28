@@ -33,7 +33,7 @@ class puphpet::hhvm(
           cwd     => '/etc/apt',
           command => "perl -p -i -e 's#${value}#${value} non-free#gi' ${sources_list}",
           unless  => "grep -Fxq '${value} non-free' ${sources_list}",
-          path    => '/usr/bin/',
+          path    => [ '/bin/', '/sbin/', '/usr/bin/', '/usr/sbin/' ],
           notify  => Exec['apt_update']
         }
       }
