@@ -31,16 +31,32 @@ class puphpet::hhvm(
       ]
 
       each( $deb_srcs ) |$value| {
-        exec { "add non-free to ${value}":
+        exec { "add contrib non-free to ${value}":
           cwd     => '/etc/apt',
-          command => "perl -p -i -e 's#${value}#${value} non-free#gi' ${sources_list}",
-          unless  => "grep -Fxq '${value} non-free' ${sources_list}",
+          command => "perl -p -i -e 's#${value}#${value} contrib non-free#gi' ${sources_list}",
+          unless  => "grep -Fxq '${value} contrib non-free' ${sources_list}",
           path    => [ '/bin/', '/sbin/', '/usr/bin/', '/usr/sbin/' ],
           notify  => Exec['apt_update']
         }
       }
 
-      class { 'apache::mod::fastcgi': }
+      if ! defined(Class['apache::mod::fastcgi']) {
+        class { 'apache::mod::fastcgi': }
+      }
+      if ! defined(Class['apache::mod::alias']) {
+        class { 'apache::mod::alias': }
+      }
+      if ! defined(Class['apache::mod::proxy']) {
+        class { 'apache::mod::proxy': }
+      }
+      if ! defined(Class['apache::mod::proxy_http']) {
+        class { 'apache::mod::proxy_http': }
+      }
+      if ! defined(Apache::Mod['actions']) {
+        apache::mod{ 'actions': }
+      }
+
+      ensure_packages( [ $package_name_base, $hhvm_package_name_fcgi ] )
     }
     'centos': {
       yum::managed_yumrepo { 'hop5 repository':
