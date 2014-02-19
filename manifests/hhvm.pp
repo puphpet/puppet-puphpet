@@ -38,8 +38,8 @@ class puphpet::hhvm(
         }
       }
 
-      if ! defined(Class['apache::mod::fastcgi']) {
-        class { 'apache::mod::fastcgi': }
+      if ! defined(Apache::Mod['fastcgi']) {
+        apache::mod { 'fastcgi': }
       }
       if ! defined(Class['apache::mod::alias']) {
         class { 'apache::mod::alias': }
