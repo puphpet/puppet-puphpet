@@ -1,4 +1,0 @@
-    FastCgiExternalServer /var/www/php5.external -host <%= @hhvm_values['settings']['host'] %>:<%= @hhvm_values['settings']['port'] %>
-    AddHandler hhvm .php
-    Action hhvm /usr/lib/cgi-bin/php5.external
-    Alias /usr/lib/cgi-bin/ <%= @vhost['docroot'] %>
