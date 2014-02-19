@@ -11,8 +11,6 @@ class puphpet::hhvm(
     default => $puphpet::params::hhvm_package_name
   }
 
-  $hhvm_package_name_fcgi = $puphpet::params::hhvm_package_name_fcgi
-
   case $::operatingsystem {
     'debian': {
       if $::lsbdistcodename != 'wheezy' {
@@ -56,7 +54,7 @@ class puphpet::hhvm(
         apache::mod{ 'actions': }
       }
 
-      ensure_packages( [ $package_name_base, $hhvm_package_name_fcgi ] )
+      ensure_packages( [ $package_name_base ] )
     }
     'centos': {
       yum::managed_yumrepo { 'hop5 repository':
@@ -88,6 +86,6 @@ class puphpet::hhvm(
     }
   }
 
-  ensure_packages( [ $package_name_base, $hhvm_package_name_fcgi ] )
+  ensure_packages( [ $package_name_base ] )
 
 }
