@@ -1,14 +1,27 @@
 # This depends on
 #   puppetlabs/apt: https://github.com/puppetlabs/puppetlabs-apt
 #   example42/puppet-yum: https://github.com/example42/puppet-yum
-#   puppetlabs/puppetlabs-apache: https://github.com/puppetlabs/puppetlabs-apache
+#   puppetlabs/puppetlabs-apache: https://github.com/puppetlabs/puppetlabs-apache (if apache)
 
 class puphpet::hhvm(
-  $nightly = false
+  $nightly = false,
+  $webserver
 ) {
 
+  $real_webserver = $webserver ? {
+    'apache'  => 'apache2',
+    'httpd'   => 'apache2',
+    'apache2' => 'apache2',
+    'nginx'   => 'nginx',
+    'fpm'     => 'fpm',
+    'cgi'     => 'cgi',
+    'fcgi'    => 'cgi',
+    'fcgid'   => 'cgi',
+    undef     => undef,
+  }
+
   $package_name_base = $nightly ? {
-    true => $puphpet::params::hhvm_package_name_nightly,
+    true    => $puphpet::params::hhvm_package_name_nightly,
     default => $puphpet::params::hhvm_package_name
   }
 
@@ -39,23 +52,25 @@ class puphpet::hhvm(
         }
       }
 
-      if ! defined(Class['apache::mod::mime']) {
-        class { 'apache::mod::mime': }
-      }
-      if ! defined(Class['apache::mod::fastcgi']) {
-        class { 'apache::mod::fastcgi': }
-      }
-      if ! defined(Class['apache::mod::alias']) {
-        class { 'apache::mod::alias': }
-      }
-      if ! defined(Class['apache::mod::proxy']) {
-        class { 'apache::mod::proxy': }
-      }
-      if ! defined(Class['apache::mod::proxy_http']) {
-        class { 'apache::mod::proxy_http': }
-      }
-      if ! defined(Apache::Mod['actions']) {
-        apache::mod{ 'actions': }
+      if $real_webserver == 'apache2' {
+        if ! defined(Class['apache::mod::mime']) {
+          class { 'apache::mod::mime': }
+        }
+        if ! defined(Class['apache::mod::fastcgi']) {
+          class { 'apache::mod::fastcgi': }
+        }
+        if ! defined(Class['apache::mod::alias']) {
+          class { 'apache::mod::alias': }
+        }
+        if ! defined(Class['apache::mod::proxy']) {
+          class { 'apache::mod::proxy': }
+        }
+        if ! defined(Class['apache::mod::proxy_http']) {
+          class { 'apache::mod::proxy_http': }
+        }
+        if ! defined(Apache::Mod['actions']) {
+          apache::mod{ 'actions': }
+        }
       }
 
       ensure_packages( [ $package_name_base ] )
