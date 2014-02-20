@@ -1,6 +1,6 @@
 <%= scope.function_template(['apache/httpd.conf.erb']) -%>
 
-FastCgiExternalServer /var/www/hhvm.external -host <%= @hhvm_values['settings']['host'] %>:<%= @hhvm_values['settings']['port'] %>
+FastCgiExternalServer <%= @docroot %>/hhvm.external -host <%= @hhvm_values['settings']['host'] %>:<%= @hhvm_values['settings']['port'] %>
 AddHandler hhvm .php
 Action hhvm /usr/lib/cgi-bin/hhvm.external
 Alias /usr/lib/cgi-bin/ <%= @docroot %>/
