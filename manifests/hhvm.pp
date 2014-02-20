@@ -51,7 +51,27 @@ class puphpet::hhvm(
           notify  => Exec['apt_update']
         }
       }
+    }
+    'ubuntu': {
+      if ! ($lsbdistcodename in ['precise', 'raring']) {
+        error('Sorry, HHVM currently only works with Ubuntu 12.04 and 13.10.')
+      }
+    }
+    'centos': {
+      yum::managed_yumrepo { 'hop5 repository':
+        descr    => 'hop5 repository',
+        baseurl  => 'http://www.hop5.in/yum/el6/hop5.repo',
+        enabled  => 1,
+        gpgcheck => 0,
+        priority => 1
+      }
+    }
+  }
 
+  $os = downcase($::operatingsystem)
+
+  case $::osfamily {
+    'debian': {
       if $real_webserver == 'apache2' {
         if ! defined(Class['apache::mod::mime']) {
           class { 'apache::mod::mime': }
@@ -73,23 +93,6 @@ class puphpet::hhvm(
         }
       }
 
-      ensure_packages( [ $package_name_base ] )
-    }
-    'centos': {
-      yum::managed_yumrepo { 'hop5 repository':
-        descr    => 'hop5 repository',
-        baseurl  => 'http://www.hop5.in/yum/el6/hop5.repo',
-        enabled  => 1,
-        gpgcheck => 0,
-        priority => 1
-      }
-    }
-  }
-
-  $os = downcase($::operatingsystem)
-
-  case $::osfamily {
-    'debian': {
       apt::key { 'hhvm':
         key        => '16d09fb4',
         key_source => 'http://dl.hhvm.com/conf/hhvm.gpg.key',
