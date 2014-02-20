@@ -20,12 +20,12 @@ class puphpet::hhvm(
     undef     => undef,
   }
 
-  $package_name_base = ($nightly == true or $nightly == 1) ? {
+  $package_name_base = $nightly == true ? {
     true    => $puphpet::params::hhvm_package_name_nightly,
     default => $puphpet::params::hhvm_package_name
   }
 
-  if ($nightly == true or $nightly == 1) and $::osfamily == 'Redhat' {
+  if $nightly == true and $::osfamily == 'Redhat' {
     warning('HHVM-nightly is not available for RHEL distros. Falling back to normal release')
   }
 
