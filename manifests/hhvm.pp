@@ -20,12 +20,14 @@ class puphpet::hhvm(
     undef     => undef,
   }
 
-  $package_name_base = $nightly ? {
+  $nightly_bool = str2bool($nightly)
+
+  $package_name_base = $nightly_bool ? {
     true    => $puphpet::params::hhvm_package_name_nightly,
     default => $puphpet::params::hhvm_package_name
   }
 
-  if $nightly and $::osfamily == 'Redhat' {
+  if $nightly_bool == true and $::osfamily == 'Redhat' {
     warning('HHVM-nightly is not available for RHEL distros. Falling back to normal release')
   }
 
@@ -72,31 +74,31 @@ class puphpet::hhvm(
     }
   }
 
+  if $real_webserver == 'apache2' {
+    if ! defined(Class['apache::mod::mime']) {
+      class { 'apache::mod::mime': }
+    }
+    if ! defined(Class['apache::mod::fastcgi']) {
+      class { 'apache::mod::fastcgi': }
+    }
+    if ! defined(Class['apache::mod::alias']) {
+      class { 'apache::mod::alias': }
+    }
+    if ! defined(Class['apache::mod::proxy']) {
+      class { 'apache::mod::proxy': }
+    }
+    if ! defined(Class['apache::mod::proxy_http']) {
+      class { 'apache::mod::proxy_http': }
+    }
+    if ! defined(Apache::Mod['actions']) {
+      apache::mod{ 'actions': }
+    }
+  }
+
   $os = downcase($::operatingsystem)
 
   case $::osfamily {
     'debian': {
-      if $real_webserver == 'apache2' {
-        if ! defined(Class['apache::mod::mime']) {
-          class { 'apache::mod::mime': }
-        }
-        if ! defined(Class['apache::mod::fastcgi']) {
-          class { 'apache::mod::fastcgi': }
-        }
-        if ! defined(Class['apache::mod::alias']) {
-          class { 'apache::mod::alias': }
-        }
-        if ! defined(Class['apache::mod::proxy']) {
-          class { 'apache::mod::proxy': }
-        }
-        if ! defined(Class['apache::mod::proxy_http']) {
-          class { 'apache::mod::proxy_http': }
-        }
-        if ! defined(Apache::Mod['actions']) {
-          apache::mod{ 'actions': }
-        }
-      }
-
       apt::key { 'hhvm':
         key        => '16d09fb4',
         key_source => 'http://dl.hhvm.com/conf/hhvm.gpg.key',
