@@ -25,6 +25,10 @@ class puphpet::hhvm(
     default => $puphpet::params::hhvm_package_name
   }
 
+  if $nightly and $::osfamily == 'Redhat' {
+    warning('HHVM-nightly is not available for RHEL distros. Falling back to normal release')
+  }
+
   case $::operatingsystem {
     'debian': {
       if $::lsbdistcodename != 'wheezy' {
