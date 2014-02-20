@@ -65,7 +65,8 @@ class puphpet::hhvm(
     'centos': {
       yum::managed_yumrepo { 'hop5':
         descr    => 'hop5 repository',
-        baseurl  => 'http://www.hop5.in/yum/el6/hop5.repo',
+        baseurl  => 'http://www.hop5.in/yum/el6/',
+        gpgkey   => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-HOP5',
         enabled  => 1,
         gpgcheck => 0,
         priority => 1
