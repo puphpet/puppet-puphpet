@@ -68,7 +68,7 @@ class puphpet::params {
   $hhvm_package_name = 'hhvm'
   $hhvm_package_name_nightly = $::osfamily ? {
     'Debian' => 'hhvm-nightly',
-    'Redhat' => error('HHVM does not currently have a nightly build for RedHat/CentOS')
+    'Redhat' => fail('HHVM does not currently have a nightly build for RedHat/CentOS')
   }
 
 }
