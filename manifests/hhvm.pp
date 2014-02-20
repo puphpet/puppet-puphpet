@@ -63,7 +63,7 @@ class puphpet::hhvm(
       }
     }
     'centos': {
-      yum::managed_yumrepo { 'hop5 repository':
+      yum::managed_yumrepo { 'hop5':
         descr    => 'hop5 repository',
         baseurl  => 'http://www.hop5.in/yum/el6/hop5.repo',
         enabled  => 1,
