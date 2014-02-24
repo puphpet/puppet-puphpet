@@ -46,8 +46,8 @@ class puphpet::params {
   $apache_mod_spdy_package = 'mod-spdy-beta'
 
   $apache_mod_spdy_cgi = $::osfamily ? {
-    'Debian' => '/usr/bin/php-cgi',
-    'Redhat' => '/usr/bin/php-cgi'
+    'Debian' => 'php5-cgi',
+    'Redhat' => 'php-cgi'
   }
 
   $nginx_webroot_location = $::osfamily ? {

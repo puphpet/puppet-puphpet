@@ -1,45 +1,25 @@
 # This depends on puppetlabs/apache: https://github.com/puppetlabs/puppetlabs-apache
 
 class puphpet::apache::modspdy (
-  $url     = $puphpet::params::apache_mod_spdy_url,
-  $package = $puphpet::params::apache_mod_spdy_package,
-  $phpcgi  = $puphpet::params::apache_mod_spdy_cgi,
-  $ensure  = 'present'
+  $url         = $puphpet::params::apache_mod_spdy_url,
+  $package     = $puphpet::params::apache_mod_spdy_package,
+  $php_package = 'php',
+  $ensure      = 'present'
 ) {
 
   class { 'apache::mod::php':
     package_ensure => 'purged'
   }
 
-  if $::osfamily == 'Debian' {
-    if ! defined(Package['php5-cgi']) {
-      package { 'php5-cgi':
-        ensure  => present
-      }
-    }
-    if ! defined(Package['libapache2-mod-fcgid']) {
-      package { 'libapache2-mod-fcgid':
-        ensure => present,
-        notify => Service['httpd']
-      }
-    }
-  } elsif $::osfamily == 'Redhat' {
-    if ! defined(Package['php-cgi']) {
-      package { 'php-cgi':
-        ensure  => present,
-        notify => Service['httpd']
-      }
-    }
-    if ! defined(Package['mod_fcgid']) {
-      package { 'mod_fcgid':
-        ensure  => present,
-        notify => Service['httpd']
-      }
+  if $php_package == 'php' and ! defined(Package[$puphpet::params::apache_mod_spdy_cgi]) {
+    package { $puphpet::params::apache_mod_spdy_cgi:
+      ensure => present,
+      notify => Service[$apache::params::service_name]
     }
   }
 
-  if ! defined(Class['apache::mod::fcgid']) {
-    class { 'apache::mod::fcgid': }
+  if ! defined(Class['apache::mod::fastcgi']) {
+    class { 'apache::mod::fastcgi': }
   }
 
   if ! defined(Class['apache::mod::cgi']) {
@@ -67,7 +47,7 @@ class puphpet::apache::modspdy (
     ensure   => $ensure,
     provider => $provider,
     source   => $download_location,
-    notify   => Service['httpd']
+    notify   => Service[$apache::params::service_name]
   }
 
   file { [
