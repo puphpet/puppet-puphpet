@@ -1,6 +1,7 @@
 class puphpet::adminer(
   $location,
-  $owner = 'www-data'
+  $owner       = 'www-data',
+  $php_package = 'php'
 ) {
 
   if ! defined(File[$location]) {
@@ -8,7 +9,7 @@ class puphpet::adminer(
       replace => no,
       ensure  => directory,
       mode    => 775,
-      require => Package['php']
+      require => Package[$php_package]
     }
   }
 
