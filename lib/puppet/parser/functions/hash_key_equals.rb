@@ -11,7 +11,7 @@ module Puppet::Parser::Functions
     ENDHEREDOC
 
     unless args.length == 3
-      raise Puppet::ParseError, ("hash_contains(): wrong number of arguments (#{args.length}; must be 3)")
+      raise Puppet::ParseError, ("hash_key_equals(): wrong number of arguments (#{args.length}; must be 3)")
     end
 
     hashVar       = args[0]
