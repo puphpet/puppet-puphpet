@@ -10,7 +10,7 @@ module Puppet::Parser::Functions
     it contains the key requested, and the key matches value.
     ENDHEREDOC
 
-    unless args.length == 2
+    unless args.length == 3
       raise Puppet::ParseError, ("hash_contains(): wrong number of arguments (#{args.length}; must be 3)")
     end
 
