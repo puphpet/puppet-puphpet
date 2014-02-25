@@ -4,24 +4,34 @@ class puphpet::xhprof (
   $webserver_service
 ) inherits puphpet::params {
 
-  if $::operatingsystem == 'ubuntu' and $php_version == '54' {
-    exec { 'pecl bundle xhprof':
-      cwd     => $webroot_location,
-      creates => "${webroot_location}/xhprof",
-      path    => [ '/bin/', '/sbin/', '/usr/bin/', '/usr/sbin/' ],
-      require => Package['php5-dev'],
-      onlyif  => "test -d ${webroot_location}/xhprof"
+    exec { 'delete-xhprof-path-if-empty-folder':
+      command => "rm -rf ${webroot_location}/xhprof",
+      onlyif  => "test ! -f ${webroot_location}/xhprof/extension/config.m4"
     }
 
+    vcsrepo { "${webroot_location}/xhprof":
+      ensure   => present,
+      provider => git,
+      source   => 'https://github.com/facebook/xhprof.git',
+      require  => Exec['delete-xhprof-path-if-empty-folder']
+    }
+
+    file { "${webroot_location}/xhprof/xhprof_html":
+      ensure  => directory,
+      mode    => 0775,
+      require => Vcsrepo["${webroot_location}/xhprof"]
+    }
+
+  if $::operatingsystem == 'ubuntu' and $php_version == '54' {
     exec { 'configure xhprof':
       cwd     => "${webroot_location}/xhprof/extension",
       command => 'phpize && ./configure && make && make install',
-      require => Exec['pecl bundle xhprof']
+      require => Vcsrepo["${webroot_location}/xhprof"]
     }
 
     puphpet::ini { 'add xhprof ini extension':
       php_version  => $php_version,
-      webserver    => $webserver,
+      webserver    => $webserver_service,
       ini_filename => '20-xhprof-custom.ini',
       entry        => 'XHPROF/extension',
       value        => 'xhprof.so',
@@ -31,20 +41,40 @@ class puphpet::xhprof (
 
     puphpet::ini { 'add xhprof ini xhprof.output_dir':
       php_version  => $php_version,
-      webserver    => $webserver,
+      webserver    => $webserver_service,
       ini_filename => '20-xhprof-custom.ini',
       entry        => 'XHPROF/xhprof.output_dir',
       value        => '/tmp',
       ensure       => 'present',
       require      => Exec['configure xhprof']
     }
-  } elsif $::operatingsystem == 'ubuntu' and $php_version == '55' {
-    if ! defined(Package['php5-xhprof']) {
-      package { 'php5-xhprof':
+
+    composer::exec { 'xhprof-composer-run':
+      cmd     => 'install',
+      cwd     => "${webroot_location}/xhprof",
+      require => [
+        Class['composer'],
+        Exec['configure xhprof']
+      ]
+    }
+  } else {
+    $xhprof_package = $puphpet::params::xhprof_package
+
+    if ! defined(Package[$xhprof_package]) {
+      package { $xhprof_package:
         ensure  => installed,
         require => Package['php'],
-        notify  => $webserver_service,
+        notify  => $xhprof_webserver_service,
       }
+    }
+
+    composer::exec { 'xhprof-composer-run':
+      cmd     => 'install',
+      cwd     => "${webroot_location}/xhprof",
+      require => [
+        Class['composer'],
+        File["${webroot_location}/xhprof/xhprof_html"]
+      ]
     }
   }
 
