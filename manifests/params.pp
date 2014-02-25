@@ -6,7 +6,10 @@ class puphpet::params {
   }
 
   $xhprof_package = $::osfamily ? {
-    'Debian' => 'php5-xhprof',
+    'Debian' => $::operatingsystem ? {
+      'ubuntu' => false,
+      'debian' => 'php5-xhprof'
+    },
     'Redhat' => 'xhprof'
   }
 
