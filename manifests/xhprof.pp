@@ -6,15 +6,15 @@ class puphpet::xhprof (
 
   if $::operatingsystem == 'ubuntu' and $php_version == '54' {
     exec { 'pecl bundle xhprof':
-      cwd     => '/tmp',
-      creates => $webroot_location,
+      cwd     => $webroot_location,
+      creates => "${webroot_location}/xhprof",
       path    => [ '/bin/', '/sbin/', '/usr/bin/', '/usr/sbin/' ],
       require => Package['php5-dev'],
       onlyif  => "test -d ${webroot_location}/xhprof"
     }
 
     exec { 'configure xhprof':
-      cwd     => '/tmp/xhprof/extension',
+      cwd     => "${webroot_location}/xhprof/extension",
       command => 'phpize && ./configure && make && make install',
       require => Exec['pecl bundle xhprof']
     }
