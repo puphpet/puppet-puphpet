@@ -5,18 +5,6 @@ class puphpet::xhprof (
 ) inherits puphpet::params {
 
   if $::operatingsystem == 'ubuntu' and $php_version == '54' {
-    if ! defined(Package['php5-dev']) {
-      package { 'php5-dev':
-        require => Package['php'],
-      }
-    }
-
-    if ! defined(Package['php-pear']) {
-      package { 'php-pear':
-        require => Package['php'],
-      }
-    }
-
     exec { 'pecl bundle xhprof':
       cwd     => '/tmp',
       creates => $webroot_location,
