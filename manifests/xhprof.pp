@@ -64,7 +64,7 @@ class puphpet::xhprof (
       package { $xhprof_package:
         ensure  => installed,
         require => Package['php'],
-        notify  => $xhprof_webserver_service,
+        notify  => $webserver_service,
       }
     }
 
