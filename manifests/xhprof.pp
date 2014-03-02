@@ -60,8 +60,10 @@ class puphpet::xhprof (
   } else {
     $xhprof_package = $puphpet::params::xhprof_package
 
-    if $webserver_service != undef {
+    if $webserver_service != undef and is_string($webserver_service) {
       $xhprof_package_notify = [Service[$webserver_service]]
+    } elsif $webserver_service != undef {
+      $xhprof_package_notify = $webserver_service
     } else {
       $xhprof_package_notify = []
     }
