@@ -60,11 +60,17 @@ class puphpet::xhprof (
   } else {
     $xhprof_package = $puphpet::params::xhprof_package
 
+    if $webserver_service != undef {
+      $xhprof_package_notify = [Service[$webserver_service]]
+    } else {
+      $xhprof_package_notify = []
+    }
+
     if ! defined(Package[$xhprof_package]) {
       package { $xhprof_package:
         ensure  => installed,
         require => Package['php'],
-        notify  => $webserver_service,
+        notify  => $xhprof_package_notify,
       }
     }
 
