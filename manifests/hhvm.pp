@@ -61,6 +61,14 @@ class puphpet::hhvm(
       if ! ($lsbdistcodename in ['precise', 'raring']) {
         error('Sorry, HHVM currently only works with Ubuntu 12.04 and 13.10.')
       }
+
+      apt::key { '5D50B6BA': key_server => 'hkp://keyserver.ubuntu.com:80' }
+
+      if $lsbdistcodename in ['lucid', 'precise'] {
+        apt::ppa { 'ppa:mapnik/boost': require => Apt::Key['5D50B6BA'], options => '' }
+      } else {
+        apt::ppa { 'ppa:mapnik/boost': require => Apt::Key['5D50B6BA'] }
+      }
     }
     'centos': {
       yum::managed_yumrepo { 'hop5':
