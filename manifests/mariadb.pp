@@ -30,6 +30,12 @@ class puphpet::mariadb(
         key_server        => 'keyserver.ubuntu.com',
         include_src       => true
       }
+
+      apt::pin { 'mariadb':
+        packages => '*',
+        priority => 1000,
+        origin   => 'mirror.jmu.edu',
+      }
     }
     'centos': {
       yum::managed_yumrepo { 'MariaDB':
