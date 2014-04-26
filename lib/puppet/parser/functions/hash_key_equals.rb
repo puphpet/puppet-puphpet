@@ -26,7 +26,7 @@ module Puppet::Parser::Functions
       return false
     end
 
-    unless hashVar[keyVar] == expectedValue
+    unless hashVar[keyVar].to_i == expectedValue.to_i
       return false
     end
 
