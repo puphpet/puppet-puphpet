@@ -26,7 +26,10 @@ class puphpet::xhprof (
     exec { 'configure xhprof':
       cwd     => "${webroot_location}/xhprof/extension",
       command => 'phpize && ./configure && make && make install',
-      require => Vcsrepo["${webroot_location}/xhprof"],
+      require => [
+        Vcsrepo["${webroot_location}/xhprof"],
+        Class['Php::Devel']
+      ],
       path    => [ '/bin/', '/usr/bin/' ]
     }
 
