@@ -22,11 +22,12 @@ class puphpet::xhprof (
     require => Vcsrepo["${webroot_location}/xhprof"]
   }
 
-  if $::operatingsystem == 'ubuntu' and $php_version == '54' {
+  if $::operatingsystem == 'ubuntu' and ($php_version == '54' or $php_version == '55') {
     exec { 'configure xhprof':
       cwd     => "${webroot_location}/xhprof/extension",
       command => 'phpize && ./configure && make && make install',
-      require => Vcsrepo["${webroot_location}/xhprof"]
+      require => Vcsrepo["${webroot_location}/xhprof"],
+      path    => [ '/bin/', '/usr/bin/' ]
     }
 
     puphpet::ini { 'add xhprof ini extension':
