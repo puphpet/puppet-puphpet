@@ -22,7 +22,7 @@ class puphpet::xhprof (
     require => Vcsrepo["${webroot_location}/xhprof"]
   }
 
-  if $::operatingsystem == 'ubuntu' and ($php_version == '54' or $php_version == '55') {
+  if $::operatingsystem == 'ubuntu' and $php_version != '53' {
     exec { 'configure xhprof':
       cwd     => "${webroot_location}/xhprof/extension",
       command => 'phpize && ./configure && make && make install',
