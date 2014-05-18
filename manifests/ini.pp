@@ -38,6 +38,11 @@
 #         NGINX
 #             FOLDERS: cli/  conf.d/  fpm/
 #             /etc/php5/fpm/conf.d        -> /etc/php5/conf.d
+#     UBUNTU 14.04 - trusty
+#         APACHE
+#             NOT CORRECT; PHP 5.5 INSTALLED
+#         NGINX
+#             NOT CORRECT; PHP 5.5 INSTALLED
 # 5.4
 #     CENTOS 6
 #         CLI
@@ -80,6 +85,11 @@
 #         NGINX
 #             FOLDERS: cli/  conf.d/  fpm/  mods-available/
 #             /etc/php5/fpm/conf.d        -> /etc/php5/conf.d/*   -> /etc/php5/mods-available/*
+#     UBUNTU 14.04 - trusty
+#         APACHE
+#             NOT CORRECT; PHP 5.5 INSTALLED
+#         NGINX
+#             NOT CORRECT; PHP 5.5 INSTALLED
 # 5.5
 #     DEBIAN 6 - squeeze
 #         APACHE
@@ -104,9 +114,21 @@
 #         CLI
 #             /etc/php5/cli/conf.d/*      -> /etc/php5/mods-available/*
 #         APACHE
-#             NOT A VALID OPTION
+#             FOLDERS: cli/  apache2/  mods-available/
+#             /etc/php5/apache2/conf.d/*      -> /etc/php5/mods-available/*
 #         NGINX
 #             FOLDERS: cli/  fpm/  mods-available/
+#             /etc/php5/fpm/conf.d/*      -> /etc/php5/mods-available/*
+#     UBUNTU 14.04 - trusty
+#         CLI
+#             /etc/php5/cli/conf.d/*      -> /etc/php5/conf.d/*
+#         APACHE
+#             FOLDERS: apache2/  cli/  mods-available/  php.ini
+#             /etc/php5/cli/conf.d/*      -> /etc/php5/mods-available/*
+#             /etc/php5/apache2/conf.d/*  -> /etc/php5/mods-available/*
+#         NGINX
+#             FOLDERS: cli/  fpm/  mods-available/
+#             /etc/php5/cli/conf.d/*      -> /etc/php5/mods-available/*
 #             /etc/php5/fpm/conf.d/*      -> /etc/php5/mods-available/*
 #
 # This depends on example42/puppet-php: https://github.com/example42/puppet-php
