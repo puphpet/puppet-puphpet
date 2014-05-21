@@ -33,7 +33,7 @@ class puphpet::hhvm(
   case $::operatingsystem {
     'debian': {
       if $::lsbdistcodename != 'wheezy' {
-        error('Sorry, HHVM currently only works with Debian 7+.')
+        fail('Sorry, HHVM currently only works with Debian 7+.')
       }
 
       $sources_list = '/etc/apt/sources.list'
@@ -58,8 +58,8 @@ class puphpet::hhvm(
       }
     }
     'ubuntu': {
-      if ! ($lsbdistcodename in ['precise', 'raring']) {
-        error('Sorry, HHVM currently only works with Ubuntu 12.04 and 13.10.')
+      if ! ($lsbdistcodename in ['precise', 'raring', 'trusty']) {
+        fail('Sorry, HHVM currently only works with Ubuntu 12.04, 13.10 and 14.04.')
       }
 
       apt::key { '5D50B6BA': key_server => 'hkp://keyserver.ubuntu.com:80' }
