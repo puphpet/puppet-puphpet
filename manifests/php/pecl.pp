@@ -20,9 +20,14 @@ define puphpet::php::pecl (
 
   $package = $::osfamily ? {
     'Debian' => {
+      'apc'  => $::operatingsystem ? {
+        'ubuntu' => 'php5-apcu',
+        'debian' => 'php5-apc'
+      },
       'apcu' => 'php5-apcu',
     },
     'Redhat' => {
+      'apc'  => 'php-pecl-apc',
       'apcu' => 'php-pecl-apcu',
     }
   }
