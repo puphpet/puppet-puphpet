@@ -24,11 +24,12 @@ define puphpet::php::pecl (
         'ubuntu' => 'php5-apcu',
         'debian' => 'php5-apc'
       },
-      'apcu' => 'php5-apcu',
+      'apcu'  => 'php5-apcu',
+      'mongo' => 'php5-mongo'
     },
     'Redhat' => {
-      'apc'  => 'php-pecl-apcu',
-      'apcu' => 'php-pecl-apcu',
+      'apc'  => 'pecl-apcu',
+      'apcu' => 'pecl-apcu',
     }
   }
 
@@ -55,7 +56,8 @@ define puphpet::php::pecl (
   }
   elsif $package_name and ! defined(Package[$package_name]) {
     package { $package_name:
-      ensure => present
+      ensure  => present,
+      require => Class['Php::Devel'],
     }
   }
 
