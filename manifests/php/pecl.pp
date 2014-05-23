@@ -22,14 +22,15 @@ define puphpet::php::pecl (
     'Debian' => {
       'apc'  => $::operatingsystem ? {
         'ubuntu' => 'php5-apcu',
-        'debian' => 'php5-apc'
+        'debian' => 'php5-apc',
       },
       'apcu'  => 'php5-apcu',
-      'mongo' => 'php5-mongo'
+      'mongo' => 'php5-mongo',
     },
     'Redhat' => {
-      'apc'  => 'pecl-apcu',
-      'apcu' => 'pecl-apcu',
+      'apc'   => 'php-pecl-apcu',
+      'apcu'  => 'php-pecl-apcu',
+      'mongo' => 'php-pecl-mongo',
     }
   }
 
