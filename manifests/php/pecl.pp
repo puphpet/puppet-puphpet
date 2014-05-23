@@ -27,7 +27,7 @@ define puphpet::php::pecl (
       'apcu' => 'php5-apcu',
     },
     'Redhat' => {
-      'apc'  => 'php-pecl-apc',
+      'apc'  => 'php-pecl-apcu',
       'apcu' => 'php-pecl-apcu',
     }
   }
