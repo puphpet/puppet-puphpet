@@ -42,8 +42,7 @@ class puphpet::mariadb(
         descr         => 'MariaDB - mariadb.org',
         baseurl       => "http://yum.mariadb.org/${version}/centos6-${arch_package_name}",
         enabled       => 1,
-        gpgcheck      => 1,
-        gpgkey_source => 'https://yum.mariadb.org/RPM-GPG-KEY-MariaDB',
+        gpgcheck      => 0,
         priority      => 1
       }
     }
