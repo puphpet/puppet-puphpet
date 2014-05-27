@@ -37,7 +37,7 @@ class puphpet::mariadb(
         origin   => 'mirror.jmu.edu',
       }
     }
-    'centos': {
+    'redhat': {
       yum::managed_yumrepo { 'MariaDB':
         descr         => 'MariaDB - mariadb.org',
         baseurl       => "http://yum.mariadb.org/${version}/centos6-${arch_package_name}",
