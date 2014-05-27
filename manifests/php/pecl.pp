@@ -25,12 +25,14 @@ define puphpet::php::pecl (
         'debian' => 'php5-apc',
       },
       'apcu'      => 'php5-apcu',
+      'memcache'  => 'php5-memcache',
       'memcached' => 'php5-memcached',
       'mongo'     => 'php5-mongo',
     },
     'Redhat' => {
       'apc'       => 'php-pecl-apcu',
       'apcu'      => 'php-pecl-apcu',
+      'memcache'  => 'php-pecl-memcache',
       'memcached' => 'php-pecl-memcached',
       'mongo'     => 'php-pecl-mongo',
     }
