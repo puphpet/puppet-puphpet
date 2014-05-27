@@ -20,17 +20,19 @@ define puphpet::php::pecl (
 
   $package = $::osfamily ? {
     'Debian' => {
-      'apc'  => $::operatingsystem ? {
+      'apc'       => $::operatingsystem ? {
         'ubuntu' => 'php5-apcu',
         'debian' => 'php5-apc',
       },
-      'apcu'  => 'php5-apcu',
-      'mongo' => 'php5-mongo',
+      'apcu'      => 'php5-apcu',
+      'memcached' => 'php5-memcached',
+      'mongo'     => 'php5-mongo',
     },
     'Redhat' => {
-      'apc'   => 'php-pecl-apcu',
-      'apcu'  => 'php-pecl-apcu',
-      'mongo' => 'php-pecl-mongo',
+      'apc'       => 'php-pecl-apcu',
+      'apcu'      => 'php-pecl-apcu',
+      'memcached' => 'php-pecl-memcached',
+      'mongo'     => 'php-pecl-mongo',
     }
   }
 
