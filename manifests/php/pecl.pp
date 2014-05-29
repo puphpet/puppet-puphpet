@@ -9,6 +9,11 @@ define puphpet::php::pecl (
   $service_autorestart
 ){
 
+  $ignore = {
+    'date_time' => true,
+    'mysql'     => true,
+  }
+
   $pecl = $::osfamily ? {
     'Debian' => {
       #
@@ -20,6 +25,7 @@ define puphpet::php::pecl (
 
   $pecl_beta = $::osfamily ? {
     'Debian' => {
+      'augeas'      => 'augeas',
       'zendopcache' => $::operatingsystem ? {
         'debian' => false,
         'ubuntu' => 'ZendOpcache',
@@ -56,10 +62,15 @@ define puphpet::php::pecl (
 
   $downcase_name = downcase($name)
 
-  if has_key($pecl, $downcase_name) {
+  if has_key($ignore, $downcase_name) {
     $pecl_name       = $pecl[$downcase_name]
     $package_name    = false
     $preferred_state = 'stable'
+  }
+  elsif has_key($pecl, $downcase_name) {
+    $pecl_name       = false
+    $package_name    = false
+    $preferred_state = false
   }
   elsif has_key($pecl_beta, $downcase_name) and $pecl_beta[$downcase_name] {
     $pecl_name       = $pecl_beta[$downcase_name]
