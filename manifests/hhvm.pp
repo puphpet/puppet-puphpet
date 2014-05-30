@@ -66,8 +66,6 @@ class puphpet::hhvm(
 
       if $lsbdistcodename in ['lucid', 'precise'] {
         apt::ppa { 'ppa:mapnik/boost': require => Apt::Key['5D50B6BA'], options => '' }
-      } else {
-        apt::ppa { 'ppa:mapnik/boost': require => Apt::Key['5D50B6BA'] }
       }
     }
     'centos': {
