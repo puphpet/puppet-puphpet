@@ -34,8 +34,8 @@ define puphpet::php::pear (
     $preferred_state = 'stable'
   }
 
-  if $package_name and $preferred_state and ! defined(Php::Pear::Module[$package_name]) {
-    php::pear::module { $name:
+  if $package_name and $preferred_state and ! defined(::Php::Pear::Module[$package_name]) {
+    ::php::pear::module { $name:
       use_package         => false,
       preferred_state     => $preferred_state,
       service_autorestart => $php_webserver_restart,

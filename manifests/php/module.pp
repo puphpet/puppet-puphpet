@@ -24,8 +24,8 @@ define puphpet::php::module (
     $package_name = $name
   }
 
-  if $package_name and ! defined(Php::Module[$package_name]) {
-    php::module { $package_name:
+  if $package_name and ! defined(::Php::Module[$package_name]) {
+    ::php::module { $package_name:
       service_autorestart => $service_autorestart,
     }
   }

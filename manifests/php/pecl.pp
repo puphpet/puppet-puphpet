@@ -86,8 +86,8 @@ define puphpet::php::pecl (
     $package_name = false
   }
 
-  if $pecl_name and ! defined(Php::Pecl::Module[$pecl_name]) {
-    php::pecl::module { $pecl_name:
+  if $pecl_name and ! defined(::Php::Pecl::Module[$pecl_name]) {
+    ::php::pecl::module { $pecl_name:
       use_package         => false,
       preferred_state     => $preferred_state,
       service_autorestart => $service_autorestart,
