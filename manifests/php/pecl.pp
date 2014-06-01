@@ -46,7 +46,10 @@ define puphpet::php::pecl (
       'imagick'     => 'php5-imagick',
       'memcache'    => 'php5-memcache',
       'memcached'   => 'php5-memcached',
-      'mongo'       => 'php5-mongo',
+      'mongo'       => $::lsbdistcodename ? {
+        'precise' => false,
+        default   => 'php5-mongo',
+      },
       'zendopcache' => 'php5-zendopcache',
     },
     'Redhat' => {
