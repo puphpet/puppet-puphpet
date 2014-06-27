@@ -82,7 +82,7 @@ class puphpet::hhvm(
         ensure   => latest,
         provider => yum,
         source   => $download_location,
-        require  => Exec["download apache mod-pagespeed to ${download_location}"],
+        require  => Exec["download jemalloc to ${download_location}"],
       }
 
       yum::managed_yumrepo { 'hop5':
