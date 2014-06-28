@@ -6,7 +6,7 @@ module Puppet::Parser::Functions
 
   newfunction(:value_true, :type => :rvalue, :doc => <<-'ENDHEREDOC') do |args|
 
-    Returns true if the key within hash is truthy
+    Returns true if value is truthy
     ENDHEREDOC
 
     unless args.length == 1
@@ -19,11 +19,15 @@ module Puppet::Parser::Functions
       return false
     end
 
-    if value.empty?
+    if value == false
       return false
     end
 
     if value == 'false'
+      return false
+    end
+
+    if value.empty?
       return false
     end
 
