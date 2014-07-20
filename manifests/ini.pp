@@ -232,7 +232,7 @@ define puphpet::ini (
           $target_file = "${target_dir}/${ini_filename}"
 
           $webserver_ini_location = $real_webserver ? {
-              'apache2' => '/etc/php5/apache2/conf.d',
+              'apache2' => "${apache::params::confd_dir}",
               'cgi'     => '/etc/php5/cgi/conf.d',
               'fpm'     => '/etc/php5/fpm/conf.d',
               undef     => undef,
