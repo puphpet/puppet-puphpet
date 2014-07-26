@@ -3,13 +3,13 @@
 
 class puphpet::supervisord {
 
-  if ! defined(Class['supervisord']) {
+  if ! defined(Class['::supervisord']) {
     class{ 'puphpet::python::pip': }
 
-    class { 'supervisord':
+    class { '::supervisord':
       install_pip => false,
       require     => [
-        Class['my_fw::post'],
+        Class['::my_fw::post'],
         Class['puphpet::python::pip'],
       ],
     }
