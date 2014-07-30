@@ -89,4 +89,9 @@ class puphpet::params {
     'Redhat' => '/etc/ssl/certs/ssl-cert-snakeoil'
   }
 
+  $php_fpm_conf = $::osfamily ? {
+    'Debian' => '/etc/php5/fpm/pool.d/www.conf',
+    'Redhat' => '/etc/php-fpm.d/www.conf',
+  }
+
 }
