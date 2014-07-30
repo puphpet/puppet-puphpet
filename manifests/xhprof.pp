@@ -7,9 +7,9 @@ class puphpet::xhprof (
   warning('puphpet::xhprof is deprecated; please use puphpet::php::xhprof')
 
   ::puphpet::php::xhprof { $name:
-    php_version       = $php_version,
-    webroot_location  = $webroot_location,
-    webserver_service = webserver_service,
+    php_version       => $php_version,
+    webroot_location  => $webroot_location,
+    webserver_service => webserver_service,
   }
 
 }
