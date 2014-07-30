@@ -225,7 +225,7 @@ define puphpet::ini (
         default: { fail('This OS has not yet been defined for PHP 5.4!') }
       }
     }
-    '5.5', '55': {
+    '5.5', '55', '5.6', '56': {
       case $::osfamily {
         'debian': {
           $target_dir  = '/etc/php5/mods-available'
