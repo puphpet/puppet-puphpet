@@ -1,6 +1,4 @@
-# This depends on
-#   puppetlabs/apt: https://github.com/puppetlabs/puppetlabs-apt
-#   example42/puppet-yum: https://github.com/example42/puppet-yum
+# Installs node.js and npm
 
 class puphpet::nodejs {
 
