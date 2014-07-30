@@ -38,7 +38,7 @@ class puphpet::xdebug (
       creates => "${mod_dir}/xdebug.so",
     }
 
-    puphpet::ini { 'xdebug/zend_extension':
+    puphpet::php::ini { 'xdebug/zend_extension':
       entry       => "XDEBUG/zend_extension",
       value       => "${mod_dir}/xdebug.so",
       php_version => '5.6',

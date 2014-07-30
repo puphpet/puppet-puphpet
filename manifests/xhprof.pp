@@ -33,7 +33,7 @@ class puphpet::xhprof (
       path    => [ '/bin/', '/usr/bin/' ]
     }
 
-    puphpet::ini { 'add xhprof ini extension':
+    puphpet::php::ini { 'add xhprof ini extension':
       php_version  => $php_version,
       webserver    => $webserver_service,
       ini_filename => '20-xhprof-custom.ini',
@@ -43,7 +43,7 @@ class puphpet::xhprof (
       require      => Exec['configure xhprof']
     }
 
-    puphpet::ini { 'add xhprof ini xhprof.output_dir':
+    puphpet::php::ini { 'add xhprof ini xhprof.output_dir':
       php_version  => $php_version,
       webserver    => $webserver_service,
       ini_filename => '20-xhprof-custom.ini',
