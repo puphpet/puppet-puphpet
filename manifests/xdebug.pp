@@ -7,7 +7,7 @@ class puphpet::xdebug (
 
   warning('puphpet::xdebug is deprecated; please use puphpet::php::xdebug')
 
-  ::puphpet::php::xdebug { $name:
+  class { '::puphpet::php::xdebug':
     install_cli => $install_cli,
     webserver   => $webserver,
     compile     => $compile,

@@ -6,7 +6,7 @@ class puphpet::xhprof (
 
   warning('puphpet::xhprof is deprecated; please use puphpet::php::xhprof')
 
-  ::puphpet::php::xhprof { $name:
+  class { '::puphpet::php::xhprof':
     php_version       => $php_version,
     webroot_location  => $webroot_location,
     webserver_service => webserver_service,
