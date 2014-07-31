@@ -2,6 +2,6 @@
 
 <% if @vhost.has_key?('engine') %>
 <% if @vhost['engine'] == 'php' %>
-    ProxyPassMatch ^/(.*\.php)$ fcgi://127.0.0.1:9000<%= @vhost['docroot'] %>/$1
+    ProxyPassMatch ^/(.*\.php)$ fcgi://<%= @fcgi_string %><%= @vhost['docroot'] %>/$1
 <% end %>
 <% end %>
