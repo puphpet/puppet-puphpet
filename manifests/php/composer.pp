@@ -28,7 +28,7 @@ class puphpet::php::composer (
     }
   }
 
-  class { 'composer':
+  class { '::composer':
     target_dir      => '/usr/local/bin',
     composer_file   => 'composer',
     download_method => 'curl',
