@@ -106,6 +106,10 @@ class puphpet::hhvm(
     }
   }
 
-  ensure_packages( [ $package_name_base ] )
+  if ! defined(Package[$package_name_base]) {
+    package { $package_name_base:
+      ensure => present
+    }
+  }
 
 }
