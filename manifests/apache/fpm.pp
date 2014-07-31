@@ -13,9 +13,6 @@ class puphpet::apache::fpm {
   if ! defined(Class['apache::mod::mime']) {
     class { 'apache::mod::mime': }
   }
-  if ! defined(Class['apache::mod::fcgid']) {
-    class { 'apache::mod::fcgid': }
-  }
   if ! defined(Class['apache::mod::alias']) {
     class { 'apache::mod::alias': }
   }
