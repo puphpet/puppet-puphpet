@@ -5,7 +5,10 @@ class puphpet::apache::fpm {
 
   include ::puphpet::params
   include ::apache::params
-  include ::puphpet::debian::non_free
+
+  if $::operatingsystem == 'debian' {
+    include ::puphpet::debian::non_free
+  }
 
   if ! defined(Class['apache::mod::mime']) {
     class { 'apache::mod::mime': }
