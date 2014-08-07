@@ -56,8 +56,8 @@ define puphpet::mysql::db (
 
   if $sql_file {
     exec{ "${dbname}-import":
-      command     => "/usr/bin/mysql ${dbname} < ${sql}",
-      onlyif      => "test -f ${sql}",
+      command     => "/usr/bin/mysql ${dbname} < ${sql_file}",
+      onlyif      => "test -f ${sql_file}",
       logoutput   => true,
       environment => "HOME=${::root_home}",
       refreshonly => true,
