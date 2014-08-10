@@ -54,6 +54,7 @@ define puphpet::php::pecl (
         default   => 'php5-mongo',
       },
       'redis'       => 'php5-redis',
+      'sqlite'      => 'php5-sqlite',
       'zendopcache' => 'php5-zendopcache',
     },
     'Redhat' => {
@@ -64,6 +65,7 @@ define puphpet::php::pecl (
       'memcached'   => 'php-pecl-memcached',
       'mongo'       => 'php-pecl-mongo',
       'redis'       => 'php-pecl-redis',
+      'sqlite'      => 'php-pecl-sqlite',
       'zendopcache' => 'php-pecl-zendopcache',
     }
   }
