@@ -1,2 +1,2 @@
 #!/bin/bash
-XDEBUG_CONFIG="idekey=xdebug" php -dxdebug.remote_host=`echo $SSH_CLIENT | cut -d "=" -f 2 | awk '{print $1}'` "$@"
+PHP_IDE_CONFIG="serverName=`echo $HOSTNAME`.cli" XDEBUG_CONFIG="idekey=xdebug" /usr/bin/php -didekey=xdebug -dxdebug.remote_autostart=1 -dxdebug.remote_enable=1 -dxdebug.remote_mode=req -dxdebug.remote_host=`echo $SSH_CLIENT | cut -d "=" -f 2 | awk '{print $1}'` "$@"
