@@ -20,11 +20,22 @@ class puphpet::php::repos (
           include_src       => true
         }
       }
-      # Wheezy : 5.4 (default) && 5.5
+      # Wheezy : 5.4 (default) && 5.5 && 5.6
       elsif $::lsbdistcodename == 'wheezy' and $php_version == '55' {
        ::apt::source { 'packages.dotdeb.org-php55-repo.puphpet':
           location          => 'http://repo.puphpet.com/dotdeb/',
           release           => 'wheezy-php55',
+          repos             => 'all',
+          required_packages => 'debian-keyring debian-archive-keyring',
+          key               => '89DF5277',
+          key_server        => 'keys.gnupg.net',
+          include_src       => true
+        }
+      }
+      elsif $::lsbdistcodename == 'wheezy' and $php_version == '56' {
+       ::apt::source { 'packages.dotdeb.org-php56-repo.puphpet':
+          location          => 'http://repo.puphpet.com/dotdeb/',
+          release           => 'wheezy-php56',
           repos             => 'all',
           required_packages => 'debian-keyring debian-archive-keyring',
           key               => '89DF5277',
