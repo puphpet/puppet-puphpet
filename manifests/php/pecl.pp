@@ -33,6 +33,7 @@ define puphpet::php::pecl (
         'debian' => false,
         'ubuntu' => 'ZendOpcache',
       },
+      'xhprof'      => 'xhprof',
     },
     'Redhat' => {
       #
