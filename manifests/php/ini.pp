@@ -192,6 +192,14 @@ define puphpet::php::ini (
           $target_dir  = '/etc/php5/mods-available'
           $target_file = "${target_dir}/${ini_filename}"
 
+          $webserver_ini_location = $real_webserver ? {
+              'apache2' => '/etc/php5/apache2/conf.d',
+              'cgi'     => '/etc/php5/cgi/conf.d',
+              'fpm'     => '/etc/php5/fpm/conf.d',
+              undef     => undef,
+          }
+          $cli_ini_location = '/etc/php5/cli/conf.d'
+
           if ! defined(File[$target_file]) {
             file { $target_file:
               replace => no,
@@ -200,10 +208,16 @@ define puphpet::php::ini (
             }
           }
 
-          $symlink = "/etc/php5/conf.d/${ini_filename}"
+          if $webserver_ini_location != undef and ! defined(File["${webserver_ini_location}/${ini_filename}"]) {
+            file { "${webserver_ini_location}/${ini_filename}":
+              ensure  => link,
+              target  => $target_file,
+              require => File[$target_file],
+            }
+          }
 
-          if ! defined(File[$symlink]) {
-            file { $symlink:
+          if ! defined(File["${cli_ini_location}/${ini_filename}"]) {
+            file { "${cli_ini_location}/${ini_filename}":
               ensure  => link,
               target  => $target_file,
               require => File[$target_file],
