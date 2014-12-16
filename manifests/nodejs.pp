@@ -2,6 +2,11 @@
 
 class puphpet::nodejs {
 
+  $node_arch = $::hardwaremodel ? {
+    /.*64.*/ => 'x64',
+    default  => 'x86',
+  }
+
   file { '/.puphpet-stuff/node_install.sh':
     ensure  => present,
     owner   => root,
