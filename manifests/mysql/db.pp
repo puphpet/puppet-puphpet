@@ -14,6 +14,14 @@ define puphpet::mysql::db (
 
   include ::mysql::params
 
+  # Detect "qualified" usernames like `someuser@%` and don't automatically append the
+  # specified host if one is present already.
+  if $user =~ /@/ {
+    $userPlusHost = $user
+  } else {
+    $userPlusHost = "${user}@${host}"
+  }
+
   if ! defined(Mysql_database[$dbname]) {
     $db_resource = {
       ensure   => present,
@@ -35,20 +43,20 @@ define puphpet::mysql::db (
       provider      => 'mysql',
       require       => Class['::mysql::server'],
     }
-    ensure_resource('mysql_user', "${user}@${host}", $user_resource)
+    ensure_resource('mysql_user', "${userPlusHost}", $user_resource)
   }
 
   $table = "${dbname}.*"
 
-  if ! defined(Mysql_grant["${user}@${host}/${table}"]) {
-    mysql_grant { "${user}@${host}/${table}":
+  if ! defined(Mysql_grant["${userPlusHost}/${table}"]) {
+    mysql_grant { "${userPlusHost}/${table}":
       privileges => $grant,
       provider   => 'mysql',
-      user       => "${user}@${host}",
+      user       => "${userPlusHost}",
       table      => $table,
       require    => [
         Mysql_database[$dbname],
-        Mysql_user["${user}@${host}"],
+        Mysql_user["${userPlusHost}"],
         Class['::mysql::server']
       ],
     }
@@ -61,7 +69,7 @@ define puphpet::mysql::db (
       logoutput   => true,
       environment => "HOME=${::root_home}",
       refreshonly => true,
-      require     => Mysql_grant["${user}@${host}/${table}"],
+      require     => Mysql_grant["${userPlusHost}/${table}"],
       subscribe   => Mysql_database[$dbname],
     }
   }
