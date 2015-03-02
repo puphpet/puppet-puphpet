@@ -6,13 +6,13 @@ define puphpet::firewall::port (
   $action   = 'accept',
   $priority = 100,
 ) {
-  $rule_name = "${rule['priority']} ${rule['proto']}/${rule['port']}"
+  $rule_name = "${priority} ${protocol}/${port}"
 
-  if ! defined(Firewall["100 tcp/${guest}"]) {
-    firewall { "100 tcp/${guest}":
-      port   => $guest,
-      proto  => tcp,
-      action => 'accept',
+  if ! defined(Firewall[$rule_name]) {
+    firewall { $rule_name:
+      port   => $port,
+      proto  => $protocol,
+      action => $action,
     }
   }
 }
