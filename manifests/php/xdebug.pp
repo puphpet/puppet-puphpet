@@ -34,11 +34,7 @@ class puphpet::php::xdebug (
       creates => '/.puphpet-stuff/xdebug/configure',
       cwd     => '/.puphpet-stuff/xdebug',
     }
-    -> exec { "mkdir -p ${mod_dir}":
-      creates => $mod_dir,
-    }
-    -> exec { 'copy xdebug to target dir':
-      command => "cp /.puphpet-stuff/xdebug/modules/xdebug.so ${mod_dir}/xdebug.so",
+    -> exec { "cp /.puphpet-stuff/xdebug/modules/xdebug.so ${mod_dir}":
       creates => "${mod_dir}/xdebug.so",
     }
 
@@ -47,7 +43,7 @@ class puphpet::php::xdebug (
       value       => "${mod_dir}/xdebug.so",
       php_version => '5.6',
       webserver   => $webserver,
-      require     => Exec['copy xdebug to target dir'],
+      require     => Exec["cp /.puphpet-stuff/xdebug/modules/xdebug.so ${mod_dir}"],
     }
   }
 
