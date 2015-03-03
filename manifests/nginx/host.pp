@@ -1,5 +1,5 @@
 # This depends on jfryman/nginx: https://github.com/jfryman/puppet-nginx.git
-# Creates a new upstream proxy entry
+# Creates a new vhost
 define puphpet::nginx::host (
   $fcgi_string,
   $server_name,
@@ -114,6 +114,7 @@ define puphpet::nginx::host (
         '$uri', '$uri/', "/${try_files}\$is_args\$args"
       ],
       ssl                         => $ssl_set,
+      ssl_only                    => $ssl_set,
       www_root                    => $www_root,
       location_cfg_append         => $location_cfg_append,
       location_custom_cfg_prepend => $location_prepend,
