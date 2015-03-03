@@ -1,7 +1,7 @@
 # This depends on maestrodev/rvm: https://github.com/maestrodev/puppet-rvm
 # Requires $::ssh_username facter
 # Sets up .rvmrc files in user home directories
-class puphpet::server::link_dotfiles {
+define puphpet::server::link_dotfiles {
 
   $user_home = $name
 
