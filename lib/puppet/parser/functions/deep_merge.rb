@@ -1,5 +1,4 @@
-dir = File.dirname(File.expand_path(__FILE__))
-require "#{dir}/deep_merge_class.rb"
+require 'deep_merge'
 
 module Puppet::Parser::Functions
   newfunction(:deep_merge, :type => :rvalue, :doc => <<-'ENDHEREDOC') do |args|
