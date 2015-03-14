@@ -32,9 +32,12 @@ class puphpet::php::xdebug (
       'redhat', 'centos': {$mod_dir = '/usr/lib64/php/modules'}
     }
 
-    exec { 'git clone https://github.com/xdebug/xdebug.git /.puphpet-stuff/xdebug':
-      creates => '/.puphpet-stuff/xdebug',
-      require => Class['Php::Devel'],
+    vcsrepo { '/.puphpet-stuff/xdebug':
+      ensure   => present,
+      provider => git,
+      source   => 'https://github.com/xdebug/xdebug.git',
+      revision => 'XDEBUG_2_3_1',
+      require  => Class['Php::Devel']
     }
     -> exec { 'phpize && ./configure --enable-xdebug && make':
       creates => '/.puphpet-stuff/xdebug/configure',
