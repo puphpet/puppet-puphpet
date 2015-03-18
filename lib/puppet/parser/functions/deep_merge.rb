@@ -1,4 +1,4 @@
-require 'deep_merge'
+require 'active_support'
 
 module Puppet::Parser::Functions
   newfunction(:deep_merge, :type => :rvalue, :doc => <<-'ENDHEREDOC') do |args|
