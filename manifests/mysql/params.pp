@@ -1,27 +1,23 @@
 class puphpet::mysql::params {
 
-  $mysql_server_55 = $::operatingsystem ? {
+  $mysql_server_55 = $::osfamily ? {
     'debian' => 'mysql-server-5.5',
-    'ubuntu' => 'mysql-server-5.5',
-    'Redhat' => 'mysql55-mysql-server',
+    'redhat' => 'mysql55-mysql-server',
   }
 
-  $mysql_client_55 = $::operatingsystem ? {
+  $mysql_client_55 = $::osfamily ? {
     'debian' => 'mysql-client-5.5',
-    'ubuntu' => 'mysql-client-5.5',
-    'Redhat' => 'mysql55-mysql',
+    'redhat' => 'mysql55-mysql',
   }
 
-  $mysql_server_56 = $::operatingsystem ? {
+  $mysql_server_56 = $::osfamily ? {
     'debian' => 'mysql-server-5.6',
-    'ubuntu' => 'mysql-server-5.6',
-    'Redhat' => 'mysql-community-server',
+    'redhat' => 'mysql-community-server',
   }
 
-  $mysql_client_56 = $::operatingsystem ? {
+  $mysql_client_56 = $::osfamily ? {
     'debian' => 'mysql-client-5.6',
-    'ubuntu' => 'mysql-client-5.6',
-    'Redhat' => 'mysql-community-client',
+    'redhat' => 'mysql-community-client',
   }
 
 }
