@@ -1,0 +1,16 @@
+<% if @directories_hash and ! @directories_hash.empty? -%>
+<% @directories_hash.each do |key, values| -%>
+  <%- if (values.has_key?('files_match')) && values['files_match'].count > 0 -%>
+    <% filesMatchArr = [] -%>
+    <% values['files_match'].each do |innerKey, filesmatch| -%>
+      <% filesMatchArr.push(filesmatch) -%>
+    <% end -%>
+    <% scope['_directories'] = filesMatchArr -%>
+    <% result = scope.function_template(['apache/vhost/_directories.erb']) -%>
+    <% result = result.gsub("## Directories, there should at least be a declaration for", "") -%>
+    <% result = result.gsub("\n\n\n", "\n\n") -%>
+    <% @directories_hash[key]['custom_fragment'] << result.gsub("\n  ", "\n    ") -%>
+  <% end -%>
+<% end -%>
+<% end %>
+<%= @directories_hash.inspect %>
