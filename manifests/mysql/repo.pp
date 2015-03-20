@@ -40,15 +40,7 @@ class puphpet::mysql::repo(
         }
       }
       'redhat', 'centos': {
-        $rhel_mysql = 'http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm'
-
-        $mysql_rhel_yum   = "yum -y --nogpgcheck install '${rhel_mysql}'"
-        $mysql_rhel_touch = 'touch /.puphpet-stuff/mysql-community-release'
-
-        exec { 'mysql-community-repo':
-          command => "${mysql_rhel_yum} && ${mysql_rhel_touch}",
-          creates => '/.puphpet-stuff/mysql-community-release'
-        }
+        # Grab from IUS repo, which is added via initial-setup.sh
       }
     }
   }
@@ -87,15 +79,7 @@ class puphpet::mysql::repo(
         }
       }
       'redhat', 'centos': {
-        $rhel_mysql = 'http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm'
-
-        $mysql_rhel_yum   = "yum -y --nogpgcheck install '${rhel_mysql}'"
-        $mysql_rhel_touch = 'touch /.puphpet-stuff/mysql-community-release'
-
-        exec { 'mysql-community-repo':
-          command => "${mysql_rhel_yum} && ${mysql_rhel_touch}",
-          creates => '/.puphpet-stuff/mysql-community-release'
-        }
+        # Grab from IUS repo, which is added via initial-setup.sh
       }
     }
   }
