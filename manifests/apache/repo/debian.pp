@@ -1,6 +1,7 @@
 # This depends on puppetlabs/apt: https://github.com/puppetlabs/puppetlabs-apt
 # Adds Apache 2.4 repo for Debian Wheezy
-define puphpet::apache::repo::debian {
+class puphpet::apache::repo::debian {
+
   apt::source { 'd7031.de':
     location          => 'http://www.d7031.de/debian/',
     release           => 'wheezy-experimental',
@@ -10,4 +11,5 @@ define puphpet::apache::repo::debian {
     key_server        => 'hkp://keyserver.ubuntu.com:80',
     include_src       => true
   }
+
 }
