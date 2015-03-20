@@ -1,30 +1,29 @@
-# Installs Apache 2.4 for CentOS 6
-define puphpet::apache::repo::centos {
-  $httpd_url               = 'http://repo.puphpet.com/centos/httpd24/httpd-2.4.10-RPM-full.x86_64.tgz'
-  $httpd_download_location = '/.puphpet-stuff/httpd-2.4.10-RPM-full.x86_64.tgz'
-  $httpd_tar               = "tar xzvf '${httpd_download_location}'"
-  $extract_location        = '/.puphpet-stuff/httpd-2.4.10-RPM-full.x86_64'
+class puphpet::apache::repo::centos (
+  $url = 'http://repo.puphpet.com/centos/httpd24/httpd-2.4.10-RPM-full.x86_64.tgz'
+){
 
-  $download_httd_cmd = "wget --quiet --tries=5 \
-    --connect-timeout=10 -O '${httpd_download_location}' \
-    '${httpd_url}'"
+  $save_to    = '/.puphpet-stuff/httpd-2.4.tgz'
+  $extract_to = '/.puphpet-stuff/httpd-2.4'
 
-  exec { 'download httpd-2.4.10':
-    creates => $httpd_download_location,
-    command => $download_httd_cmd,
+  $cmd = "wget --quiet --tries=5 --connect-timeout=10 -O '${save_to}' ${url}"
+
+  exec { "download ${url}":
+    creates => $save_to,
+    command => $cmd,
     timeout => 3600,
     path    => '/usr/bin',
   } ->
-  exec { 'untar httpd-2.4.10':
+  exec { "untar ${save_to}":
     creates => $extract_location,
-    command => $httpd_tar,
+    command => "mkdir -p ${extract_to} && \
+                tar xzf '${save_to}' -C ${extract_to} --strip-components=1",
     cwd     => '/.puphpet-stuff',
     path    => '/bin',
   } ->
   exec { 'install httpd-2.4.10':
     creates => '/etc/httpd',
     command => 'yum -y localinstall * --skip-broken',
-    cwd     => $extract_location,
+    cwd     => $extract_to,
     path    => '/usr/bin',
   }
 
@@ -34,4 +33,5 @@ define puphpet::apache::repo::centos {
     require => Class['apache'],
     notify  => Service['httpd'],
   }
+
 }
