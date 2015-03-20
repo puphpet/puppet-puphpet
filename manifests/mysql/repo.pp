@@ -40,7 +40,9 @@ class puphpet::mysql::repo(
         }
       }
       'redhat', 'centos': {
-        # Grab from IUS repo, which is added via initial-setup.sh
+        class { 'yum::repo::mysql_community':
+          enabled_version => '5.5',
+        }
       }
     }
   }
@@ -79,7 +81,9 @@ class puphpet::mysql::repo(
         }
       }
       'redhat', 'centos': {
-        # Grab from IUS repo, which is added via initial-setup.sh
+        class { 'yum::repo::mysql_community':
+          enabled_version => '5.6',
+        }
       }
     }
   }
