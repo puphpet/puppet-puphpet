@@ -1,10 +1,10 @@
 # This depends on puppetlabs/apache: https://github.com/puppetlabs/puppetlabs-apache
 
 class puphpet::apache::modpagespeed (
-  $url     = $puphpet::params::apache_mod_pagespeed_url,
-  $package = $puphpet::params::apache_mod_pagespeed_package,
+  $url     = $puphpet::apache::params::mod_pagespeed_url,
+  $package = $puphpet::apache::params::mod_pagespeed_package,
   $ensure  = 'present'
-) {
+) inherits puphpet::apache::params {
 
   $download_location = $::osfamily ? {
     'Debian' => '/.puphpet-stuff/mod-pagespeed.deb',
