@@ -71,7 +71,7 @@ class puphpet::hhvm(
     }
   }
   if $real_webserver == 'apache2' {
-    include ::puphpet::apache::fpm
+    include puphpet::apache::proxy_fcgi
   }
 
   $os = downcase($::operatingsystem)

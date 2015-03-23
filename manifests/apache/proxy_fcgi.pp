@@ -1,7 +1,7 @@
-# Sets up Apache to use fastcgi
+# Sets up Apache to use fcgi
 # Useful for things like php-fpm or hhvm
 
-class puphpet::apache::fpm {
+class puphpet::apache::proxy_fcgi {
 
   include ::puphpet::params
   include ::apache::params
