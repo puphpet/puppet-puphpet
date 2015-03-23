@@ -31,6 +31,7 @@ define puphpet::php::pecl (
       'augeas'        => 'augeas',
       'mcrypt_filter' => 'mcrypt_filter',
       'pdo_user'      => 'pdo_user',
+      'ssh2'          => 'ssh2',
       'zendopcache'   => $::operatingsystem ? {
         'debian' => false,
         'ubuntu' => 'ZendOpcache',
