@@ -2,6 +2,7 @@ class puphpet::python::pip {
 
   Exec { path => [ '/usr/bin/', '/usr/local/bin', '/bin', '/usr/local/sbin', '/usr/sbin', '/sbin' ] }
 
+  $url = 'https://bootstrap.pypa.io/ez_setup.py'
   $download_location = '/.puphpet-stuff/ez_setup.py'
 
   exec { "Download and install ez_setup":
