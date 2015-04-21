@@ -1,6 +1,8 @@
 # Defines where we can expect PHP-FPM ini files and paths to be located.
 #
 # debian 7.x
+#    7.0
+#        N/A
 #    5.6
 #        /etc/php5/fpm/php-fpm.conf
 #    5.5
@@ -8,6 +10,8 @@
 #    5.4
 #        /etc/php5/fpm/php-fpm.conf
 # ubuntu 14.04
+#    7.0
+#        /etc/php7/fpm/php-fpm.conf
 #    5.6
 #        /etc/php5/fpm/php-fpm.conf
 #    5.5
@@ -15,6 +19,8 @@
 #    5.4
 #        N/A
 # ubuntu 12.04
+#    7.0
+#        N/A
 #    5.6
 #        N/A
 #    5.5
@@ -39,9 +45,18 @@ define puphpet::php::fpm::ini (
 
   $pool_name = 'global'
 
+  case $fpm_version {
+    '7.0', '70', '7': {
+      $dir_name = 'php7'
+    }
+    default: {
+      $dir_name = 'php5'
+    }
+  }
+
   case $::osfamily {
     'debian': {
-      $pool_dir = '/etc/php5/fpm'
+      $pool_dir = "/etc/${dir_name}/fpm"
     }
     'redhat': {
       $pool_dir = '/etc'
@@ -59,6 +74,7 @@ define puphpet::php::fpm::ini (
     lens    => 'PHP.lns',
     incl    => $conf_filename,
     changes => $changes,
+    require => File[$conf_filename],
     notify  => Service[$php_fpm_service],
   }
 

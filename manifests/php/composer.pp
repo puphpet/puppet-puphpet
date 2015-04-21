@@ -37,6 +37,7 @@ class puphpet::php::composer (
     php_package     => $php_package,
     curl_package    => 'curl',
     suhosin_enabled => false,
+    require         => Package[$php_package],
   }
 
 }

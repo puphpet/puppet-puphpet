@@ -38,9 +38,18 @@ define puphpet::php::fpm::pool_ini (
   $php_fpm_service
   ) {
 
+  case $fpm_version {
+    '7.0', '70', '7': {
+      $dir_name = 'php7'
+    }
+    default: {
+      $dir_name = 'php5'
+    }
+  }
+
   case $::osfamily {
     'debian': {
-      $pool_dir = '/etc/php5/fpm/pool.d'
+      $pool_dir = "/etc/${dir_name}/fpm/pool.d"
     }
     'redhat': {
       $pool_dir = '/etc/php-fpm.d'
@@ -58,7 +67,8 @@ define puphpet::php::fpm::pool_ini (
     file { $conf_filename:
       replace => no,
       ensure  => present,
-      require => Package['php']
+      require => Service[$php_fpm_service],
+      notify  => Service[$php_fpm_service],
     }
   }
 
