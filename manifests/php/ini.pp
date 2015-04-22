@@ -62,7 +62,6 @@ define puphpet::php::ini (
             file { $target_file:
               replace => no,
               ensure  => present,
-              require => Package['php']
             }
           }
 
@@ -84,7 +83,6 @@ define puphpet::php::ini (
             file { $target_file:
               replace => no,
               ensure  => present,
-              require => Package['php']
             }
           }
         }
@@ -109,7 +107,6 @@ define puphpet::php::ini (
             file { $target_file:
               replace => no,
               ensure  => present,
-              require => Package['php']
             }
           }
 
@@ -137,7 +134,6 @@ define puphpet::php::ini (
             file { $target_file:
               replace => no,
               ensure  => present,
-              require => Package['php']
             }
           }
         }
@@ -189,7 +185,7 @@ define puphpet::php::ini (
     lens    => 'PHP.lns',
     incl    => $target_file,
     changes => $changes,
-    require => File[$target_file],
+    require => Package[$puphpet::php::settings::cli_package],
     notify  => $notify_service,
   }
 

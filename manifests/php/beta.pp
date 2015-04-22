@@ -134,14 +134,12 @@ class puphpet::php::beta {
     owner  => 'root',
     group  => 'root',
   }
-
   # ensure as absent because these are not true packages
-  package { ['php7-cli', 'php7-fpm']:
+  -> package { ['php7-cli', 'php7-fpm']:
     ensure  => absent,
     require => Package[$packages],
   }
-
-  service { 'php7-fpm':
+  -> service { 'php7-fpm':
     ensure     => running,
     hasrestart => false,
     hasstatus  => true,

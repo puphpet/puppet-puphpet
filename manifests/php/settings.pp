@@ -54,4 +54,7 @@ class puphpet::php::settings (
     }
   }
 
+  $cli_package = "${php_prefix}cli"
+  $fpm_package = "${php_prefix}fpm"
+
 }
