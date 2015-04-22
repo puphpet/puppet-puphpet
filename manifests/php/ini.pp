@@ -22,7 +22,7 @@
 #         FPM   /etc/php5/fpm/conf.d/*  -> /etc/php5/mods-available/*
 # 7.0
 #     CENTOS 6
-#         @todo
+#          N/A
 #     UBUNTU 14.04 TRUSTY
 #         CLI   /etc/php7/cli/conf.d  -> /etc/php7/mods-available/*
 #         FPM   /etc/php7/fpm/conf.d  -> /etc/php7/mods-available/*
@@ -167,9 +167,6 @@ define puphpet::php::ini (
               require => File[$target_file],
             }
           }
-        }
-        'redhat': {
-          # @todo
         }
         default: { fail('This OS has not yet been defined for PHP 7.0!') }
       }
