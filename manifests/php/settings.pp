@@ -1,6 +1,12 @@
 class puphpet::php::settings (
-  $version
+  $version_string
 ){
+
+  if $version_string == '7.0' or $version_string == '70' {
+    $version = '7.0'
+  } else {
+    $version = $version_string
+  }
 
   if $version == '7.0' or $version == '70' {
     $enable_modules = false
@@ -8,24 +14,24 @@ class puphpet::php::settings (
     $enable_pecl    = false
     $enable_xdebug  = false
 
-    $php_prefix = $::osfamily ? {
+    $prefix = $::osfamily ? {
       'debian' => 'php7-',
       'redhat' => 'php-',
     }
 
-    $php_fpm_ini = $::osfamily ? {
+    $base_ini = $::osfamily ? {
+      'debian' => '/etc/php7/php.ini',
+      'redhat' => '/etc/php.ini',
+    }
+
+    $fpm_ini = $::osfamily ? {
       'debian' => '/etc/php7/fpm/php.ini',
       'redhat' => '/etc/php.ini',
     }
 
-    $config_file = $::operatingsystem ? {
-      /(?i:Ubuntu|Debian|Mint)/ => '/etc/php7/php.ini',
-      default                   => '/etc/php.ini',
-    }
-
-    $php_module_prefix = $::operatingsystem ? {
-      /(?i:Ubuntu|Debian|Mint|SLES|OpenSuSE)/ => 'php7-',
-      default                                 => 'php-',
+    $pid_file = $::osfamily ? {
+      'debian' => '/run/php-fpm.pid',
+      'redhat' => '/var/run/php-fpm.pid',
     }
   } else {
     $enable_modules = true
@@ -33,28 +39,29 @@ class puphpet::php::settings (
     $enable_pecl    = true
     $enable_xdebug  = true
 
-    $php_prefix = $::osfamily ? {
+    $prefix = $::osfamily ? {
       'debian' => 'php5-',
       'redhat' => 'php-',
     }
 
-    $php_fpm_ini = $::osfamily ? {
+    $base_ini = $::osfamily ? {
+      'debian' => '/etc/php5/php.ini',
+      'redhat' => '/etc/php.ini',
+    }
+
+    $fpm_ini = $::osfamily ? {
       'debian' => '/etc/php5/fpm/php.ini',
       'redhat' => '/etc/php.ini',
     }
 
-    $config_file = $::operatingsystem ? {
-      /(?i:Ubuntu|Debian|Mint)/ => '/etc/php5/php.ini',
-      default                   => '/etc/php.ini',
-    }
-
-    $php_module_prefix = $::operatingsystem ? {
-      /(?i:Ubuntu|Debian|Mint|SLES|OpenSuSE)/ => 'php5-',
-      default                                 => 'php-',
+    $pid_file = $::osfamily ? {
+      'debian' => '/run/php-fpm.pid',
+      'redhat' => '/var/run/php-fpm.pid',
     }
   }
 
-  $cli_package = "${php_prefix}cli"
-  $fpm_package = "${php_prefix}fpm"
+  $cli_package = "${prefix}cli"
+  $fpm_package = "${prefix}fpm"
+  $service     = "${prefix}fpm"
 
 }

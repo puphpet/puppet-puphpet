@@ -126,7 +126,7 @@ class puphpet::php::beta {
     mode   => '0764',
     owner  => 'root',
     group  => 'root',
-  } 
+  }
   -> file { '/etc/init.d/php7-fpm':
     ensure => present,
     source => 'puppet:///modules/puphpet/php7/php7-fpm',

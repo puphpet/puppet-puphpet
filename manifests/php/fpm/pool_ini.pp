@@ -67,7 +67,6 @@ define puphpet::php::fpm::pool_ini (
     file { $conf_filename:
       replace => no,
       ensure  => present,
-      require => Package[$puphpet::php::settings::fpm_package],
       notify  => Service[$php_fpm_service],
     }
   }
@@ -84,10 +83,7 @@ define puphpet::php::fpm::pool_ini (
     lens    => 'PHP.lns',
     incl    => $conf_filename,
     changes => $changes,
-    require => [
-      File_line["[${pool_name}]"],
-      Package[$puphpet::php::settings::fpm_package],
-    ],
+    require => File_line["[${pool_name}]"],
     notify  => Service[$php_fpm_service],
   }
 

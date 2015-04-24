@@ -74,7 +74,6 @@ define puphpet::php::fpm::ini (
     lens    => 'PHP.lns',
     incl    => $conf_filename,
     changes => $changes,
-    require => Package[$puphpet::php::settings::fpm_package],
     notify  => Service[$php_fpm_service],
   }
 
