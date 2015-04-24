@@ -64,4 +64,22 @@ class puphpet::php::settings (
   $fpm_package = "${prefix}fpm"
   $service     = "${prefix}fpm"
 
+  Package[$fpm_package]
+  -> Puphpet::Php::Module <| |>
+
+  Package[$fpm_package]
+  -> Puphpet::Php::Pear <| |>
+
+  Package[$fpm_package]
+  -> Puphpet::Php::Pecl <| |>
+
+  Package[$fpm_package]
+  -> Puphpet::Php::Ini <| |>
+
+  Package[$fpm_package]
+  -> Puphpet::Php::Fpm::Ini <| |>
+
+  Package[$fpm_package]
+  -> Puphpet::Php::Fpm::Pool_ini <| |>
+
 }

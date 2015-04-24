@@ -185,7 +185,6 @@ define puphpet::php::ini (
     lens    => 'PHP.lns',
     incl    => $target_file,
     changes => $changes,
-    require => Package[$puphpet::php::settings::cli_package],
     notify  => $notify_service,
   }
 
