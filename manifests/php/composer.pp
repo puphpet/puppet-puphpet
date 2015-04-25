@@ -1,4 +1,5 @@
 class puphpet::php::composer (
+  $php_package,
   $composer_home = false
 ){
 
@@ -36,7 +37,6 @@ class puphpet::php::composer (
     php_package     => $php_package,
     curl_package    => 'curl',
     suhosin_enabled => false,
-    require         => Package[$puphpet::php::settings::cli_package],
   }
 
 }
