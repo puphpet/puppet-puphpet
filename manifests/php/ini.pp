@@ -7,13 +7,15 @@
 #
 # 5.4
 #     CENTOS 6
-#         @todo
+#         CLI   /etc/php.d
+#         FPM   /etc/php.d
 #     DEBIAN 6 SQUEEZE, DEBIAN 7 WHEEZY, UBUNTU 10.04 LUCID, UBUNTU 12.04 PRECISE
 #         CLI   /etc/php5/cli/conf.d  -> /etc/php5/conf.d/*  -> /etc/php5/mods-available/*
 #         FPM   /etc/php5/fpm/conf.d  -> /etc/php5/conf.d/*  -> /etc/php5/mods-available/*
 # 5.5 / 5.6
 #     CENTOS 6
-#         @todo
+#         CLI   /etc/php.d
+#         FPM   /etc/php.d
 #     DEBIAN 7 WHEEZY, UBUNTU 12.04 PRECISE
 #         CLI   /etc/php5/cli/conf.d/*  -> /etc/php5/mods-available/*
 #         FPM   /etc/php5/fpm/conf.d/*  -> /etc/php5/mods-available/*
@@ -107,6 +109,16 @@ define puphpet::php::ini (
             file { $target_file:
               replace => no,
               ensure  => present,
+            }
+          }
+
+          $symlink = "/etc/php5/conf.d"
+
+          if ! defined(File[$symlink]) {
+            file { $symlink:
+              ensure  => link,
+              target  => $target_dir,
+              require => File[$target_file],
             }
           }
 
