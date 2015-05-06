@@ -56,7 +56,7 @@ class puphpet::php::settings (
 
     $pid_file = $::osfamily ? {
       'debian' => '/run/php-fpm.pid',
-      'redhat' => '/var/run/php-fpm.pid',
+      'redhat' => '/var/run/php-fpm/php-fpm.pid',
     }
   }
 
