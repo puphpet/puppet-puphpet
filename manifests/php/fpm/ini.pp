@@ -66,8 +66,8 @@ define puphpet::php::fpm::ini (
   $conf_filename = "${pool_dir}/php-fpm.conf"
 
   $changes = $ensure ? {
-    present => [ "set '${pool_name}/${entry}' '${value}'" ],
-    absent  => [ "rm '${pool_name}/${entry}'" ],
+    present => [ "set '${pool_name}/${entry}' \"'${value}'\"" ],
+    absent  => [ "rm \"'${pool_name}/${entry}'\"" ],
   }
 
   augeas { "${pool_name}/${entry}: ${value}":

@@ -189,8 +189,8 @@ define puphpet::php::ini (
   }
 
   $changes = $ensure ? {
-    present => [ "set '${entry}' '${value}'" ],
-    absent  => [ "rm '${entry}'" ],
+    present => [ "set '${entry}' \"'${value}'\"" ],
+    absent  => [ "rm \"'${entry}'\"" ],
   }
 
   augeas { "${entry}: ${value}":
