@@ -45,8 +45,8 @@ class puphpet::php::repos (
       }
     }
     'ubuntu': {
-      if ! defined(::Apt::Key['4F4EA0AAE5267A6C']) {
-        ::apt::key { '4F4EA0AAE5267A6C':
+      if ! defined(::Apt::Key['14AA40EC0831756756D7F66C4F4EA0AAE5267A6C']) {
+        ::apt::key { '14AA40EC0831756756D7F66C4F4EA0AAE5267A6C':
           key_server => 'hkp://keyserver.ubuntu.com:80'
         }
       }
@@ -62,7 +62,7 @@ class puphpet::php::repos (
         }
 
         ::apt::ppa { 'ppa:ondrej/php5-oldstable':
-          require => ::Apt::Key['4F4EA0AAE5267A6C'],
+          require => ::Apt::Key['14AA40EC0831756756D7F66C4F4EA0AAE5267A6C'],
           options => $options
         }
       }
@@ -71,7 +71,7 @@ class puphpet::php::repos (
         and $php_version == '55'
       {
         ::apt::ppa { 'ppa:ondrej/php5':
-          require => ::Apt::Key['4F4EA0AAE5267A6C']
+          require => ::Apt::Key['14AA40EC0831756756D7F66C4F4EA0AAE5267A6C']
         }
       }
       elsif $::lsbdistcodename in ['lucid'] and $php_version == '55' {
@@ -80,7 +80,7 @@ class puphpet::php::repos (
       # Ubuntu 14.04 can do PHP 5.6
       elsif $::lsbdistcodename == 'trusty' and $php_version == '56' {
         ::apt::ppa { 'ppa:ondrej/php5-5.6':
-          require => ::Apt::Key['4F4EA0AAE5267A6C']
+          require => ::Apt::Key['14AA40EC0831756756D7F66C4F4EA0AAE5267A6C']
         }
       }
     }
