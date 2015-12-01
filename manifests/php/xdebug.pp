@@ -2,7 +2,8 @@ class puphpet::php::xdebug (
   $install_cli = true,
   $webserver,
   $compile     = false,
-  $ensure      = present
+  $ensure      = present,
+  $php_package = $puphpet::php::settings::fpm_package
 ) inherits puphpet::params {
 
   if $webserver != undef {
@@ -17,7 +18,7 @@ class puphpet::php::xdebug (
     package { 'xdebug':
       name    => $puphpet::params::xdebug_package,
       ensure  => installed,
-      require => Package['php'],
+      require => Package[$php_package],
       notify  => $notify_service,
     }
   } elsif $puphpet::php::settings::enable_xdebug {
@@ -66,7 +67,7 @@ class puphpet::php::xdebug (
       ensure  => present,
       mode    => '+X',
       source  => 'puppet:///modules/puphpet/xdebug_cli_alias.erb',
-      require => Package['php']
+      require => Package[$php_package]
     }
   }
 
