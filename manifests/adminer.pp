@@ -8,7 +8,7 @@ class puphpet::adminer(
     file { $location:
       replace => no,
       ensure  => directory,
-      mode    => 775,
+      mode    => '0775',
       require => Package[$php_package]
     }
   }
