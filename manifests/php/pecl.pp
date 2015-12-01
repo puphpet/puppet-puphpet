@@ -108,7 +108,7 @@ define puphpet::php::pecl (
     $package_name = false
   }
 
-  if $pecl_name and ! defined(::Php::Pecl::Module[$pecl_name])
+  if $pecl_name and ! defined(Php::Pecl::Module[$pecl_name])
     and $puphpet::php::settings::enable_pecl
   {
     ::php::pecl::module { $pecl_name:

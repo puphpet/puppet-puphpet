@@ -24,7 +24,7 @@ define puphpet::php::module (
     $package_name = $name
   }
 
-  if $package_name and ! defined(::Php::Module[$package_name])
+  if $package_name and ! defined(Php::Module[$package_name])
     and $puphpet::php::settings::enable_modules
   {
     ::php::module { $package_name:
