@@ -8,7 +8,6 @@ class puphpet::php::settings (
     $version = $version_string
   }
 
-
   $enable_modules = true
   $enable_pear    = true
   $enable_pecl    = true

@@ -12,11 +12,16 @@ class puphpet::php::xdebug (
     $notify_service = []
   }
 
-  if !$compile and ! defined(Package[$puphpet::params::xdebug_package])
+  $xdebug_package = $::osfamily ? {
+    'Debian' => "${puphpet::php::settings::prefix}xdebug",
+    'Redhat' => 'php-pecl-xdebug'
+  }
+
+  if !$compile and ! defined(Package[$xdebug_package])
     and $puphpet::php::settings::enable_xdebug
   {
     package { 'xdebug':
-      name    => $puphpet::params::xdebug_package,
+      name    => $xdebug_package,
       ensure  => installed,
       require => Package[$php_package],
       notify  => $notify_service,
@@ -41,7 +46,6 @@ class puphpet::php::xdebug (
       ensure   => present,
       provider => git,
       source   => 'https://github.com/xdebug/xdebug.git',
-      revision => 'XDEBUG_2_3_1',
       require  => Class['Php::Devel']
     }
     -> exec { 'phpize && ./configure --enable-xdebug && make':
@@ -55,7 +59,7 @@ class puphpet::php::xdebug (
     puphpet::php::ini { 'xdebug/zend_extension':
       entry       => "XDEBUG/zend_extension",
       value       => "${mod_dir}/xdebug.so",
-      php_version => '5.6',
+      php_version => $puphpet::php::settings::version,
       webserver   => $webserver,
       require     => Exec["cp /.puphpet-stuff/xdebug/modules/xdebug.so ${mod_dir}/xdebug.so"],
     }
