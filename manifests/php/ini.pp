@@ -189,6 +189,17 @@ define puphpet::php::ini (
             }
           }
         }
+        'redhat': {
+          $target_dir  = '/etc/php.d'
+          $target_file = "${target_dir}/${ini_filename}"
+
+          if ! defined(File[$target_file]) {
+            file { $target_file:
+              replace => no,
+              ensure  => present,
+            }
+          }
+        }
         default: { fail('This OS has not yet been defined for PHP 7.0!') }
       }
     }
