@@ -29,6 +29,7 @@ define puphpet::php::module (
   {
     ::php::module { $package_name:
       service_autorestart => $service_autorestart,
+      module_prefix       => $puphpet::php::settings::prefix
     }
   }
 

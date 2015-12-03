@@ -83,6 +83,12 @@ class puphpet::php::repos (
           require => ::Apt::Key['14AA40EC0831756756D7F66C4F4EA0AAE5267A6C']
         }
       }
+      # Ubuntu 14.04 can do PHP 7
+      elsif $::lsbdistcodename == 'trusty' and $php_version == '70' {
+        ::apt::ppa { 'ppa:ondrej/php-7.0':
+          require => ::Apt::Key['14AA40EC0831756756D7F66C4F4EA0AAE5267A6C']
+        }
+      }
     }
     'redhat', 'centos': {
       include ::yum::repo::remi

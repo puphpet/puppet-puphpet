@@ -28,8 +28,10 @@ class puphpet::php::xdebug (
       'debian', 'ubuntu': {
         if is_dir('/usr/lib/php5/20131226-zts') {
           $mod_dir = '/usr/lib/php5/20131226-zts'
-        } else {
+        } elsif is_dir('/usr/lib/php5/20131226') {
           $mod_dir = '/usr/lib/php5/20131226'
+        } else {
+          $mod_dir = '/usr/lib/php/20151012'
         }
       }
       'redhat', 'centos': {$mod_dir = '/usr/lib64/php/modules'}
