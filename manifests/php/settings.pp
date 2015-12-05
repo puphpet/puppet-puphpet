@@ -22,7 +22,10 @@ class puphpet::php::settings (
       'Redhat' => 'php-'
     }
 
-    $package_devel = 'php-devel'
+    $package_devel = $::osfamily ? {
+      'debian' => 'php7.0-dev',
+      'redhat' => 'php-devel',
+    }
 
     $base_ini = $::osfamily ? {
       'debian' => '/etc/php/7.0/php.ini',
