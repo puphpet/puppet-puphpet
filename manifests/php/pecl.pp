@@ -45,20 +45,20 @@ define puphpet::php::pecl (
   $package = $::osfamily ? {
     'Debian' => {
       'apc'         => $::operatingsystem ? {
-        'debian' => "${prefix}-apc",
-        'ubuntu' => "${prefix}-apcu",
+        'debian' => "${prefix}apc",
+        'ubuntu' => "${prefix}apcu",
       },
-      'apcu'        => "${prefix}-apcu",
-      'imagick'     => "${prefix}-imagick",
-      'memcache'    => "${prefix}-memcache",
-      'memcached'   => "${prefix}-memcached",
+      'apcu'        => "${prefix}apcu",
+      'imagick'     => "${prefix}imagick",
+      'memcache'    => "${prefix}memcache",
+      'memcached'   => "${prefix}memcached",
       'mongo'       => $::lsbdistcodename ? {
         'precise' => false,
-        default   => "${prefix}-mongo",
+        default   => "${prefix}mongo",
       },
-      'redis'       => "${prefix}-redis",
-      'sqlite'      => "${prefix}-sqlite",
-      'zendopcache' => "${prefix}-zendopcache",
+      'redis'       => "${prefix}redis",
+      'sqlite'      => "${prefix}sqlite",
+      'zendopcache' => "${prefix}zendopcache",
     },
     'Redhat' => {
       'apc'         => 'php-pecl-apcu',
