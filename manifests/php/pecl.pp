@@ -56,7 +56,11 @@ define puphpet::php::pecl (
         'precise' => false,
         default   => "${prefix}mongo",
       },
-      'redis'       => "${prefix}redis",
+      'redis'       => $puphpet::php::settings::version ? {
+        '54'    => false,
+        '5.4'   => false,
+        default => "${prefix}redis",
+      },
       'sqlite'      => "${prefix}sqlite",
       'zendopcache' => "${prefix}zendopcache",
     },
