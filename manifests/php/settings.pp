@@ -16,7 +16,7 @@ class puphpet::php::settings (
   if $version == '70' {
     $prefix = $::osfamily ? {
       'debian' => $::operatingsystem ? {
-        'ubuntu' => 'php7.0-',
+        'ubuntu' => 'php-',
         'debian' => 'php7-'
       },
       'redhat' => 'php-'
@@ -24,7 +24,7 @@ class puphpet::php::settings (
 
     $pecl_prefix = $::osfamily ? {
       'debian' => $::operatingsystem ? {
-        'ubuntu' => 'php7.0-',
+        'ubuntu' => 'php-',
         'debian' => 'php7-'
       },
       'redhat' => 'php70-php-pecl-'
@@ -41,13 +41,37 @@ class puphpet::php::settings (
     }
 
     $fpm_ini = $::osfamily ? {
-      'debian' => '/etc/php7/fpm/php.ini',
+      'debian' => '/etc/php/7.0/fpm/php.ini',
       'redhat' => '/etc/php.ini',
     }
 
     $pid_file = $::osfamily ? {
       'debian' => '/run/php-fpm.pid',
       'redhat' => '/var/run/php-fpm.pid',
+    }
+
+    $cli_package = $::osfamily ? {
+      'debian' => $::operatingsystem ? {
+        'ubuntu' => 'php7.0-cli',
+        'debian' => 'php7-cli'
+      },
+      'redhat' => 'php-cli'
+    }
+
+    $fpm_package = $::osfamily ? {
+      'debian' => $::operatingsystem ? {
+        'ubuntu' => 'php7.0-fpm',
+        'debian' => 'php7-fpm'
+      },
+      'redhat' => 'php-fpm'
+    }
+
+    $service = $::osfamily ? {
+      'debian' => $::operatingsystem ? {
+        'ubuntu' => 'php7.0-fpm',
+        'debian' => 'php7-fpm'
+      },
+      'redhat' => 'php-fpm'
     }
   } else {
     $prefix = $::osfamily ? {
@@ -76,11 +100,11 @@ class puphpet::php::settings (
       'debian' => '/run/php-fpm.pid',
       'redhat' => '/var/run/php-fpm/php-fpm.pid',
     }
-  }
 
-  $cli_package = "${prefix}cli"
-  $fpm_package = "${prefix}fpm"
-  $service     = "${prefix}fpm"
+    $cli_package = "${prefix}cli"
+    $fpm_package = "${prefix}fpm"
+    $service     = "${prefix}fpm"
+  }
 
   Package[$fpm_package]
   -> Puphpet::Php::Module <| |>
