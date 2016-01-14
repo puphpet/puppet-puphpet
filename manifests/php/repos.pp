@@ -91,7 +91,29 @@ class puphpet::php::repos (
       }
     }
     'redhat', 'centos': {
-      include ::yum::repo::remi
+      if $php_version == '53' {
+        $ius_gpg_key_url = 'https://dl.iuscommunity.org/pub/ius/IUS-COMMUNITY-GPG-KEY'
+        $ius_gpg_key_dl  = '/etc/pki/rpm-gpg/IUS-COMMUNITY-GPG-KEY'
+
+        exec { 'ius gpg key':
+          command => "wget --quiet --tries=5 --connect-timeout=10 -O '${ius_gpg_key_dl}' ${ius_gpg_key_url}",
+          creates => $ius_gpg_key_dl,
+          path    => '/usr/bin:/bin',
+        }
+
+        ::yum::managed_yumrepo { 'ius6-archive':
+          descr          => 'IUS Community Project Archive',
+          mirrorlist     => 'http://dmirr.iuscommunity.org/mirrorlist/?repo=ius-el6-archive&arch=$basearch',
+          enabled        => 1,
+          gpgcheck       => 1,
+          gpgkey         => "file://${ius_gpg_key_dl}",
+          priority       => 1,
+        }
+      }
+
+      if $php_version != '53' {
+        include ::yum::repo::remi
+      }
 
       # remi_php55 requires the remi repo as well
       if $php_version == '55' {
