@@ -66,7 +66,11 @@ define puphpet::php::pecl (
     },
     'Redhat' => {
       'amqp'        => "${prefix}amqp",
-      'apc'         => "${prefix}apcu",
+      'apc'         => $puphpet::php::settings::version ? {
+        '53'    => "${prefix}apc",
+        '5.3'   => "${prefix}apc",
+        default => "${prefix}apcu",
+      },
       'apcu'        => "${prefix}apcu",
       'imagick'     => "${prefix}imagick",
       'memcache'    => "${prefix}memcache",
