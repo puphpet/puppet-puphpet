@@ -14,6 +14,14 @@ class Fixnum
   end
 end
 
+class Float
+  def to_bool
+    return false if self == 0
+    return false if self == 0.0
+    return true
+  end
+end
+
 class TrueClass
   def to_i; 1; end
   def to_bool; self; end
