@@ -15,9 +15,11 @@ class puphpet::php::repos (
           release           => 'squeeze-php54',
           repos             => 'all',
           required_packages => 'debian-keyring debian-archive-keyring',
-          key               => '89DF5277',
-          key_server        => 'pgp.mit.edu',
-          include_src       => true
+          key               => {
+            'id'      => '89DF5277',
+            'server'  => 'hkp://keyserver.ubuntu.com:80',
+          },
+          include           => { 'src' => true }
         }
       }
       # Wheezy : 5.4 (default) && 5.5 && 5.6
@@ -27,9 +29,11 @@ class puphpet::php::repos (
           release           => 'wheezy-php55',
           repos             => 'all',
           required_packages => 'debian-keyring debian-archive-keyring',
-          key               => '89DF5277',
-          key_server        => 'pgp.mit.edu',
-          include_src       => true
+          key               => {
+            'id'      => '89DF5277',
+            'server'  => 'hkp://keyserver.ubuntu.com:80',
+          },
+          include           => { 'src' => true }
         }
       }
       elsif $::lsbdistcodename == 'wheezy' and $php_version == '56' {
@@ -38,16 +42,18 @@ class puphpet::php::repos (
           release           => 'wheezy-php56',
           repos             => 'all',
           required_packages => 'debian-keyring debian-archive-keyring',
-          key               => '89DF5277',
-          key_server        => 'pgp.mit.edu',
-          include_src       => true
+          key               => {
+            'id'      => '89DF5277',
+            'server'  => 'hkp://keyserver.ubuntu.com:80',
+          },
+          include           => { 'src' => true }
         }
       }
     }
     'ubuntu': {
       if ! defined(Apt::Key['14AA40EC0831756756D7F66C4F4EA0AAE5267A6C']) {
         ::apt::key { '14AA40EC0831756756D7F66C4F4EA0AAE5267A6C':
-          key_server => 'hkp://keyserver.ubuntu.com:80'
+          server => 'hkp://keyserver.ubuntu.com:80'
         }
       }
 
