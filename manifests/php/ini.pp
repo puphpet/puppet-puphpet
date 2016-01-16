@@ -233,9 +233,16 @@ define puphpet::php::ini (
     $notify_service = []
   }
 
-  $changes = $ensure ? {
-    present => [ "set '${entry}' \"'${value}'\"" ],
-    absent  => [ "rm \"'${entry}'\"" ],
+  if '=' in $value {
+    $changes = $ensure ? {
+      present => [ "set '${entry}' \"'${value}'\"" ],
+      absent  => [ "rm \"'${entry}'\"" ],
+    }
+  } else {
+    $changes = $ensure ? {
+      present => [ "set '${entry}' '${value}'" ],
+      absent  => [ "rm '${entry}'" ],
+    }
   }
 
   augeas { "${entry}: ${value}":
