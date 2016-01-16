@@ -18,7 +18,7 @@ define puphpet::ruby::install (
     }
 
     if $bundler_true == true {
-      $gems_merged = concat($gems, 'bundler')
+      $gems_merged = concat($gems, ['bundler'])
     } else {
       $gems_merged = $gems
     }
