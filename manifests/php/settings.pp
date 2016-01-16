@@ -112,6 +112,7 @@ class puphpet::php::settings (
       'debian' => '/run/php-fpm.pid',
       'redhat' => '/var/run/php-fpm/php-fpm.pid',
     }
+  }
 
   Package[$fpm_package]
   -> Puphpet::Php::Module <| |>
