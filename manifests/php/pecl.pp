@@ -127,6 +127,16 @@ define puphpet::php::pecl (
       auto_answer         => $auto_answer,
       service_autorestart => $service_autorestart,
     }
+
+    if ! defined(Puphpet::Php::Ini[$pecl_name]) {
+      puphpet::php::ini { $pecl_name:
+        entry        => 'MODULE/extension',
+        value        => "${pecl_name}.so",
+        php_version  => $puphpet::php::settings::version,
+        webserver    => $puphpet::php::settings::service,
+        ini_filename => "${pecl_name}.ini",
+      }
+    }
   }
   elsif $package_name and ! defined(Package[$package_name])
     and $puphpet::php::settings::enable_pecl
