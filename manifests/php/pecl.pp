@@ -17,13 +17,10 @@ define puphpet::php::pecl (
 
   $pecl = $::osfamily ? {
     'Debian' => {
-      'mongo' => $::lsbdistcodename ? {
-        'precise' => 'mongo',
-        default   => false,
-      },
+      'mongo' => 'mongodb',
     },
     'Redhat' => {
-      #
+      'mongo' => 'mongodb',
     }
   }
 
@@ -52,10 +49,6 @@ define puphpet::php::pecl (
       'imagick'     => "${prefix}imagick",
       'memcache'    => "${prefix}memcache",
       'memcached'   => "${prefix}memcached",
-      'mongo'       => $::lsbdistcodename ? {
-        'precise' => false,
-        default   => "${prefix}mongo",
-      },
       'redis'       => $puphpet::php::settings::version ? {
         '54'    => false,
         '5.4'   => false,
@@ -75,7 +68,6 @@ define puphpet::php::pecl (
       'imagick'     => "${prefix}imagick",
       'memcache'    => "${prefix}memcache",
       'memcached'   => "${prefix}memcached",
-      'mongo'       => "${prefix}mongo",
       'redis'       => "${prefix}redis",
       'sqlite'      => "${prefix}sqlite",
       'zendopcache' => "${prefix}zendopcache",
@@ -83,7 +75,7 @@ define puphpet::php::pecl (
   }
 
   $auto_answer_hash = {
-    'mongo' => 'no\n'
+    #
   }
 
   $downcase_name = downcase($name)
