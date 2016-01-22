@@ -90,15 +90,9 @@ class puphpet::php::repos (
       elsif $::lsbdistcodename in ['lucid'] and $php_version == '55' {
         err('You have chosen to install PHP 5.5 on Ubuntu 10.04 Lucid. This will probably not work!')
       }
-      # Ubuntu 14.04 can do PHP 5.6
-      elsif $::lsbdistcodename == 'trusty' and $php_version == '56' {
-        ::apt::ppa { 'ppa:ondrej/php5-5.6':
-          require => ::Apt::Key['14AA40EC0831756756D7F66C4F4EA0AAE5267A6C']
-        }
-      }
-      # Ubuntu 14.04 can do PHP 7
-      elsif $::lsbdistcodename == 'trusty' and $php_version == '70' {
-        ::apt::ppa { 'ppa:ondrej/php-7.0':
+      # Ubuntu 14.04 can do PHP 5.6 and PHP 7
+      elsif $::lsbdistcodename == 'trusty' and $php_version in ['56', '70'] {
+        ::apt::ppa { 'ppa:ondrej/php':
           require => ::Apt::Key['14AA40EC0831756756D7F66C4F4EA0AAE5267A6C']
         }
       }
