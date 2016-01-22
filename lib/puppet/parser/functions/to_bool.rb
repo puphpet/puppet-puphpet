@@ -35,3 +35,7 @@ end
 class NilClass
   def to_bool; false; end
 end
+
+class Symbol
+  def to_bool; false; end
+end
