@@ -62,14 +62,21 @@ class puphpet::php::repos (
       if $::lsbdistcodename in ['lucid', 'precise', 'quantal', 'raring', 'trusty']
         and $php_version == '54'
       {
-        $options = $::lsbdistcodename ? {
-          'lucid' => '',
-          default => '-y'
+        ::apt::pin { 'ppa-ondrej-php5-oldstable':
+          priority   => 1000,
+          originator => 'LP-PPA-ondrej-php5-oldstable',
         }
 
-        ::apt::ppa { 'ppa:ondrej/php5-oldstable':
-          require => ::Apt::Key['14AA40EC0831756756D7F66C4F4EA0AAE5267A6C'],
-          options => $options
+        ::apt::source { 'ppa-ondrej-php5-oldstable':
+          comment  => 'ppa:ondrej/php5-oldstable',
+          location => 'http://ppa.launchpad.net/ondrej/php5-oldstable/ubuntu',
+          release  => 'precise',
+          repos    => 'main',
+          include  => {
+            'src' => true,
+            'deb' => true,
+          },
+          require  => Apt::Pin['ppa-ondrej-php5-oldstable'],
         }
       }
       # 12.04/10, 13.04/10, 14.04: 5.5
