@@ -32,7 +32,7 @@ class puphpet::php::xdebug (
       ensure   => present,
       provider => git,
       source   => 'https://github.com/xdebug/xdebug.git',
-      require  => Class['Php::Devel']
+      require  => Package[$puphpet::php::settings::package_devel]
     }
     -> exec { 'phpize && ./configure --enable-xdebug && make':
       creates => '/.puphpet-stuff/xdebug/configure',
