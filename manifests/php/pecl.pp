@@ -136,7 +136,7 @@ define puphpet::php::pecl (
   {
     package { $package_name:
       ensure  => present,
-      require => Class['Php::Devel'],
+      require => Package[$puphpet::php::settings::package_devel]
     }
   }
 
