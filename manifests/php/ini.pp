@@ -235,7 +235,7 @@ define puphpet::php::ini (
               }
             }
             'ubuntu': {
-              $target_dir  = '/etc/php/mods-available'
+              $target_dir  = '/etc/php/5.6/mods-available'
               $target_file = "${target_dir}/${ini_filename}"
 
               $webserver_ini_location = $real_webserver ? {
