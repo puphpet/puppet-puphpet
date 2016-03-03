@@ -288,36 +288,43 @@ define puphpet::php::ini (
     '7.0', '70': {
       case $::osfamily {
         'debian': {
-          $target_dir  = '/etc/php/mods-available'
-          $target_file = "${target_dir}/${ini_filename}"
-
-          $webserver_ini_location = $real_webserver ? {
-              'cgi' => '/etc/php/7.0/cgi/conf.d',
-              'fpm' => '/etc/php/7.0/fpm/conf.d',
-              undef => undef,
-          }
-          $cli_ini_location = '/etc/php/7.0/cli/conf.d'
-
-          if ! defined(File[$target_file]) {
-            file { $target_file:
-              replace => no,
-              ensure  => present,
+          case $::operatingsystem {
+            'debian': {
+              fail('PHP 7 support for Debian not yet added.')
             }
-          }
+            'ubuntu': {
+              $target_dir  = '/etc/php/7.0/mods-available'
+              $target_file = "${target_dir}/${ini_filename}"
 
-          if $webserver_ini_location != undef and ! defined(File["${webserver_ini_location}/${ini_filename}"]) {
-            file { "${webserver_ini_location}/${ini_filename}":
-              ensure  => link,
-              target  => $target_file,
-              require => File[$target_file],
-            }
-          }
+              $webserver_ini_location = $real_webserver ? {
+                'cgi' => '/etc/php/7.0/cgi/conf.d',
+                'fpm' => '/etc/php/7.0/fpm/conf.d',
+                undef => undef,
+              }
+              $cli_ini_location = '/etc/php/7.0/cli/conf.d'
 
-          if ! defined(File["${cli_ini_location}/${ini_filename}"]) {
-            file { "${cli_ini_location}/${ini_filename}":
-              ensure  => link,
-              target  => $target_file,
-              require => File[$target_file],
+              if ! defined(File[$target_file]) {
+                file { $target_file:
+                  replace => no,
+                  ensure  => present,
+                }
+              }
+
+              if $webserver_ini_location != undef and ! defined(File["${webserver_ini_location}/${ini_filename}"]) {
+                file { "${webserver_ini_location}/${ini_filename}":
+                  ensure  => link,
+                  target  => $target_file,
+                  require => File[$target_file],
+                }
+              }
+
+              if ! defined(File["${cli_ini_location}/${ini_filename}"]) {
+                file { "${cli_ini_location}/${ini_filename}":
+                  ensure  => link,
+                  target  => $target_file,
+                  require => File[$target_file],
+                }
+              }
             }
           }
         }
