@@ -59,7 +59,7 @@ class puphpet::php::xdebug (
   {
     file { '/usr/bin/xdebug':
       ensure  => present,
-      mode    => '+X',
+      mode    => '+x',
       source  => 'puppet:///modules/puphpet/xdebug_cli_alias.erb',
       require => Package[$php_package]
     }
