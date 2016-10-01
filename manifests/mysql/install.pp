@@ -28,13 +28,12 @@ class puphpet::mysql::install
     }
   }
 
-  create_resources('class', {
-    'puphpet::mysql::server' => $settings
-  })
+  create_resources('class', { 'puphpet::mysql::server' => {
+    settings => $settings,
+  }})
 
   class { 'mysql::client':
     package_name => $puphpet::mysql::params::client_package,
-    require      => Class['puphpet::mysql::repo'],
   }
 
   Mysql_user <| |>

@@ -17,7 +17,6 @@ class puphpet::mysql::server (
       'Debian' => '--force-yes',
       default  => undef,
     },
-    require            => Class['puphpet::mysql::repo'],
   }, $settings), ['version', 'root_password'])
 
   $true_settings = deep_merge({
