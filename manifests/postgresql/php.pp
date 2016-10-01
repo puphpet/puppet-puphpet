@@ -13,8 +13,8 @@ class puphpet::postgresql::php
     $php_package = false
   }
 
-  if $php_package == 'php' and ! defined(Puphpet::Php::Module['pgsql']) {
-    puphpet::php::module { 'pgsql':
+  if $php_package == 'php' and ! defined(Puphpet::Php::Module::Package['pgsql']) {
+    puphpet::php::module::package { 'pgsql':
       service_autorestart => true,
     }
   }

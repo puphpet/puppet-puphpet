@@ -5,7 +5,7 @@ class puphpet::xhprof {
   include ::puphpet::params
   include ::puphpet::apache::params
   include ::puphpet::nginx::params
-  include ::puphpet::php::settings
+  include ::puphpet::php::params
 
   $xhprof = $puphpet::params::hiera['xhprof']
   $apache = $puphpet::params::hiera['apache']
@@ -27,7 +27,7 @@ class puphpet::xhprof {
   }
 
   if array_true($apache, 'install') or array_true($nginx, 'install') {
-    $service = $puphpet::php::settings::service
+    $service = $puphpet::php::params::service
   } else {
     $service = undef
   }

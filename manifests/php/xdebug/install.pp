@@ -2,12 +2,12 @@
 class puphpet::php::xdebug::install
  inherits puphpet::php::xdebug::params {
 
-  include ::puphpet::php::settings
+  include ::puphpet::php::params
 
   $xdebug = $puphpet::params::hiera['xdebug']
   $php    = $puphpet::params::hiera['php']
 
-  $version  = $puphpet::php::settings::version
+  $version  = $puphpet::php::params::version
 
   $compile = $version ? {
     '5.6'   => true,
@@ -17,20 +17,20 @@ class puphpet::php::xdebug::install
   }
 
   $xdebug_package = $::osfamily ? {
-    'Debian' => "${puphpet::php::settings::prefix}xdebug",
-    'Redhat' => "${puphpet::php::settings::pecl_prefix}xdebug"
+    'Debian' => "${puphpet::php::params::prefix}xdebug",
+    'Redhat' => "${puphpet::php::params::pecl_prefix}xdebug"
   }
 
   if !$compile and ! defined(Package[$xdebug_package])
-    and $puphpet::php::settings::enable_xdebug
+    and $puphpet::php::params::enable_xdebug
   {
     package { 'xdebug':
       name    => $xdebug_package,
       ensure  => installed,
-      require => Package[$puphpet::php::settings::fpm_package],
-      notify  => Service[$puphpet::php::settings::service],
+      require => Package[$puphpet::php::params::fpm_package],
+      notify  => Service[$puphpet::php::params::service],
     }
-  } elsif $puphpet::php::settings::enable_xdebug {
+  } elsif $puphpet::php::params::enable_xdebug {
     include ::puphpet::php::xdebug::compile
   }
 
@@ -40,7 +40,7 @@ class puphpet::php::xdebug::install
       ensure  => present,
       mode    => '+x',
       source  => 'puppet:///modules/puphpet/xdebug_cli_alias.erb',
-      require => Package[$puphpet::php::settings::fpm_package]
+      require => Package[$puphpet::php::params::fpm_package]
     }
   }
 
@@ -49,8 +49,8 @@ class puphpet::php::xdebug::install
       entry       => "XDEBUG/${key}",
       value       => $value,
       php_version => $version,
-      webserver   => $puphpet::php::settings::service,
-      notify      => Service[$puphpet::php::settings::service],
+      webserver   => $puphpet::php::params::service,
+      notify      => Service[$puphpet::php::params::service],
     }
   }
 

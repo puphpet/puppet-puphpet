@@ -53,8 +53,8 @@ class puphpet::mongodb::install
     })
   }
 
-  if array_true($php, 'install') and ! defined(Puphpet::Php::Pecl['mongo']) {
-    puphpet::php::pecl { 'mongo':
+  if array_true($php, 'install') and ! defined(Puphpet::Php::Module::Pecl['mongo']) {
+    puphpet::php::module::pecl { 'mongo':
       service_autorestart => true,
       require             => Class['mongodb::server']
     }

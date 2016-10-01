@@ -26,8 +26,8 @@ class puphpet::mysql::php
       $php_module = 'mysqlnd'
     }
 
-    if ! defined(Puphpet::Php::Module[$php_module]) {
-      puphpet::php::module { $php_module:
+    if ! defined(Puphpet::Php::Module::Package[$php_module]) {
+      puphpet::php::module::package { $php_module:
         service_autorestart => true,
       }
     }

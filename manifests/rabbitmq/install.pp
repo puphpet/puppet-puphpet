@@ -31,14 +31,14 @@ class puphpet::rabbitmq::install
   puphpet::rabbitmq::vhosts { 'from puphpet::rabbitmq::install': }
   puphpet::rabbitmq::users { 'from puphpet::rabbitmq::install': }
 
-  if array_true($php, 'install') and ! defined(Puphpet::Php::Pecl['amqp']) {
+  if array_true($php, 'install') and ! defined(Puphpet::Php::Module::Pecl['amqp']) {
     if ! defined(Package[$puphpet::rabbitmq::params::rabbitmq_dev_pkg]) {
       package { $puphpet::rabbitmq::params::rabbitmq_dev_pkg:
         ensure => present,
       }
     }
 
-    puphpet::php::pecl { $puphpet::rabbitmq::params::pecl_pkg:
+    puphpet::php::module::pecl { $puphpet::rabbitmq::params::pecl_pkg:
       service_autorestart => $puphpet::rabbitmq::params::webserver_restart,
       require             => [
         Package['rabbitmq-server'],

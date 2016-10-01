@@ -7,7 +7,7 @@ class puphpet::php::xdebug::compile
     ensure   => present,
     provider => git,
     source   => $puphpet::php::xdebug::params::git_source,
-    require  => Package[$puphpet::php::settings::package_devel]
+    require  => Package[$puphpet::php::params::package_devel]
   }
   -> exec { 'phpize && ./configure --enable-xdebug && make':
     creates => '/.puphpet-stuff/xdebug/configure',
@@ -22,8 +22,8 @@ class puphpet::php::xdebug::compile
   puphpet::php::ini { 'xdebug/zend_extension':
     entry       => "XDEBUG/zend_extension",
     value       => 'xdebug.so',
-    php_version => $puphpet::php::settings::version,
-    webserver   => $puphpet::php::settings::service,
+    php_version => $puphpet::php::params::version,
+    webserver   => $puphpet::php::params::service,
     require     => Exec['copy xdebug.so to modules dir'],
   }
 

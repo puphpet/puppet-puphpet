@@ -25,8 +25,8 @@ class puphpet::sqlite::php
     }
   }
 
-  if $php_package == 'php' and ! defined(Puphpet::Php::Module[$php_sqlite]) {
-    puphpet::php::module { $php_sqlite:
+  if $php_package == 'php' and ! defined(Puphpet::Php::Module::Package[$php_sqlite]) {
+    puphpet::php::module::package { $php_sqlite:
       service_autorestart => true,
     }
   }

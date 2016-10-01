@@ -29,8 +29,8 @@ class puphpet::redis::install {
 
   create_resources('class', { 'redis' => $settings })
 
-  if array_true($php, 'install') and ! defined(Puphpet::Php::Pecl['redis']) {
-    puphpet::php::pecl { 'redis':
+  if array_true($php, 'install') and ! defined(Puphpet::Php::Module::Pecl['redis']) {
+    puphpet::php::module::pecl { 'redis':
       service_autorestart => $webserver_restart,
       require             => Class['redis']
     }
