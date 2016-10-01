@@ -56,7 +56,7 @@ define puphpet::apache::modules (
     and ! defined(Class['apache::mod::ssl'])
   {
     class { '::apache::mod::ssl':
-      package_name => "${$puphpet::apache::params::module_prefix}_ssl",
+      package_name => "${puphpet::apache::params::module_prefix}_ssl",
     }
   }
 
