@@ -4,6 +4,16 @@ class puphpet::mariadb::params
 
   include ::mysql::params
 
+  $package_server_name = $::osfamily ? {
+    'Debian' => 'mariadb-server',
+    'Redhat' => 'MariaDB-server',
+  }
+
+  $package_client_name = $::osfamily ? {
+    'Debian' => 'mariadb-client',
+    'Redhat' => 'MariaDB-client',
+  }
+
   $settings = delete(deep_merge({
     'package_name'     => $package_server_name,
     'restart'          => true,
@@ -23,15 +33,5 @@ class puphpet::mariadb::params
   $user = $settings['override_options']['mysqld']['user']
 
   $version = '10.0'
-
-  $package_server_name = $::osfamily ? {
-    'Debian' => 'mariadb-server',
-    'Redhat' => 'MariaDB-server',
-  }
-
-  $package_client_name = $::osfamily ? {
-    'Debian' => 'mariadb-client',
-    'Redhat' => 'MariaDB-client',
-  }
 
 }
