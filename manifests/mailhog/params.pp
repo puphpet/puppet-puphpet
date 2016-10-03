@@ -16,6 +16,6 @@ class puphpet::mailhog::params
     'x86_64' => 'MailHog_linux_amd64'
   }
 
-  $download_url = "https://github.com/mailhog/MailHog/releases/download/v0.2.0/${filename}"
+  $download_url = "https://github.com/mailhog/MailHog/releases/download/v0.2.1/${filename}"
 
 }
