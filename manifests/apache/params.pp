@@ -4,45 +4,27 @@ class puphpet::apache::params
 
   include ::apache::params
 
-  if array_true($puphpet::params::hiera['apache']['settings'], 'version')
-    and $puphpet::params::hiera['apache']['settings']['version'] in ['2.2', '22', 2.2, 22]
-  {
-    $package_version = '2.2'
+  $package_version = '2.4'
 
-    $package_name = $::osfamily ? {
-      'Debian' => $::apache::params::apache_name,
-      'Redhat' => 'httpd'
-    }
+  $package_name = $::osfamily ? {
+    'Debian' => $::apache::params::apache_name,
+    'Redhat' => 'httpd24u'
+  }
 
-    $module_prefix = $::osfamily ? {
-      'Debian' => 'mod',
-      'Redhat' => 'mod'
-    }
+  $module_prefix = $::osfamily ? {
+    'Debian' => 'mod',
+    'Redhat' => 'mod24u'
+  }
 
-    $system_modules = []
-  } else {
-    $package_version = '2.4'
-
-    $package_name = $::osfamily ? {
-      'Debian' => $::apache::params::apache_name,
-      'Redhat' => 'httpd24u'
-    }
-
-    $module_prefix = $::osfamily ? {
-      'Debian' => 'mod',
-      'Redhat' => 'mod24u'
-    }
-
-    $system_modules = $::osfamily ? {
-      'Debian' => [],
-      'Redhat' => [
-        'httpd24u-filesystem',
-        'httpd24-httpd-tools',
-        'httpd24-mod_ldap',
-        'httpd24-mod_proxy_html',
-        'httpd24-mod_session',
-      ]
-    }
+  $system_modules = $::osfamily ? {
+    'Debian' => [],
+    'Redhat' => [
+      'httpd24u-filesystem',
+      'httpd24-httpd-tools',
+      'httpd24-mod_ldap',
+      'httpd24-mod_proxy_html',
+      'httpd24-mod_session',
+    ]
   }
 
   $www_root = $::osfamily ? {
@@ -102,7 +84,6 @@ class puphpet::apache::params
   $ssl_mutex_dir = '/var/run/apache2/ssl_mutex'
 
   if array_true($puphpet::params::hiera['php'], 'install')
-    and ! ($puphpet::params::hiera['php']['settings']['version'] in ['5.3', '53'])
   {
     $php_engine    = true
     $php_fcgi_port = '9000'

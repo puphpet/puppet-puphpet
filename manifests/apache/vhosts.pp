@@ -73,7 +73,7 @@ define puphpet::apache::vhosts (
     }
     $ssl_key = array_true($vhost, 'ssl_key') ? {
       true    => $vhost['ssl_key'],
-      default => $puphpet::params::ssl_key_location
+      default => $puphpet::apache::params::ssl_key_location
     }
     $ssl_chain = array_true($vhost, 'ssl_chain') ? {
       true    => $vhost['ssl_chain'],
