@@ -25,12 +25,6 @@ class puphpet::mongodb::directories
     mode    => '0775',
     notify  => Service[$::mongodb::globals::service_name],
   }
-  -> file { $::mongodb::params::pidfilepath:
-    ensure  => file,
-    owner   => $::mongodb::params::user,
-    mode    => '0775',
-    notify  => Service[$::mongodb::globals::service_name],
-  }
   -> file { $::mongodb::params::logpath:
     ensure  => file,
     owner   => $::mongodb::params::user,
@@ -38,4 +32,12 @@ class puphpet::mongodb::directories
     notify  => Service[$::mongodb::globals::service_name],
   }
 
+  if ! defined(File[$::mongodb::params::pidfilepath]) {
+    file { $::mongodb::params::pidfilepath:
+      ensure  => file,
+      owner   => $::mongodb::params::user,
+      mode    => '0775',
+      notify  => Service[$::mongodb::globals::service_name],
+    }
+  }
 }
