@@ -9,8 +9,6 @@
 class puphpet::postgresql::install
  inherits puphpet::postgresql::params {
 
-  include ::mysql::params
-
   $postgresql = $puphpet::params::hiera['postgresql']
 
   $settings = $postgresql['settings']
