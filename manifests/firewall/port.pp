@@ -22,7 +22,7 @@ define puphpet::firewall::port (
 
   if ! defined(Firewall[$rule_name]) {
     firewall { $rule_name:
-      port   => $port_real,
+      dport  => $port_real,
       proto  => $protocol,
       action => $action,
     }
