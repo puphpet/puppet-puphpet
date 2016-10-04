@@ -9,7 +9,7 @@ class puphpet::mariadb::server (
   $true_settings_no_pw = delete(deep_merge({
     'package_name'     => $puphpet::mariadb::params::package_server_name,
     'restart'          => true,
-    'override_options' => $puphpet::mariadb::params::override_options,
+    'override_options' => $puphpet::mariadb::params::settings['override_options'],
     'service_name'     => 'mysql',
   }, $settings), ['version'])
 
