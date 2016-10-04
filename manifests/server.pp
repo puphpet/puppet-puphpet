@@ -93,32 +93,6 @@ class puphpet::server {
   }
 
   case $::operatingsystem {
-    'debian': {
-      include apt::backports
-
-      if ! defined(Apt::Source['packages.dotdeb.org-repo.puphpet']) {
-        apt::source { 'packages.dotdeb.org-repo.puphpet':
-          location          => 'http://repo.puphpet.com/dotdeb/',
-          release           => $::lsbdistcodename,
-          repos             => 'all',
-          required_packages => 'debian-keyring debian-archive-keyring',
-          key               => {
-            'id'      => '89DF5277',
-            'server'  => 'hkp://keyserver.ubuntu.com:80',
-          },
-          include           => { 'src' => true }
-        }
-      }
-
-      $lsbdistcodename = downcase($::lsbdistcodename)
-
-      if ! defined(Package['git']) {
-        package { 'git':
-          ensure          => present,
-          install_options => "-t ${lsbdistcodename}-backports"
-        }
-      }
-    }
     'ubuntu': {
       if ! defined(Apt::Key['14AA40EC0831756756D7F66C4F4EA0AAE5267A6C']){
         apt::key { '14AA40EC0831756756D7F66C4F4EA0AAE5267A6C':
@@ -135,22 +109,11 @@ class puphpet::server {
       apt::ppa { 'ppa:pdoes/ppa':
         require => Apt::Key['945A6177078449082DDCC0E5551CE2FB4CBEDD5A']
       }
-
-      if ! defined(Package['git']) {
-        package { 'git':
-          ensure => present,
-        }
-      }
     }
     'redhat', 'centos': {
-      if ! defined(Package['git']) {
-        package { 'git':
-          ensure => present,
-        }
-      }
     }
     default: {
-      error('PuPHPet supports Debian, Ubuntu, CentOS and RHEL only')
+      error('PuPHPet supports Ubuntu, CentOS and RHEL only')
     }
   }
 
