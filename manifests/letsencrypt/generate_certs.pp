@@ -3,10 +3,21 @@
 # Generates SSL certificates using Let's Encrypt certbot-auto tool
 #
 define puphpet::letsencrypt::generate_certs (
+  $webserver_service,
   $domains = $::puphpet::letsencrypt::params::domains
 ){
 
   include puphpet::letsencrypt::params
+
+  $pre_hook = $webserver_service ? {
+    false   => '',
+    default => "--pre-hook 'service ${webserver_service} stop || true'"
+  }
+
+  $post_host = $webserver_service ? {
+    false   => '',
+    default => "--post-hook 'service ${webserver_service} start || true'"
+  }
 
   $cmd_base = join([
     $puphpet::letsencrypt::params::certbot,
@@ -17,8 +28,8 @@ define puphpet::letsencrypt::generate_certs (
     '--standalone-supported-challenges http-01',
     '--noninteractive',
     "--email '${puphpet::params::hiera['letsencrypt']['settings']['email']}'",
-    "--pre-hook 'service ${webserver_service} stop || true'",
-    "--post-hook 'service ${webserver_service} start || true'",
+    $pre_hook,
+    $post_host,
   ], ' ')
 
   each( $domains ) |$key, $domain| {
