@@ -12,20 +12,6 @@ class puphpet::xhprof {
   $nginx  = $puphpet::params::hiera['nginx']
   $php    = $puphpet::params::hiera['php']
 
-  # $::lsbdistcodename is blank in CentOS
-  if $::operatingsystem == 'ubuntu'
-    and $::lsbdistcodename in [
-      'lucid', 'maverick', 'natty', 'oneiric', 'precise'
-    ]
-  {
-    apt::key { '8D0DC64F':
-      server => 'hkp://keyserver.ubuntu.com:80'
-    }
-    apt::ppa { 'ppa:brianmercer/php5-xhprof':
-      require => Apt::Key['8D0DC64F']
-    }
-  }
-
   if array_true($apache, 'install') or array_true($nginx, 'install') {
     $service = $puphpet::php::params::service
   } else {

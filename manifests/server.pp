@@ -125,21 +125,15 @@ class puphpet::server {
           server => 'hkp://keyserver.ubuntu.com:80'
         }
       }
+
       if ! defined(Apt::Key['945A6177078449082DDCC0E5551CE2FB4CBEDD5A']){
         apt::key { '945A6177078449082DDCC0E5551CE2FB4CBEDD5A':
           server => 'hkp://keyserver.ubuntu.com:80'
         }
       }
 
-      if $::lsbdistcodename in ['lucid', 'precise'] {
-        apt::ppa { 'ppa:pdoes/ppa':
-          require => Apt::Key['945A6177078449082DDCC0E5551CE2FB4CBEDD5A'],
-          options => ''
-        }
-      } else {
-        apt::ppa { 'ppa:pdoes/ppa':
-          require => Apt::Key['945A6177078449082DDCC0E5551CE2FB4CBEDD5A']
-        }
+      apt::ppa { 'ppa:pdoes/ppa':
+        require => Apt::Key['945A6177078449082DDCC0E5551CE2FB4CBEDD5A']
       }
 
       if ! defined(Package['git']) {

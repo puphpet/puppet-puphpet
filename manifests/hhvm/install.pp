@@ -22,16 +22,6 @@ class puphpet::hhvm::install
   }
 
   case $::lsbdistcodename {
-    'wheezy': {
-      class { 'puphpet::hhvm::repo::debian7':
-        before => Package[$puphpet::hhvm::params::package_name],
-      }
-    }
-    'precise': {
-      class { 'puphpet::hhvm::repo::ubuntu1204':
-        before => Package[$puphpet::hhvm::params::package_name],
-      }
-    }
     'trusty': {
       class { 'puphpet::hhvm::repo::ubuntu1404': }
       -> package { 'libdouble-conversion1':
