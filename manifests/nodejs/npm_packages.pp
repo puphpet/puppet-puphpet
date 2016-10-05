@@ -24,7 +24,10 @@ define puphpet::nodejs::npm_packages (
       package { $npm_array[0]:
         ensure   => $npm_ensure,
         provider => npm,
-        require  => Package['nodejs']
+        require  => [
+          Package['nodejs'],
+          Package['git'],
+        ]
       }
     }
   }
