@@ -27,7 +27,8 @@ class puphpet::elasticsearch::install
 
   $merged = merge($settings, {
     'java_install' => false,
-    require        => Class['puphpet::firewall::post'],
+    'manage_repo'  => true,
+    'repo_version' => '2.x',
   })
 
   create_resources('class', { 'elasticsearch' => $merged })
