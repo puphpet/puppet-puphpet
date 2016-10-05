@@ -18,14 +18,17 @@ class puphpet::mysql::php
   if $php_package == 'php' {
     if $::osfamily == 'redhat' {
       $php_module = 'mysqlnd'
+      $php_prefix = $puphpet::php::params::prefix
     } else {
       # php5.5-mysql
-      $php_module = "php${puphpet::php::params::version_match}-mysql"
+      $php_module = 'mysql'
+      $php_prefix = "php${puphpet::php::params::version_match}-"
     }
 
     if ! defined(Puphpet::Php::Module::Package[$php_module]) {
       puphpet::php::module::package { $php_module:
         service_autorestart => true,
+        prefix              => $php_prefix,
       }
     }
   }

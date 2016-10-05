@@ -1,4 +1,5 @@
 define puphpet::php::module::package (
+  $prefix = $puphpet::php::params::prefix,
   $service_autorestart
 ){
 
@@ -11,7 +12,7 @@ define puphpet::php::module::package (
   {
     ::php::module { $package_name:
       service_autorestart => $service_autorestart,
-      module_prefix       => $puphpet::php::params::prefix,
+      module_prefix       => $prefix,
     }
   }
 
