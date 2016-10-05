@@ -76,9 +76,6 @@ class puphpet::server {
     'redhat': {
       class { 'yum': extrarepo => ['epel'] }
 
-      class { 'yum::repo::rpmforge': }
-      class { 'yum::repo::repoforgeextras': }
-
       Class['::yum'] -> Yum::Managed_yumrepo <| |> -> Package <| |>
 
       if ! defined(Package['augeas']) {
