@@ -9,7 +9,8 @@ class puphpet::mariadb::repo::centos (
     'amd64'  => 'amd64',
     'x86_64' => 'amd64'
   }
-  $location = "http://yum.mariadb.org/${version}/centos6-${arch}"
+
+  $location = "http://yum.mariadb.org/${version}/centos${::operatingsystemmajrelease}-${arch}"
 
   ::yum::managed_yumrepo { 'MariaDB':
     descr    => 'MariaDB - mariadb.org',
@@ -20,5 +21,3 @@ class puphpet::mariadb::repo::centos (
   }
 
 }
-
-

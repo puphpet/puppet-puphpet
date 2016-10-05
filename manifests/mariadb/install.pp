@@ -26,6 +26,16 @@ class puphpet::mariadb::install
       class { 'puphpet::mariadb::repo::centos':
         version => to_string($settings['version']),
       }
+
+      if defined(File[$::mysql::params::log_error]) {
+        file { '/var/log/mariadb':
+          ensure => directory,
+          owner  => 'mariadb',
+          group  => 'mariadb',
+          mode   => '0644',
+          before => File[$::mysql::params::log_error],
+        }
+      }
     }
   }
 
