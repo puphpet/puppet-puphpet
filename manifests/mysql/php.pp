@@ -1,6 +1,8 @@
 class puphpet::mysql::php
  inherits puphpet::mysql::params {
 
+  include puphpet::php::params
+
   $mysql = $puphpet::params::hiera['mysql']
   $php   = $puphpet::params::hiera['php']
   $hhvm  = $puphpet::params::hiera['hhvm']
@@ -14,16 +16,11 @@ class puphpet::mysql::php
   }
 
   if $php_package == 'php' {
-    if $::osfamily == 'redhat' and $php['settings']['version'] == '53' {
-      $php_module = 'mysql'
-    } elsif $::lsbdistcodename == 'lucid' or $::lsbdistcodename == 'squeeze' {
-      $php_module = 'mysql'
-    } elsif $::osfamily == 'debian' and $php['settings']['version'] in ['7.0', '70'] {
-      $php_module = 'mysql'
-    } elsif $::operatingsystem == 'ubuntu' and $php['settings']['version'] in ['5.6', '56'] {
-      $php_module = 'mysql'
-    } else {
+    if $::osfamily == 'redhat' {
       $php_module = 'mysqlnd'
+    } else {
+      # php5.5-mysql
+      $php_module = "php${puphpet::php::params::version_match}-mysql"
     }
 
     if ! defined(Puphpet::Php::Module::Package[$php_module]) {
