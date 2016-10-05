@@ -55,8 +55,11 @@ class puphpet::apache::install
     }
   }
 
-  if $puphpet::apache::params::package_version == '2.4' {
-    include ::puphpet::apache::repo
+  include ::puphpet::apache::repo
+
+  $version = array_true($puphpet::params::hiera['apache']['settings'], 'version') ? {
+    true    => $puphpet::params::hiera['apache']['settings']['version'],
+    default => $puphpet::apache::params::package_version,
   }
 
   $settings = delete(merge($puphpet::params::hiera['apache']['settings'], {
@@ -65,7 +68,8 @@ class puphpet::apache::install
     'mpm_module'     => 'worker',
     'conf_template'  => $::apache::params::conf_template,
     'sendfile'       => $puphpet::apache::params::sendfile,
-    'apache_version' => $puphpet::apache::params::package_version
+    'apache_version' => $puphpet::apache::params::package_version,
+    'package_ensure' => $version,
   }), 'version')
 
   create_resources('class', { 'apache' => $settings })
