@@ -8,12 +8,6 @@ class puphpet::supervisord {
   Exec['easy_install pip']
   -> Class['Supervisord::Install']
 
-  if ! defined(Package['git']) {
-    package { 'git':
-      ensure  => present,
-    }
-  }
-
   if ! defined(Class['supervisord']) {
     class { '::supervisord':
       install_pip => false,

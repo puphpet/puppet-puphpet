@@ -1,6 +1,7 @@
 class puphpet::server {
 
   include ::puphpet::params
+  include ::git
   include ::ntp
   include ::swap_file
 
@@ -120,7 +121,12 @@ class puphpet::server {
     default => { }
   }
 
-  each( $packages ) |$package| {
+  # git handled by module
+  $filtered_packages = delete($packages, [
+    'git',
+  ])
+
+  each( $filtered_packages ) |$package| {
     if ! defined(Package[$package]) {
       package { $package:
         ensure => present,
