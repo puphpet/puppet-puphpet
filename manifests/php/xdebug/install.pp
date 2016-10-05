@@ -1,4 +1,3 @@
-
 class puphpet::php::xdebug::install
  inherits puphpet::php::xdebug::params {
 
@@ -7,12 +6,8 @@ class puphpet::php::xdebug::install
   $xdebug = $puphpet::params::hiera['xdebug']
   $php    = $puphpet::params::hiera['php']
 
-  $version  = $puphpet::php::params::version
-
-  $compile = $version ? {
-    '5.6'   => true,
-    '56'    => true,
-    '70'    => true,
+  $compile = $puphpet::php::params::version_match ? {
+    '7.1'   => true,
     default => false,
   }
 
@@ -48,7 +43,7 @@ class puphpet::php::xdebug::install
     puphpet::php::ini { $key:
       entry       => "XDEBUG/${key}",
       value       => $value,
-      php_version => $version,
+      php_version => $puphpet::php::params::version_match,
       webserver   => $puphpet::php::params::service,
       notify      => Service[$puphpet::php::params::service],
     }

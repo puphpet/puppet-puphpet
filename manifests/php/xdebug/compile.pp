@@ -1,7 +1,7 @@
 class puphpet::php::xdebug::compile
  inherits puphpet::php::xdebug::params {
 
-  include puphpet::php::settings
+  include puphpet::php::params
 
   vcsrepo { '/.puphpet-stuff/xdebug':
     ensure   => present,
@@ -22,7 +22,7 @@ class puphpet::php::xdebug::compile
   puphpet::php::ini { 'xdebug/zend_extension':
     entry       => "XDEBUG/zend_extension",
     value       => 'xdebug.so',
-    php_version => $puphpet::php::params::version,
+    php_version => $puphpet::php::params::version_match,
     webserver   => $puphpet::php::params::service,
     require     => Exec['copy xdebug.so to modules dir'],
   }
