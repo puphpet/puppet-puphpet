@@ -7,7 +7,7 @@ class puphpet::php::xdebug::compile
     ensure   => present,
     provider => git,
     source   => $puphpet::php::xdebug::params::git_source,
-    require  => Package[$puphpet::php::params::package_devel]
+    require  => Package[$puphpet::php::params::dev_package]
   }
   -> exec { 'phpize && ./configure --enable-xdebug && make':
     creates => '/.puphpet-stuff/xdebug/configure',

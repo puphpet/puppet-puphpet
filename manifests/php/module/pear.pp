@@ -7,9 +7,7 @@ define puphpet::php::module::pear (
 
   $package_name = downcase($name)
 
-  if ! defined(Php::Pear::Module[$package_name])
-    and $puphpet::php::params::enable_pear
-  {
+  if ! defined(Php::Pear::Module[$package_name]) {
     ::php::pear::module { $package_name:
       use_package         => false,
       service             => $service_name,

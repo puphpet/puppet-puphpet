@@ -3,7 +3,7 @@ class puphpet::php::alternatives
 {
 
   if $::osfamily == 'debian' {
-    Package[$puphpet::php::params::package_devel]
+    Package[$puphpet::php::params::dev_package]
     -> Puphpet::Alternatives_update <| |>
 
     Puphpet::Php::Module::Package <| |>

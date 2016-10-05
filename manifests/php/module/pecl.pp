@@ -7,9 +7,7 @@ define puphpet::php::module::pecl (
 
   $package_name = downcase($name)
 
-  if ! defined(Php::Pecl::Module[$package_name])
-    and $puphpet::php::params::enable_pecl
-  {
+  if ! defined(Php::Pecl::Module[$package_name]) {
     ::php::pecl::module { $package_name:
       use_package         => false,
       service_autorestart => $service_autorestart,

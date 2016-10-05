@@ -12,20 +12,18 @@ class puphpet::php::xdebug::install
   }
 
   $xdebug_package = $::osfamily ? {
-    'Debian' => "${puphpet::php::params::prefix}xdebug",
+    'Debian' => "${puphpet::php::params::package_prefix}xdebug",
     'Redhat' => "${puphpet::php::params::pecl_prefix}xdebug"
   }
 
-  if !$compile and ! defined(Package[$xdebug_package])
-    and $puphpet::php::params::enable_xdebug
-  {
+  if !$compile and ! defined(Package[$xdebug_package]) {
     package { 'xdebug':
       name    => $xdebug_package,
       ensure  => installed,
       require => Package[$puphpet::php::params::fpm_package],
       notify  => Service[$puphpet::php::params::service],
     }
-  } elsif $puphpet::php::params::enable_xdebug {
+  } elsif $compile {
     include ::puphpet::php::xdebug::compile
   }
 

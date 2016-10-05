@@ -4,11 +4,6 @@ class puphpet::php::params
 
   $version = $hiera['php']['settings']['version']
 
-  $enable_modules = true
-  $enable_pear    = true
-  $enable_pecl    = true
-  $enable_xdebug  = true
-
   $version_match = to_string($version) ? {
     /5\.5/    => '5.5',
     /5\.5\.*/ => '5.5',
@@ -57,185 +52,44 @@ class puphpet::php::params
     default   => undef,
   }
 
-  if $version_match == '7.1' {
-    $prefix      = 'php-'
-    $pecl_prefix = $::osfamily ? {
-      'debian' => 'php-',
-      'redhat' => 'php-pecl-',
-    }
-
-    $cli_package = $::osfamily ? {
-      'debian' => 'php7.1-cli',
-      'redhat' => 'php-cli',
-    }
-
-    $fpm_package = $::osfamily ? {
-      'debian' => 'php7.1-fpm',
-      'redhat' => 'php-fpm',
-    }
-
-    $service = $fpm_package
-
-    $package_devel = $::osfamily ? {
-      'debian' => 'php7.1-dev',
-      'redhat' => 'php-devel',
-    }
-
-    $root_ini = $::osfamily ? {
-      'debian' => '/etc/php/7.1/php.ini',
-      'redhat' => '/etc/php.ini',
-    }
-
-    $fpm_ini = $::osfamily ? {
-      'debian' => '/etc/php/7.1/fpm/php.ini',
-      'redhat' => '/etc/php.ini',
-    }
-
-    $pid_file = $::osfamily ? {
-      'debian' => '/run/php-fpm.pid',
-      'redhat' => '/var/run/php-fpm.pid',
-    }
-
-    $bin = $::osfamily ? {
-      'debian' => '/usr/bin/php7.1',
-      'redhat' => '/usr/bin/php',
-    }
+  $package_prefix = $::osfamily ? {
+    'debian' => "php${version_match}-",
+    'redhat' => 'php-',
   }
 
-  if $version_match == '7.0' {
-    $prefix      = 'php-'
-    $pecl_prefix = $::osfamily ? {
-      'debian' => 'php-',
-      'redhat' => 'php-pecl-',
-    }
-
-    $cli_package = $::osfamily ? {
-      'debian' => 'php7.0-cli',
-      'redhat' => 'php-cli',
-    }
-
-    $fpm_package = $::osfamily ? {
-      'debian' => 'php7.0-fpm',
-      'redhat' => 'php-fpm',
-    }
-
-    $service = $fpm_package
-
-    $package_devel = $::osfamily ? {
-      'debian' => 'php7.0-dev',
-      'redhat' => 'php-devel',
-    }
-
-    $root_ini = $::osfamily ? {
-      'debian' => '/etc/php/7.0/php.ini',
-      'redhat' => '/etc/php.ini',
-    }
-
-    $fpm_ini = $::osfamily ? {
-      'debian' => '/etc/php/7.0/fpm/php.ini',
-      'redhat' => '/etc/php.ini',
-    }
-
-    $pid_file = $::osfamily ? {
-      'debian' => '/run/php-fpm.pid',
-      'redhat' => '/var/run/php-fpm.pid',
-    }
-
-    $bin = $::osfamily ? {
-      'debian' => '/usr/bin/php7.0',
-      'redhat' => '/usr/bin/php',
-    }
+  $pecl_prefix = $::osfamily ? {
+    'debian' => 'php-',
+    'redhat' => 'php-pecl-',
   }
 
-  if $version_match == '5.6' {
-    $prefix      = 'php-'
-    $pecl_prefix = $::osfamily ? {
-      'debian' => 'php-',
-      'redhat' => 'php-pecl-',
-    }
-
-    $cli_package = $::osfamily ? {
-      'debian' => 'php5.6-cli',
-      'redhat' => 'php-cli',
-    }
-
-    $fpm_package = $::osfamily ? {
-      'debian' => 'php5.6-fpm',
-      'redhat' => 'php-fpm',
-    }
-
-    $service = $fpm_package
-
-    $package_devel = $::osfamily ? {
-      'debian' => 'php5.6-dev',
-      'redhat' => 'php-devel',
-    }
-
-    $root_ini = $::osfamily ? {
-      'debian' => '/etc/php/5.6/php.ini',
-      'redhat' => '/etc/php.ini',
-    }
-
-    $fpm_ini = $::osfamily ? {
-      'debian' => '/etc/php/5.6/fpm/php.ini',
-      'redhat' => '/etc/php.ini',
-    }
-
-    $pid_file = $::osfamily ? {
-      'debian' => '/run/php-fpm.pid',
-      'redhat' => '/var/run/php-fpm.pid',
-    }
-
-    $bin = $::osfamily ? {
-      'debian' => '/usr/bin/php5.6',
-      'redhat' => '/usr/bin/php',
-    }
+  $root_ini = $::osfamily ? {
+    'debian' => "/etc/php/${version_match}/php.ini",
+    'redhat' => '/etc/php.ini',
   }
 
-  if $version_match == '5.5' {
-    $prefix      = 'php-'
-    $pecl_prefix = $::osfamily ? {
-      'debian' => 'php-',
-      'redhat' => 'php-pecl-',
-    }
-
-    $cli_package = $::osfamily ? {
-      'debian' => 'php5.5-cli',
-      'redhat' => 'php-cli',
-    }
-
-    $fpm_package = $::osfamily ? {
-      'debian' => 'php5.5-fpm',
-      'redhat' => 'php-fpm',
-    }
-
-    $service = $fpm_package
-
-    $package_devel = $::osfamily ? {
-      'debian' => 'php5.5-dev',
-      'redhat' => 'php-devel',
-    }
-
-    $root_ini = $::osfamily ? {
-      'debian' => '/etc/php/5.5/php.ini',
-      'redhat' => '/etc/php.ini',
-    }
-
-    $fpm_ini = $::osfamily ? {
-      'debian' => '/etc/php/5.5/fpm/php.ini',
-      'redhat' => '/etc/php.ini',
-    }
-
-    $pid_file = $::osfamily ? {
-      'debian' => '/run/php-fpm.pid',
-      'redhat' => '/var/run/php-fpm.pid',
-    }
-
-    $bin = $::osfamily ? {
-      'debian' => '/usr/bin/php5.5',
-      'redhat' => '/usr/bin/php',
-    }
+  $fpm_ini = $::osfamily ? {
+    'debian' => "/etc/php/${version_match}/fpm/php.ini",
+    'redhat' => '/etc/php.ini',
   }
+
+  $pid_file = $::osfamily ? {
+    'debian' => '/run/php-fpm.pid',
+    'redhat' => '/var/run/php-fpm.pid',
+  }
+
+  $bin = $::osfamily ? {
+    'debian' => "/usr/bin/php${version_match}",
+    'redhat' => '/usr/bin/php',
+  }
+
+  $cli_package = "${package_prefix}cli"
+  $fpm_package = "${package_prefix}fpm"
+  $dev_package = $::osfamily ? {
+    'debian' => "${package_prefix}dev",
+    'redhat' => "${package_prefix}devel",
+  }
+
+  $service = $fpm_package
 
   Package[$fpm_package]
   -> Puphpet::Php::Module::Package <| |>

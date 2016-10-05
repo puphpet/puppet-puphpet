@@ -18,7 +18,7 @@ class puphpet::php::install
 
   $root_ini      = $puphpet::php::params::root_ini
   $package       = $puphpet::php::params::fpm_package
-  $package_devel = $puphpet::php::params::package_devel
+  $package_devel = $puphpet::php::params::dev_package
   $service       = $puphpet::php::params::service
 
   case $::osfamily {
