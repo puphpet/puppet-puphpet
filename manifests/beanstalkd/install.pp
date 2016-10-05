@@ -23,7 +23,7 @@ class puphpet::beanstalkd::install
 
   # beanstalk_console requires Apache or Nginx
   if array_true($nginx, 'install') {
-    $webroot = "${puphpet::nginx::params::nginx_webroot_location}/beanstalk_console"
+    $webroot = "${puphpet::nginx::params::webroot_location}/beanstalk_console"
   } elsif array_true($apache, 'install') {
     $webroot = "${puphpet::apache::params::default_vhost_dir}/beanstalk_console"
   } else {

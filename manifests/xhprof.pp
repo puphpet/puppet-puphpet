@@ -21,7 +21,7 @@ class puphpet::xhprof {
   if array_true($apache, 'install') {
     $webroot = $puphpet::apache::params::default_vhost_dir
   } elsif array_true($nginx, 'install') {
-    $webroot = $puphpet::nginx::params::nginx_webroot_location
+    $webroot = $puphpet::nginx::params::webroot_location
   } else {
     $webroot = $xhprof['location']
   }

@@ -18,7 +18,7 @@ class puphpet::adminer::install
   $apache = $puphpet::params::hiera['apache']
 
   if array_true($nginx, 'install') {
-    $webroot = $puphpet::nginx::params::nginx_webroot_location
+    $webroot = $puphpet::nginx::params::webroot_location
     $require = Class['puphpet::nginx']
   } elsif array_true($apache, 'install') {
     $webroot = $puphpet::apache::params::default_vhost_dir
