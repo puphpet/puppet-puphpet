@@ -5,6 +5,8 @@ class puphpet::mysql::server (
   include puphpet::mysql::params
   include ::mysql::params
 
+  $provider = $execs = getvar('::mysql::params::provider')
+
   $true_settings_no_pw = delete(deep_merge({
     'package_name'     => $puphpet::mysql::params::server_package,
     'service_name'     => $::osfamily ? {
@@ -16,17 +18,17 @@ class puphpet::mysql::server (
       'mysqld' => {
         'user'      => 'mysql',
         'tmpdir'    => $::mysql::params::tmpdir,
-        'log-error' => $::mysql::params::provider ? {
+        'log-error' => $provider ? {
           'mariadb' => '/var/log/mysqld.log',
           default   => $::mysql::params::log_error,
         },
-        'pid-file'  => $::mysql::params::provider ? {
+        'pid-file'  => $provider ? {
           'mariadb' => '/var/run/mysqld/mysqld.pid',
           default   => $::mysql::params::pidfile,
         },
       },
       'mysqld_safe' => {
-        'log-error' => $::mysql::params::provider ? {
+        'log-error' => $provider ? {
           'mariadb' => '/var/log/mysqld.log',
           default   => $::mysql::params::log_error,
         },
