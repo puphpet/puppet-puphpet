@@ -39,11 +39,12 @@ class puphpet::php::xdebug::install
 
   each( $xdebug['settings'] ) |$key, $value| {
     puphpet::php::ini { $key:
-      entry       => "XDEBUG/${key}",
-      value       => $value,
-      php_version => $puphpet::php::params::version_match,
-      webserver   => $puphpet::php::params::service,
-      notify      => Service[$puphpet::php::params::service],
+      entry        => "XDEBUG/${key}",
+      value        => $value,
+      php_version  => $puphpet::php::params::version_match,
+      ini_filename => '99-xdebug.ini',
+      webserver    => $puphpet::php::params::service,
+      notify       => Service[$puphpet::php::params::service],
     }
   }
 
