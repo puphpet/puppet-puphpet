@@ -1,6 +1,8 @@
 class puphpet::mariadb::php
  inherits puphpet::mariadb::params {
 
+  include puphpet::php::params
+
   $mariadb = $puphpet::params::hiera['mariadb']
   $php     = $puphpet::params::hiera['php']
   $hhvm    = $puphpet::params::hiera['hhvm']
@@ -16,13 +18,17 @@ class puphpet::mariadb::php
   if $php_package == 'php' {
     if $::osfamily == 'redhat' {
       $php_module = 'mysqlnd'
+      $php_prefix = $puphpet::php::params::prefix
     } else {
+      # php5.5-mysql
       $php_module = 'mysql'
+      $php_prefix = "php${puphpet::php::params::version_match}-"
     }
 
     if ! defined(Puphpet::Php::Module::Package[$php_module]) {
       puphpet::php::module::package { $php_module:
         service_autorestart => true,
+        prefix              => $php_prefix,
       }
     }
   }
