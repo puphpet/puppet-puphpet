@@ -9,6 +9,8 @@
 class puphpet::mongodb::install
  inherits puphpet::mongodb::params {
 
+  include puphpet::php::params
+
   $mongodb = $puphpet::params::hiera['mongodb']
   $php     = $puphpet::params::hiera['php']
 
@@ -54,7 +56,16 @@ class puphpet::mongodb::install
   }
 
   if array_true($php, 'install') and ! defined(Puphpet::Php::Module::Pecl['mongo']) {
-    puphpet::php::module::pecl { 'mongo':
+    $php_version_int = 0 + $puphpet::php::params::version_int
+
+    if $php_version_int >= 70 {
+      $php_package = 'mongodb'
+    }
+    else {
+      $php_package = 'mongo'
+    }
+
+    puphpet::php::module::pecl { $php_package:
       service_autorestart => true,
       require             => Class['mongodb::server']
     }
