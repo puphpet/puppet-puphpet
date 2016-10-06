@@ -13,7 +13,14 @@ class puphpet::nginx::install
 
   $nginx = $puphpet::params::hiera['nginx']
 
-  $settings = $nginx['settings']
+  $version = array_true($nginx['settings'], 'version') ? {
+    true    => $nginx['settings']['version'],
+    default => $::nginx::params::package_ensure,
+  }
+
+  $settings = delete(merge($nginx['settings'], {
+    'package_ensure' => $version,
+  }), 'version')
 
   Class['puphpet::nginx::ssl_cert']
   -> Nginx::Resource::Vhost <| |>
@@ -43,7 +50,7 @@ class puphpet::nginx::install
   }
 
   create_resources('class', { 'nginx' => delete(merge({},
-    $nginx['settings']), 'default_vhost')
+    $settings), 'default_vhost')
   })
 
   # config file could contain no upstreams key
@@ -73,7 +80,7 @@ class puphpet::nginx::install
   }
 
   # Creates a default vhost entry if user chose to do so
-  if array_true($nginx['settings'], 'default_vhost') {
+  if array_true($settings, 'default_vhost') {
     $vhosts = merge($vhosts_tmp, {
       '_' => $puphpet::nginx::params::default_vhost,
     })
