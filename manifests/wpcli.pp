@@ -16,7 +16,7 @@ class puphpet::wpcli {
 
   # Requires either PHP or HHVM, and Composer
   if $version and $engine and $composer {
-    class { 'puphpet::php::wpcli::install' :
+    class { 'puphpet::wpcli::install' :
       version => $wpcli['version']
     }
   }
