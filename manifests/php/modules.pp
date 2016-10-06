@@ -10,6 +10,12 @@ class puphpet::php::modules
     default => { }
   }
 
+  Puphpet::Php::Module::Package <| |>
+  -> Puphpet::Php::Module::Pear <| |>
+
+  Puphpet::Php::Module::Package <| |>
+  -> Puphpet::Php::Module::Pecl <| |>
+
   each( $php_modules ) |$name| {
     if ! defined(Puphpet::Php::Module::Package[$name]) {
       puphpet::php::module::package { $name:
