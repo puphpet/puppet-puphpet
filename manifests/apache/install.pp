@@ -62,6 +62,11 @@ class puphpet::apache::install
     default => $puphpet::apache::params::package_version,
   }
 
+  $version_true = ($version in [2.4, 24, '24', '2.4']) ? {
+    true    => 'present',
+    default => $version
+  }
+
   $settings = delete(merge($puphpet::params::hiera['apache']['settings'], {
     'apache_name'    => $puphpet::apache::params::package_name,
     'default_vhost'  => false,
@@ -69,7 +74,7 @@ class puphpet::apache::install
     'conf_template'  => $::apache::params::conf_template,
     'sendfile'       => $puphpet::apache::params::sendfile,
     'apache_version' => $puphpet::apache::params::package_version,
-    'package_ensure' => $version,
+    'package_ensure' => $version_true,
   }), 'version')
 
   create_resources('class', { 'apache' => $settings })
