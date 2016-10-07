@@ -1,6 +1,10 @@
-class puphpet {
+class puphpet  (
+  $extra_config_files = []
+) {
 
-  include ::puphpet::params
+  class { '::puphpet::params':
+    extra_config_files => $extra_config_files,
+  }
 
   Exec { path => [ '/bin/', '/sbin/', '/usr/bin/', '/usr/sbin/' ] }
   Vcsrepo { require => Package['git'] }

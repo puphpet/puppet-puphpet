@@ -1,13 +1,18 @@
-class puphpet::params {
+class puphpet::params (
+  $extra_config_files = []
+) {
 
   $puphpet_base_dir     = '/vagrant/puphpet'
   $puphpet_manifest_dir = "${puphpet_base_dir}/puppet/manifests/puphpet"
 
-  $yaml = merge_yaml(
+  $base_configs = [
     "${puphpet_base_dir}/config.yaml",
     "${puphpet_base_dir}/config-${::provisioner_type}.yaml",
-    "${puphpet_base_dir}/config-custom.yaml"
-  )
+  ]
+
+  $custom_config = ["${puphpet_base_dir}/config-custom.yaml"]
+
+  $yaml = merge_yaml($base_configs, $extra_config_files, $custom_config)
 
   $hiera = {
     vm             => hiera_hash('vagrantfile', {}),
