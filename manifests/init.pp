@@ -9,103 +9,103 @@ class puphpet  (
   Exec { path => [ '/bin/', '/sbin/', '/usr/bin/', '/usr/sbin/' ] }
   Vcsrepo { require => Package['git'] }
 
-  class { '::puphpet::cron': }
-  class { '::puphpet::firewall': }
-  class { '::puphpet::locale': }
-  class { '::puphpet::ruby': }
-  class { '::puphpet::server': }
-  class { '::puphpet::usersgroups': }
+  include ::puphpet::cron
+  include ::puphpet::firewall
+  include ::puphpet::locale
+  include ::puphpet::ruby
+  include ::puphpet::server
+  include ::puphpet::usersgroups
 
   if array_true($puphpet::params::hiera['apache'], 'install') {
-    class { '::puphpet::apache::install': }
+    include ::puphpet::apache::install
   }
 
   if array_true($puphpet::params::hiera['beanstalkd'], 'install') {
-    class { '::puphpet::beanstalkd::install': }
+    include ::puphpet::beanstalkd::install
   }
 
   if array_true($puphpet::params::hiera['drush'], 'install') {
-    class { '::puphpet::drush::install': }
+    include ::puphpet::drush::install
   }
 
   if array_true($puphpet::params::hiera['elasticsearch'], 'install') {
-    class { '::puphpet::elasticsearch::install': }
+    include ::puphpet::elasticsearch::install
   }
 
   if array_true($puphpet::params::hiera['hhvm'], 'install') {
-    class { '::puphpet::hhvm::install': }
+    include ::puphpet::hhvm::install
   }
 
   if array_true($puphpet::params::hiera['mailhog'], 'install') {
-    class { '::puphpet::mailhog::install': }
+    include ::puphpet::mailhog::install
   }
 
   if array_true($puphpet::params::hiera['mariadb'], 'install')
     and ! array_true($puphpet::params::hiera['mysql'], 'install')
   {
-    class { '::puphpet::mariadb::install': }
+    include ::puphpet::mariadb::install
   }
 
   if array_true($puphpet::params::hiera['mongodb'], 'install') {
-    class { '::puphpet::mongodb::install': }
+    include ::puphpet::mongodb::install
   }
 
   if array_true($puphpet::params::hiera['mysql'], 'install')
     and ! array_true($puphpet::params::hiera['mariadb'], 'install')
   {
-    class { '::puphpet::mysql::install': }
+    include ::puphpet::mysql::install
   }
 
   if array_true($puphpet::params::hiera['nginx'], 'install') {
-    class { '::puphpet::nginx::install': }
+    include ::puphpet::nginx::install
   }
 
   if array_true($puphpet::params::hiera['nodejs'], 'install') {
-    class { '::puphpet::nodejs::install': }
+    include ::puphpet::nodejs::install
   }
 
   if array_true($puphpet::params::hiera['php'], 'install') {
-    class { '::puphpet::php::install': }
+    include ::puphpet::php::install
 
     if array_true($puphpet::params::hiera['blackfire'], 'install') {
-      class { '::puphpet::blackfire::install': }
+      include ::puphpet::blackfire::install
     }
 
     if array_true($puphpet::params::hiera['xhprof'], 'install') {
-      class { '::puphpet::xhprof': }
+      include ::puphpet::xhprof
     }
   }
 
   if array_true($puphpet::params::hiera['postgresql'], 'install') {
-    class { '::puphpet::postgresql::install': }
+    include ::puphpet::postgresql::install
   }
 
   if array_true($puphpet::params::hiera['python'], 'install') {
-    class { '::puphpet::python::install': }
+    include ::puphpet::python::install
   }
 
   if array_true($puphpet::params::hiera['rabbitmq'], 'install') {
-    class { '::puphpet::rabbitmq::install': }
+    include ::puphpet::rabbitmq::install
   }
 
   if array_true($puphpet::params::hiera['redis'], 'install') {
-    class { '::puphpet::redis::install': }
+    include ::puphpet::redis::install
   }
 
   if array_true($puphpet::params::hiera['letsencrypt'], 'install') {
-    class { '::puphpet::letsencrypt::install': }
+    include ::puphpet::letsencrypt::install
   }
 
   if array_true($puphpet::params::hiera['solr'], 'install') {
-    class { '::puphpet::solr::install': }
+    include ::puphpet::solr::install
   }
 
   if array_true($puphpet::params::hiera['sqlite'], 'install') {
-    class { '::puphpet::sqlite::install': }
+    include ::puphpet::sqlite::install
   }
 
   if array_true($puphpet::params::hiera['wpcli'], 'install') {
-    class { '::puphpet::wpcli': }
+    include ::puphpet::wpcli
   }
 
 }
