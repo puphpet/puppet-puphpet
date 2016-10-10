@@ -11,6 +11,12 @@ class puphpet::redis::install {
   $nginx  = $puphpet::params::hiera['nginx']
   $php    = $puphpet::params::hiera['php']
 
+  if $::operatingsystem == 'ubuntu' and $::lsbdistcodename == 'trust' {
+    $manage_repo = true
+  } else {
+    $manage_repo = false
+  }
+
   if array_true($apache, 'install') or array_true($nginx, 'install') {
     $webserver_restart = true
   } else {
@@ -24,7 +30,8 @@ class puphpet::redis::install {
   }
 
   $settings = delete(deep_merge({
-    'port' => $port,
+    'port'        => $port,
+    'manage_repo' => $manage_repo,
   }, $redis['settings']), 'conf_port')
 
   create_resources('class', { 'redis' => $settings })
