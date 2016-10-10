@@ -33,16 +33,24 @@ define puphpet::letsencrypt::generate_certs (
   ], ' ')
 
   each( $domains ) |$key, $domain| {
-    $hosts = join($domain['hosts'], ' -d ')
+    $hosts = is_array($domain) ? {
+      true    => join($domain['hosts'], ' -d '),
+      default => $domain
+    }
+
+    $first_host = is_array($domain) ? {
+      true    => $domain['hosts'][0],
+      default => $domain
+    }
 
     $cmd_final = "${cmd_base} -d ${hosts}"
 
     $hour   = seeded_rand(23, $::fqdn)
     $minute = seeded_rand(59, $::fqdn)
 
-    exec { "generate ssl cert for ${domain['hosts'][0]}":
+    exec { "generate ssl cert for ${first_host}":
       command => $cmd_final,
-      creates => "/etc/letsencrypt/live/${domain['hosts'][0]}/fullchain.pem",
+      creates => "/etc/letsencrypt/live/${first_host}/fullchain.pem",
       group   => 'root',
       user    => 'root',
       path    => [ '/bin', '/sbin/', '/usr/sbin/', '/usr/bin' ],
@@ -52,7 +60,7 @@ define puphpet::letsencrypt::generate_certs (
       ],
     }
 
-    cron { "letsencrypt cron for ${domain['hosts'][0]}":
+    cron { "letsencrypt cron for ${first_host}":
        command  => $cmd_final,
        minute   => "${minute}",
        hour     => "${hour}",
