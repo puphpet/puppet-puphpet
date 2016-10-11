@@ -76,7 +76,7 @@ class puphpet::nginx::install
   # config file could contain no vhosts key
   $vhosts_tmp = array_true($nginx, 'vhosts') ? {
     true    => $nginx['vhosts'],
-    default => [ ],
+    default => { },
   }
 
   # Creates a default vhost entry if user chose to do so
