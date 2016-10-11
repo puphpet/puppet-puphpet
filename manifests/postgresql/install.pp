@@ -68,4 +68,6 @@ class puphpet::postgresql::install
     grants => $grants,
   }
 
+  include puphpet::postgresql::php
+
 }
