@@ -11,7 +11,7 @@ class puphpet::redis::install {
   $nginx  = $puphpet::params::hiera['nginx']
   $php    = $puphpet::params::hiera['php']
 
-  if $::operatingsystem == 'ubuntu' and $::lsbdistcodename == 'trust' {
+  if $::operatingsystem == 'ubuntu' and $::lsbdistcodename == 'trusty' {
     $manage_repo = true
   } else {
     $manage_repo = false
