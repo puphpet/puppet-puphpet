@@ -28,13 +28,14 @@ class puphpet::mariadb::install
       }
 
       if ! defined(File['/var/log/mariadb']) {
-        file { '/var/log/mariadb':
+        Package['mysql-server']
+        -> file { '/var/log/mariadb':
           ensure => directory,
           owner  => 'root',
           group  => 'mysql',
           mode   => '0755',
-          before => Class['mysql::server::installdb'],
         }
+        -> Class['mysql::server::installdb']
       }
     }
   }
