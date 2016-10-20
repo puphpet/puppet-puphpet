@@ -33,12 +33,12 @@ define puphpet::letsencrypt::generate_certs (
   ], ' ')
 
   each( $domains ) |$key, $domain| {
-    $hosts = is_array($domain) ? {
+    $hosts = array_true($domain, 'hosts') ? {
       true    => join($domain['hosts'], ' -d '),
       default => $domain
     }
 
-    $first_host = is_array($domain) ? {
+    $first_host = array_true($domain, 'hosts') ? {
       true    => $domain['hosts'][0],
       default => $domain
     }
