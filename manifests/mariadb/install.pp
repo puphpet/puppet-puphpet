@@ -27,13 +27,13 @@ class puphpet::mariadb::install
         version => to_string($settings['version']),
       }
 
-      if defined(File[$::mysql::params::log_error]) {
+      if ! defined(File['/var/log/mariadb']) {
         file { '/var/log/mariadb':
           ensure => directory,
-          owner  => 'mariadb',
-          group  => 'mariadb',
-          mode   => '0644',
-          before => File[$::mysql::params::log_error],
+          owner  => 'root',
+          group  => 'mysql',
+          mode   => '0755',
+          before => Class['mysql::server::installdb'],
         }
       }
     }
