@@ -49,7 +49,7 @@ define puphpet::nginx::locations (
 
     # If www_root was removed with all the trimmings,
     # add it back it
-    if ! array_true($location_no_root, 'fastcgi') {
+    if ! array_true($location_no_root, 'www_root') {
       $location_root_merged = merge({
         'www_root' => $www_root,
       }, $location_no_root)

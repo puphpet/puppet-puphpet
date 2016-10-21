@@ -80,6 +80,7 @@ define puphpet::nginx::vhosts (
       true    =>  $vhost['rewrites'],
       default =>  {}
     }
+
     $vhost_rewrites_append = deep_merge($vhost_cfg_append, {
       'rewrites'  => $rewrites
     })
