@@ -3,12 +3,23 @@
 class puphpet::locale {
 
   include ::puphpet::params
+  include ::locales::params
 
   $locales = $puphpet::params::hiera['locales']
 
   $settings = $locales['settings']
 
   if $::osfamily == 'debian' {
+    if $::lsbdistid == 'Ubuntu' {
+      file { [
+        '/var/lib/locales',
+        '/var/lib/locales/supported.d',
+      ]:
+        ensure => directory,
+        before => File[$locales::params::config_file]
+      }
+    }
+
     $default_locale = array_true($settings, 'default_locale') ? {
       true    => $settings['default_locale'],
       default => ''
