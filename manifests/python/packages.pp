@@ -4,7 +4,7 @@ define puphpet::python::packages (
 
   include ::puphpet::python::params
 
-  each( $packages ) |$key, $package| {
+  each( $packages ) |$package| {
     $package_array = split($package, '@')
     $package_name = $package_array[0]
 

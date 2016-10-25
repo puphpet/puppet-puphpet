@@ -14,4 +14,13 @@ class puphpet::python::install
   include ::puphpet::python::pip
   anchor{ 'puphpet::python::end': }
 
+  $packages = array_true($python, 'packages') ? {
+    true    => $python['packages'],
+    default => { }
+  }
+
+  create_resources(puphpet::python::packages, { 'from puphpet::python::install' => {
+    packages => $job_values
+  } })
+
 }
