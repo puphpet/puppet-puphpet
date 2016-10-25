@@ -20,7 +20,7 @@ class puphpet::python::install
   }
 
   create_resources(puphpet::python::packages, { 'from puphpet::python::install' => {
-    packages => $job_values
+    packages => $packages
   } })
 
 }
