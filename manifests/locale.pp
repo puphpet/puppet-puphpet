@@ -3,13 +3,13 @@
 class puphpet::locale {
 
   include ::puphpet::params
-  include ::locales::params
 
-  $locales = $puphpet::params::hiera['locales']
-
+  $locales  = $puphpet::params::hiera['locales']
   $settings = $locales['settings']
 
   if $::osfamily == 'debian' {
+    include ::locales::params
+
     if $::lsbdistid == 'Ubuntu' {
       file { [
         '/var/lib/locales',
