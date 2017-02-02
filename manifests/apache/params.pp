@@ -83,67 +83,32 @@ class puphpet::apache::params
 
   $ssl_mutex_dir = '/var/run/apache2/ssl_mutex'
 
-  if array_true($puphpet::params::hiera['php'], 'install')
-  {
-    $php_engine    = true
-    $php_fcgi_port = '9000'
-  } elsif array_true($puphpet::params::hiera['hhvm'], 'install') {
-    $php_engine    = true
-    $php_fcgi_port = array_true($puphpet::params::hiera['hhvm']['server_ini'], 'hhvm.server.port') ? {
-      true    => $puphpet::params::hiera['hhvm']['server_ini']['hhvm.server.port'],
-      default => '9000'
-    }
-  } else {
-    $php_engine    = false
-  }
-
-  $php_sethandler = $php_engine ? {
-    true    => "proxy:fcgi://127.0.0.1:${php_fcgi_port}",
-    default => 'default-handler'
-  }
-
-  if $php_engine {
-    $default_vhost_directories = {'default' => {
-      'provider'        => 'directory',
-      'path'            => $default_vhost_dir,
-      'options'         => ['Indexes', 'FollowSymlinks', 'MultiViews'],
-      'allow_override'  => ['All'],
-      'require'         => ['all granted'],
-      'files_match'     => {'php_match' => {
-        'provider'   => 'filesmatch',
-        'path'       => '\.php$',
-        'sethandler' => $php_sethandler,
-      }},
-      'custom_fragment' => '',
-    }}
-  } else {
-    $default_vhost_directories = {'default' => {
-      'provider'        => 'directory',
-      'path'            => $default_vhost_dir,
-      'options'         => ['Indexes', 'FollowSymlinks', 'MultiViews'],
-      'allow_override'  => ['All'],
-      'require'         => ['all granted'],
-      'files_match'     => {},
-      'custom_fragment' => '',
-    }}
-  }
+  $default_vhost_directories = {'default' => {
+    'provider'        => 'directory',
+    'path'            => $default_vhost_dir,
+    'directoryindex'  => 'index.html',
+    'options'         => ['Indexes', 'FollowSymlinks', 'MultiViews'],
+    'allow_override'  => ['All'],
+    'require'         => ['all granted'],
+    'custom_fragment' => '',
+  }}
 
   if array_true($puphpet::params::hiera['apache']['settings'], 'default_vhost') {
     $default_vhosts = {
       'default_vhost_80'  => {
-        'servername'    => 'default',
-        'docroot'       => $default_vhost_dir,
-        'port'          => 80,
-        'directories'   => $default_vhost_directories,
-        'default_vhost' => true,
+        'servername'     => 'default',
+        'docroot'        => $default_vhost_dir,
+        'port'           => 80,
+        'directories'    => $default_vhost_directories,
+        'default_vhost'  => true,
       },
       'default_vhost_443' => {
-        'servername'    => 'default',
-        'docroot'       => $default_vhost_dir,
-        'port'          => 443,
-        'directories'   => $default_vhost_directories,
-        'default_vhost' => true,
-        'ssl'           => 1,
+        'servername'     => 'default',
+        'docroot'        => $default_vhost_dir,
+        'port'           => 443,
+        'directories'    => $default_vhost_directories,
+        'default_vhost'  => true,
+        'ssl'            => 1,
       },
     }
   } else {
