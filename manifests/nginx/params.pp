@@ -18,38 +18,8 @@ class puphpet::nginx::params
     'client_max_body_size' => '1m',
     'use_default_location' => false,
     'vhost_cfg_append'     => {'sendfile' => 'off'},
-    'index_files'          => [
-      'index', 'index.html', 'index.htm', 'index.php'
-    ],
-    'locations'            => [
-      {
-        'location'              => '/',
-        'autoindex'             => 'off',
-        'internal'              => false,
-        'try_files'             => ['$uri', '$uri/', 'index.php',],
-        'fastcgi'               => '',
-        'fastcgi_index'         => '',
-        'fastcgi_split_path'    => '',
-        'fast_cgi_params_extra' => [],
-        'index_files'           => [],
-      },
-      {
-        'location'              => '~ \.php$',
-        'autoindex'             => 'off',
-        'internal'              => false,
-        'try_files'             => [
-          '$uri', '$uri/', 'index.php', '/index.php$is_args$args'
-        ],
-        'fastcgi'               => '127.0.0.1:9000',
-        'fastcgi_index'         => 'index.php',
-        'fastcgi_split_path'    => '^(.+\.php)(/.*)$',
-        'fast_cgi_params_extra' => [
-          'SCRIPT_FILENAME $request_filename',
-          'APP_ENV dev',
-        ],
-        'index_files'           => [],
-      }
-    ]
+    'index_files'          => ['index.html', 'index.htm',],
+    'locations'            => [ ]
   }
 
   $allowed_ciphers = [

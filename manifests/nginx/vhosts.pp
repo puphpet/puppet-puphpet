@@ -123,7 +123,7 @@ define puphpet::nginx::vhosts (
       "${puphpet::nginx::params::webroot_location}/index.html"
 
     $default_vhost_source_file =
-      '/vagrant/puphpet/puppet/manifests/puphpet/files/webserver_landing.html'
+      "${puphpet::params::puphpet_manifest_dir}/files/webserver_landing.html"
 
     exec { "Set ${default_vhost_index_file} contents":
       command => "cat ${default_vhost_source_file} > ${default_vhost_index_file} && \

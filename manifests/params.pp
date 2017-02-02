@@ -3,7 +3,7 @@ class puphpet::params (
 ) {
 
   $puphpet_base_dir     = '/vagrant/puphpet'
-  $puphpet_manifest_dir = "${puphpet_base_dir}/puppet/manifests/puphpet"
+  $puphpet_manifest_dir = "${puphpet_base_dir}/puppet/modules/puphpet"
 
   $base_configs = [
     "${puphpet_base_dir}/config.yaml",
