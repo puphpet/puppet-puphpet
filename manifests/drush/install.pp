@@ -15,7 +15,6 @@ class puphpet::drush::install
   $php   = $puphpet::params::hiera['php']
   $hhvm  = $puphpet::params::hiera['hhvm']
 
-  $version  = $drush['version'] != undef
   $engine   = (array_true($php, 'install') or array_true($hhvm, 'install'))
   $composer = (array_true($php, 'composer') or array_true($hhvm, 'composer'))
 
@@ -28,7 +27,7 @@ class puphpet::drush::install
   }
 
   # Requires either PHP or HHVM, and Composer
-  if $version and $engine and $composer {
+  if $drush['version'] != undef and $engine and $composer {
     $drush_github   = 'https://github.com/drush-ops/drush.git'
     $drush_location = '/usr/share/drush'
 
@@ -41,7 +40,7 @@ class puphpet::drush::install
       ensure   => present,
       provider => git,
       source   => $drush_github,
-      revision => $version,
+      revision => $drush['version'],
     } ->
     composer::exec { 'drush':
       cmd     => 'install',
