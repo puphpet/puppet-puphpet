@@ -20,8 +20,10 @@ class puphpet::mariadb::server (
     }
   }, $true_settings_no_pw)
 
-  $pidfile = $true_settings['override_options']['mysqld']['pid-file']
-  $user    = $true_settings['override_options']['mysqld']['user']
+  $pidfile       = $true_settings['override_options']['mysqld']['pid-file']
+  $user          = $true_settings['override_options']['mysqld']['user']
+  $root_group    = $::mysql::params::root_group
+  $tmpfiles_conf = '/usr/lib/tmpfiles.d/mariadb.conf'
 
   # Ensure PID file directory exists
   exec { 'Create pidfile parent directory':
@@ -30,13 +32,16 @@ class puphpet::mariadb::server (
     before  => Class['mysql::server'],
     require => [
       User[$user],
-      Group[$::mysql::params::root_group]
+      Group[$root_group]
     ],
   }
   -> exec { 'Set pidfile parent directory permissions':
-    command => "chown \
-      ${user}:${::mysql::params::root_group} \
-      $(dirname ${pidfile})",
+    command => "chown ${user}:${root_group} $(dirname ${pidfile})",
+  }
+  -> exec { 'Create mariadb tmpfiles.d conf file':
+    command => "echo \"d $(dirname ${pidfile}) 0755 ${user} ${root_group} -\" > ${tmpfiles_conf}",
+    creates => $tmpfiles_conf,
+    onlyif  => 'test -d /usr/lib/tmpfiles.d',
   }
 
   # Ensure the data directory exists
