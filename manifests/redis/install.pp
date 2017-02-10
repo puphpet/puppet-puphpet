@@ -35,12 +35,28 @@ class puphpet::redis::install {
     'manage_repo' => $manage_repo,
   }, $redis['settings']), 'conf_port')
 
+  $config_owner = $redis::params::config_owner
+  $config_group = $redis::params::config_group
+
   # Non-Debian install does not create this directory by default
   if ! defined(File['/var/run/redis']) and $::osfamily != 'Debian' {
     file { '/var/run/redis':
-      ensure => 'directory',
-      owner  => $redis::params::config_owner,
-      group  => $redis::params::config_group,
+      ensure  => 'directory',
+      owner   => $config_owner,
+      group   => $config_group,
+      require => Class['redis'],
+    }
+  }
+
+  $tmpfiles_conf = '/usr/lib/tmpfiles.d/redis.conf'
+
+  if ! defined(File[$tmpfiles_conf]) {
+    file { $tmpfiles_conf:
+      ensure  => 'present',
+      content => "d /var/run/redis 0755 ${config_owner} ${config_group} -",
+      owner   => $config_owner,
+      group   => 'root',
+      require => Class['redis'],
     }
   }
 
