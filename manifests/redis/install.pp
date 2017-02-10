@@ -5,6 +5,7 @@
 class puphpet::redis::install {
 
   include ::puphpet::params
+  include ::redis::params
 
   $redis  = $puphpet::params::hiera['redis']
   $apache = $puphpet::params::hiera['apache']
@@ -33,6 +34,15 @@ class puphpet::redis::install {
     'port'        => $port,
     'manage_repo' => $manage_repo,
   }, $redis['settings']), 'conf_port')
+
+  # Non-Debian install does not create this directory by default
+  if ! defined(File['/var/run/redis']) and $::osfamily != 'Debian' {
+    file { '/var/run/redis':
+      ensure => 'directory',
+      owner  => $redis::params::config_owner,
+      group  => $redis::params::config_group,
+    }
+  }
 
   create_resources('class', { 'redis' => $settings })
 
