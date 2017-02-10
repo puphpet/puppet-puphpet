@@ -19,11 +19,4 @@ class puphpet::postgresql::php
     }
   }
 
-  if array_true($postgresql, 'adminer')
-    and $php_package
-    and ! defined(Class['puphpet::adminer::install'])
-  {
-    class { 'puphpet::adminer::install': }
-  }
-
 }

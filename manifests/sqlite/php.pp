@@ -31,11 +31,4 @@ class puphpet::sqlite::php
     }
   }
 
-  if array_true($sqlite, 'adminer')
-    and $php_package
-    and ! defined(Class['puphpet::adminer::install'])
-  {
-    class { 'puphpet::adminer::install': }
-  }
-
 }
