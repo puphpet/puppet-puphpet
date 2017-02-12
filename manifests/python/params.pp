@@ -14,7 +14,7 @@ class puphpet::python::params
     default => { }
   }
 
-  $setup_tools_url = 'https://bootstrap.pypa.io/ez_setup.py'
-  $setup_tools_download = '/.puphpet-stuff/ez_setup.py'
+  $setup_tools_url = 'https://bootstrap.pypa.io/get-pip.py'
+  $setup_tools_download = '/.puphpet-stuff/get-pip.py'
 
 }
