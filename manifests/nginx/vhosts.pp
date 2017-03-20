@@ -130,9 +130,9 @@ define puphpet::nginx::vhosts (
                   chmod 644 ${default_vhost_index_file} && \
                   chown root ${default_vhost_index_file} && \
                   chgrp ${puphpet::nginx::params::webroot_group} ${default_vhost_index_file} && \
-                  touch /.puphpet-stuff/default_vhost_index_file_set",
+                  touch ${puphpet::params::puphpet_state_dir}/default_vhost_index_file_set",
       returns => [0, 1],
-      creates => '/.puphpet-stuff/default_vhost_index_file_set',
+      creates => "${puphpet::params::puphpet_state_dir}/default_vhost_index_file_set",
       require => File[$puphpet::nginx::params::webroot_location],
     }
   }

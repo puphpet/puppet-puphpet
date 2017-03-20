@@ -2,15 +2,19 @@ class puphpet::params (
   $extra_config_files = []
 ) {
 
-  $puphpet_base_dir     = '/vagrant/puphpet'
-  $puphpet_manifest_dir = "${puphpet_base_dir}/puppet/modules/puphpet"
+  $puphpet_core_dir  = pick(getvar('::puphpet_core_dir'), '/opt/puphpet')
+  $puphpet_state_dir = pick(getvar('::puphpet_state_dir'), '/opt/puphpet-state')
+  $ssh_username      = pick(getvar('::ssh_username'), 'root')
+  $provisioner_type  = pick(getvar('::provisioner_type'), 'remote')
+
+  $puphpet_manifest_dir = "${puphpet_core_dir}/puppet/modules/puphpet"
 
   $base_configs = [
-    "${puphpet_base_dir}/config.yaml",
-    "${puphpet_base_dir}/config-${::provisioner_type}.yaml",
+    "${puphpet_core_dir}/config.yaml",
+    "${puphpet_core_dir}/config-${provisioner_type}.yaml",
   ]
 
-  $custom_config = ["${puphpet_base_dir}/config-custom.yaml"]
+  $custom_config = ["${puphpet_core_dir}/config-custom.yaml"]
 
   $yaml = merge_yaml($base_configs, $extra_config_files, $custom_config)
 

@@ -15,6 +15,6 @@ class puphpet::python::params
   }
 
   $setup_tools_url = 'https://bootstrap.pypa.io/ez_setup.py'
-  $setup_tools_download = '/.puphpet-stuff/ez_setup.py'
+  $setup_tools_download = "${puphpet::params::puphpet_state_dir}/ez_setup.py"
 
 }

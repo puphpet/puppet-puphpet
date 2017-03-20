@@ -24,8 +24,8 @@ class puphpet::php::beta {
     }
   }
 
-  $save_to    = '/.puphpet-stuff/php-7.0-latest.tar.gz'
-  $extract_to = '/.puphpet-stuff/php-7.0-latest'
+  $save_to    = "${puphpet::params::puphpet_state_dir}/php-7.0-latest.tar.gz"
+  $extract_to = "${puphpet::params::puphpet_state_dir}/php-7.0-latest"
 
   $cmd = "wget --quiet --tries=5 --connect-timeout=10 -O '${save_to}' ${url}"
 
@@ -39,7 +39,7 @@ class puphpet::php::beta {
     creates => $extract_to,
     command => "mkdir -p ${extract_to} && \
                 tar xzf '${save_to}' -C ${extract_to} --strip-components=1",
-    cwd     => '/.puphpet-stuff',
+    cwd     => $puphpet::params::puphpet_state_dir,
     path    => '/bin',
   }
 

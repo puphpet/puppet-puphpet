@@ -54,6 +54,16 @@ class puphpet::usersgroups {
         managehome => true,
         groups     => $groups,
       }
+    } else {
+      @user { $user:
+        groups => $groups,
+      }
+
+      realize(User[$user])
+    }
+
+    if ! defined(Puphpet::Server::Link_dotfiles[$user]) {
+      puphpet::server::link_dotfiles { $user: }
     }
   }
 

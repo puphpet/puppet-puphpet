@@ -3,20 +3,20 @@ class puphpet::php::xdebug::compile
 
   include puphpet::php::params
 
-  vcsrepo { '/.puphpet-stuff/xdebug':
+  vcsrepo { "${puphpet::params::puphpet_state_dir}/xdebug":
     ensure   => present,
     provider => git,
     source   => $puphpet::php::xdebug::params::git_source,
     require  => Package[$puphpet::php::params::dev_package]
   }
   -> exec { 'phpize && ./configure --enable-xdebug && make':
-    creates => '/.puphpet-stuff/xdebug/configure',
-    cwd     => '/.puphpet-stuff/xdebug',
+    creates => "${puphpet::params::puphpet_state_dir}/xdebug/configure",
+    cwd     => "${puphpet::params::puphpet_state_dir}/xdebug",
   }
   -> exec { 'copy xdebug.so to modules dir':
-    command => "cp /.puphpet-stuff/xdebug/modules/xdebug.so `php-config --extension-dir`/xdebug.so \
-                && touch /.puphpet-stuff/xdebug-installed",
-    creates => '/.puphpet-stuff/xdebug-installed',
+    command => "cp ${puphpet::params::puphpet_state_dir}/xdebug/modules/xdebug.so `php-config --extension-dir`/xdebug.so \
+                && touch ${puphpet::params::puphpet_state_dir}/xdebug-installed",
+    creates => "${puphpet::params::puphpet_state_dir}/xdebug-installed",
   }
 
   puphpet::php::ini { 'xdebug/zend_extension':

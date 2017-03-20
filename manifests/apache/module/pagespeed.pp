@@ -8,8 +8,8 @@ class puphpet::apache::module::pagespeed {
   $apache = $puphpet::params::hiera['apache']
 
   $download_location = $::osfamily ? {
-    'Debian' => '/.puphpet-stuff/mod-pagespeed.deb',
-    'Redhat' => '/.puphpet-stuff/mod-pagespeed.rpm'
+    'Debian' => "${puphpet::params::puphpet_state_dir}/mod-pagespeed.deb",
+    'Redhat' => "${puphpet::params::puphpet_state_dir}/mod-pagespeed.rpm"
   }
 
   $provider = $::osfamily ? {

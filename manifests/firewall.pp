@@ -72,7 +72,7 @@ class puphpet::firewall
   }
 
   # Opens forwarded ports only on local machines
-  if array_true($vm['vm']['provider'], 'local') {
+  if has_key($vm, 'vm') and array_true($vm['vm']['provider'], 'local') {
     each( $vm['vm']['provider']['local']['machines'] ) |$mId, $machine| {
       # config file could contain no forwarded ports
       $forwarded_ports = array_true($machine['network'], 'forwarded_port') ? {

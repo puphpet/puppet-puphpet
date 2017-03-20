@@ -16,7 +16,7 @@ class puphpet::nodejs::params
 
   $url = "https://${provider}.nodesource.com/setup_${version}"
 
-  $save_to = '/.puphpet-stuff/nodesource'
+  $save_to = "${puphpet::params::puphpet_state_dir}/nodesource"
 
   # config file could contain no npm_packages key
   $npm_packages = array_true($puphpet::params::hiera['nodejs'], 'npm_packages') ? {

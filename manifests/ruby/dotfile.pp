@@ -1,19 +1,20 @@
 # This depends on maestrodev/rvm: https://github.com/maestrodev/puppet-rvm
-# Requires $::ssh_username facter
 # Sets up .rvmrc files in user home directories
 define puphpet::ruby::dotfile {
 
-  if $::ssh_username != 'root' {
-    file { "/home/${::ssh_username}/.rvmrc":
+  include ::puphpet::params
+
+  if $puphpet::params::ssh_username != 'root' {
+    file { "/home/${puphpet::params::ssh_username}/.rvmrc":
       ensure  => present,
-      owner   => $::ssh_username,
-      require => User[$::ssh_username]
+      owner   => $puphpet::params::ssh_username,
+      require => User[$puphpet::params::ssh_username]
     }
     file_line { 'rvm_autoupdate_flag=0 >> ~/.rvmrc':
       ensure  => present,
       line    => 'rvm_autoupdate_flag=0',
-      path    => "/home/${::ssh_username}/.rvmrc",
-      require => File["/home/${::ssh_username}/.rvmrc"],
+      path    => "/home/${puphpet::params::ssh_username}/.rvmrc",
+      require => File["/home/${puphpet::params::ssh_username}/.rvmrc"],
     }
   }
 

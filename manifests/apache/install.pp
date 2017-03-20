@@ -23,8 +23,8 @@ class puphpet::apache::install
     command => "mkdir -p ${www_root} && \
                 chown root:${webroot_group} ${www_root} && \
                 chmod 775 ${www_root} && \
-                touch /.puphpet-stuff/apache-webroot-created",
-    creates => '/.puphpet-stuff/apache-webroot-created',
+                touch ${puphpet::params::puphpet_state_dir}/apache-webroot-created",
+    creates => "${puphpet::params::puphpet_state_dir}/apache-webroot-created",
     require => [
       Group[$webroot_group],
       Class['apache']
@@ -39,9 +39,9 @@ class puphpet::apache::install
                 chmod 644 ${index_file} && \
                 chown root ${index_file} && \
                 chgrp ${puphpet::apache::params::webroot_group} ${index_file} && \
-                touch /.puphpet-stuff/default_vhost_index_file_set",
+                touch ${puphpet::params::puphpet_state_dir}/default_vhost_index_file_set",
     returns => [0, 1],
-    creates => '/.puphpet-stuff/default_vhost_index_file_set',
+    creates => "${puphpet::params::puphpet_state_dir}/default_vhost_index_file_set",
     require => Exec['Create apache webroot'],
   }
 

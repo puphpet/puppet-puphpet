@@ -111,10 +111,10 @@ class puphpet::php::install
       }
 
       exec { 'set php session path owner/group':
-        creates => '/.puphpet-stuff/php-session-path-owner-group',
+        creates => "${puphpet::params::puphpet_state_dir}/php-session-path-owner-group",
         command => "chown www-data ${session_save_path} && \
                     chgrp www-data ${session_save_path} && \
-                    touch /.puphpet-stuff/php-session-path-owner-group",
+                    touch ${puphpet::params::puphpet_state_dir}/php-session-path-owner-group",
         require => [
           File[$session_save_path],
           Package[$package]

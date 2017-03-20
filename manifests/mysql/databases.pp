@@ -21,7 +21,7 @@ define puphpet::mysql::databases (
 
     if $sql != '' {
       # Run import only on initial database creation
-      $touch_file = "/.puphpet-stuff/db-import-${name}"
+      $touch_file = "${puphpet::params::puphpet_state_dir}/db-import-${name}"
 
       exec{ "${name}-import":
         command     => "mysql ${name} < ${sql} && touch ${touch_file}",
