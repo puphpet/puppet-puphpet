@@ -12,6 +12,7 @@ class puphpet::nodejs::params
     '5'     => '5.x',
     '4'     => '4.x',
     default => '6.x',
+    '7'     => '7.x',
   }
 
   $url = "https://${provider}.nodesource.com/setup_${version}"
