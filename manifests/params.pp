@@ -41,6 +41,7 @@ class puphpet::params (
     python         => hiera_hash('python', {}),
     rabbitmq       => hiera_hash('rabbitmq', {}),
     redis          => hiera_hash('redis', {}),
+    resolv         => hiera_hash('resolv', {}),
     ruby           => hiera_hash('ruby', {}),
     server         => hiera_hash('server', {}),
     solr           => hiera_hash('solr', {}),

@@ -12,6 +12,7 @@ class puphpet  (
   include ::puphpet::cron
   include ::puphpet::firewall
   include ::puphpet::locale
+  include ::puphpet::resolv
   include ::puphpet::ruby
   include ::puphpet::server
   include ::puphpet::usersgroups
