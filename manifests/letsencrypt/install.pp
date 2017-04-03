@@ -13,7 +13,10 @@ class puphpet::letsencrypt::install
   $apache      = $puphpet::params::hiera['apache']
   $nginx       = $puphpet::params::hiera['nginx']
 
-  if array_true($apache, 'install') {
+  if ! empty($letsencrypt['settings']['webserver_service']) {
+    $webserver_service = $letsencrypt['settings']['webserver_service']
+  }
+  elsif array_true($apache, 'install') {
     $webserver_service = $::apache::params::service_name
   }
   elsif array_true($nginx, 'install') {
@@ -29,8 +32,10 @@ class puphpet::letsencrypt::install
 
   include puphpet::letsencrypt::certbot
 
-  puphpet::letsencrypt::generate_certs { 'from puphpet::letsencrypt::install':
+  anchor{ 'puphpet::letsencrypt::init': }
+  -> puphpet::letsencrypt::generate_certs { 'from puphpet::letsencrypt::install':
     webserver_service => $webserver_service
   }
+  -> anchor{ 'puphpet::letsencrypt::end': }
 
 }
