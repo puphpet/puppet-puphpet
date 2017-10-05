@@ -44,7 +44,7 @@ class puphpet::solr::install {
   $path        = "${destination}/solr-${version}/bin"
 
   supervisord::program { 'solr':
-    command     => "${path}/solr start -p ${settings['port']}",
+    command     => "${path}/solr start -f -p ${settings['port']}",
     priority    => '100',
     user        => 'root',
     autostart   => true,
