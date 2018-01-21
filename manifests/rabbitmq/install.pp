@@ -47,13 +47,31 @@ class puphpet::rabbitmq::install
       }
     }
 
-    puphpet::php::module::pecl { $puphpet::rabbitmq::params::pecl_pkg:
-      service_autorestart => $puphpet::rabbitmq::params::webserver_restart,
-      require             => [
-        Package['rabbitmq-server'],
-        Package[$puphpet::rabbitmq::params::rabbitmq_dev_pkg],
-      ]
+    if $::osfamily == 'debian' {
+      if ! defined(Puphpet::Php::Module::Package[$puphpet::rabbitmq::params::php_pkg]) {
+        puphpet::php::module::package { $puphpet::rabbitmq::params::php_pkg:
+          service_autorestart => $puphpet::rabbitmq::params::webserver_restart,
+          prefix              => 'php-',
+          require             => [
+            Package['rabbitmq-server'],
+            Package[$puphpet::rabbitmq::params::rabbitmq_dev_pkg],
+          ]
+        }
+      }
     }
+
+    if $::osfamily == 'redhat' {
+      if ! defined(Puphpet::Php::Module::Pecl[$puphpet::rabbitmq::params::pecl_pkg]) {
+        puphpet::php::module::pecl { $puphpet::rabbitmq::params::pecl_pkg:
+          service_autorestart => $puphpet::rabbitmq::params::webserver_restart,
+          require             => [
+            Package['rabbitmq-server'],
+            Package[$puphpet::rabbitmq::params::rabbitmq_dev_pkg],
+          ]
+        }
+      }
+    }
+
   }
 
   if ! defined(Puphpet::Firewall::Port["${settings['port']}"]) {

@@ -23,6 +23,7 @@ class puphpet::rabbitmq::params
   }
 
   $pecl_pkg = 'amqp'
+  $php_pkg  = 'amqp'
 
   # config file could contain no plugins key
   $plugins = array_true($puphpet::params::hiera['rabbitmq'], 'plugins') ? {
