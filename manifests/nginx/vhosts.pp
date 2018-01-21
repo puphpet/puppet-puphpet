@@ -9,22 +9,15 @@ define puphpet::nginx::vhosts (
   each( $vhosts ) |$key, $vhost| {
     # Could be proxy vhost
     if $vhost['www_root'] != '' {
+      $chown = "${puphpet::nginx::params::webroot_user}:${puphpet::nginx::params::webroot_group}"
+
       exec { "exec mkdir -p ${vhost['www_root']} @ key ${key}":
-        command => "mkdir -p ${vhost['www_root']}",
+        command => "mkdir -m 775 -p ${vhost['www_root']} && \
+                    chown ${chown} ${vhost['docroot']}",
         user    => 'root',
         group   => 'root',
         creates => $vhost['www_root'],
         require => File[$puphpet::nginx::params::www_location],
-      }
-
-      if ! defined(File[$vhost['www_root']]) {
-        file { $vhost['www_root']:
-          ensure  => directory,
-          mode    => '0775',
-          owner   => $puphpet::nginx::params::webroot_user,
-          group   => $puphpet::nginx::params::webroot_group,
-          require => Exec["exec mkdir -p ${vhost['www_root']} @ key ${key}"],
-        }
       }
     }
 

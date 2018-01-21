@@ -58,10 +58,13 @@ define puphpet::apache::vhosts (
   $apache = $puphpet::params::hiera['apache']
 
   each( $vhosts ) |$key, $vhost| {
+    $chown = "${puphpet::apache::params::webroot_user}:${puphpet::apache::params::webroot_group}"
+
     exec { "exec mkdir -p ${vhost['docroot']} @ key ${key}":
-      command => "mkdir -m 775 -p ${vhost['docroot']}",
-      user    => $puphpet::apache::params::webroot_user,
-      group   => $puphpet::apache::params::webroot_group,
+      command => "mkdir -m 775 -p ${vhost['docroot']} && \
+                  chown ${chown} ${vhost['docroot']}",
+      user    => 'root',
+      group   => 'root',
       creates => $vhost['docroot'],
       require => Exec['Create apache webroot'],
     }
