@@ -48,7 +48,6 @@ class puphpet::params (
     resolv         => lookup('resolv',          Hash, $strategy, {}),
     ruby           => lookup('ruby',            Hash, $strategy, {}),
     server         => lookup('server',          Hash, $strategy, {}),
-    solr           => lookup('solr',            Hash, $strategy, {}),
     sqlite         => lookup('sqlite',          Hash, $strategy, {}),
     users_groups   => lookup('users_groups',    Hash, $strategy, {}),
     wpcli          => lookup('wpcli',           Hash, $strategy, {}),

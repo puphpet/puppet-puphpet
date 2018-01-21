@@ -97,10 +97,6 @@ class puphpet  (
     include ::puphpet::letsencrypt::install
   }
 
-  if array_true($puphpet::params::hiera['solr'], 'install') {
-    include ::puphpet::solr::install
-  }
-
   if array_true($puphpet::params::hiera['sqlite'], 'install') {
     include ::puphpet::sqlite::install
   }
