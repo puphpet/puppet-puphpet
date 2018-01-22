@@ -8,7 +8,7 @@ class puphpet::rabbitmq::repos {
       Class['::puphpet::rabbitmq::repos']
       -> Package <| title == 'rabbitmq-server' |>
 
-      exec { "rpm --import ${puphpet::rabbitmq::params::gpg_key_src}":
+      exec { "rpm --import ${::rabbitmq::package_gpg_key}":
         path   => ['/bin','/usr/bin','/sbin','/usr/sbin'],
         unless => 'rpm -q gpg-pubkey-6026dfca-573adfde 2>/dev/null',
       }
