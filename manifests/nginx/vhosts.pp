@@ -19,6 +19,13 @@ define puphpet::nginx::vhosts (
         creates => $vhost['www_root'],
         require => File[$puphpet::nginx::params::www_location],
       }
+
+      if ! defined(File[$vhost['www_root']]) {
+        file { $vhost['www_root']:
+          ensure  => directory,
+          require => Exec["exec mkdir -p ${vhost['www_root']} @ key ${key}"],
+        }
+      }
     }
 
     # the gui passes "server_name" and "server_aliases"
