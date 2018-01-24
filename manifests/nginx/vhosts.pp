@@ -13,7 +13,7 @@ define puphpet::nginx::vhosts (
 
       exec { "exec mkdir -p ${vhost['www_root']} @ key ${key}":
         command => "mkdir -m 775 -p ${vhost['www_root']} && \
-                    chown ${chown} ${vhost['docroot']}",
+                    chown ${chown} ${vhost['www_root']}",
         user    => 'root',
         group   => 'root',
         creates => $vhost['www_root'],
