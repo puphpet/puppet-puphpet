@@ -14,6 +14,12 @@ define puphpet::nginx::locations (
       $autoindex = 'off'
     }
 
+    if array_true($location, 'index_files') {
+      $index_files = $location['index_files']
+    } else {
+      $index_files = []
+    }
+
     if array_true($location, 'internal') and $location['internal'] != 'off' {
       $internal = true
     } else {
@@ -42,6 +48,7 @@ define puphpet::nginx::locations (
     # Removes fast_cgi_params_extra because it only exists in gui
     # not puppet-nginx
     $location_no_root = delete(merge({
+      'index_files'                => $index_files,
       'vhost'                      => $vhost_key,
       'ssl'                        => $ssl,
       'location_custom_cfg_append' => $location_custom_cfg_append,
