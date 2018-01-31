@@ -127,11 +127,16 @@ define puphpet::apache::vhosts (
     }
 
     $directories_merged  = merge($directories_hash, $files_match_hash)
-    $directories_trimmed = remove_empty_hash_values($directories_merged)
+    $directories_w_custom_fragments = apache_directories_custom_fragment($directories_merged)
+    $directories_trimmed = remove_empty_hash_values($directories_w_custom_fragments)
 
-    $vhost_custom_fragment = array_true($vhost, 'custom_fragment') ? {
-      true    => file($vhost['custom_fragment']),
-      default => '',
+    if array_true($vhost, 'custom_fragment') {
+      $vhost_custom_fragment = ($vhost['custom_fragment'] =~ Array) ? {
+        true    => join($vhost['custom_fragment'], "\n  "),
+        default => file($vhost['custom_fragment']),
+      }
+    } else {
+      $vhost_custom_fragment = undef
     }
 
     $vhost_merged = delete(merge($vhost, {
