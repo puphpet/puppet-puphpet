@@ -8,7 +8,7 @@ define puphpet::nginx::locations (
   include puphpet::nginx::params
 
   each( $locations ) |$key, $location| {
-    if $location['autoindex'] or $location['autoindex'] == 'on' {
+    if array_true($location, 'autoindex') and $location['autoindex'] in [1, '1', 'on'] {
       $autoindex = 'on'
     } else {
       $autoindex = 'off'
