@@ -33,10 +33,6 @@ class puphpet  (
     include ::puphpet::elasticsearch::install
   }
 
-  if array_true($puphpet::params::hiera['hhvm'], 'install') {
-    include ::puphpet::hhvm::install
-  }
-
   if array_true($puphpet::params::hiera['mailhog'], 'install') {
     include ::puphpet::mailhog::install
   }
