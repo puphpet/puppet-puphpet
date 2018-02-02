@@ -71,10 +71,6 @@ class puphpet  (
     if array_true($puphpet::params::hiera['blackfire'], 'install') {
       include ::puphpet::blackfire::install
     }
-
-    if array_true($puphpet::params::hiera['xhprof'], 'install') {
-      include ::puphpet::xhprof
-    }
   }
 
   if array_true($puphpet::params::hiera['postgresql'], 'install') {
