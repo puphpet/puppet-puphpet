@@ -94,7 +94,7 @@ class puphpet  (
   }
 
   if array_true($puphpet::params::hiera['wpcli'], 'install') {
-    include ::puphpet::wpcli
+    include ::puphpet::wpcli::install
   }
 
 }
