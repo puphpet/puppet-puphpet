@@ -48,6 +48,21 @@
 #   },
 # }#
 #
+
+function puphpet::apache::vhosts::load_custom_fragment(Hash $hash) {
+  $result = $hash.map |$key, $item| {
+    $custom_fragment = array_true($item, 'custom_fragment') ? {
+      true    => file($item['custom_fragment']),
+      default => ''
+    }
+    $hash_new = merge($item, {
+      'custom_fragment'   => $custom_fragment
+    })
+    [$key, $hash_new]
+  }
+  hash($result)
+}
+
 define puphpet::apache::vhosts (
   $vhosts = $::puphpet::apache::params::vhosts
 ){
@@ -114,14 +129,14 @@ define puphpet::apache::vhosts (
     }
 
     if array_true($vhost, 'directories') {
-      $directories_hash = $vhost['directories']
+      $directories_hash = puphpet::apache::vhosts::load_custom_fragment($vhost['directories'])
     } else {
       $directories_hash = {}
     }
 
     # Legacy support: files_match and directories used to be separate hashes
     if array_true($vhost, 'files_match') {
-      $files_match_hash = $vhost['files_match']
+      $files_match_hash = puphpet::apache::vhosts::load_custom_fragment($vhost['files_match'])
     } else {
       $files_match_hash = {}
     }
