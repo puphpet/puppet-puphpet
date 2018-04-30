@@ -7,10 +7,25 @@ class puphpet::server {
 
   $server = $puphpet::params::hiera['server']
 
-  each( ['puppet', 'www-data', 'www-user'] ) |$group| {
+  each( ['puppet'] ) |$group| {
     if ! defined(Group[$group]) {
       group { $group:
         ensure => present
+      }
+    }
+  }
+
+  # Setup www groups
+  $groups = {'www-data' => 2000, 'www-user' => 2001}
+  if array_true($server, 'groups') {
+    $groups = merge($groups, $server['groups'])
+  }
+
+  each( $groups ) |$group| {
+    if ! defined(Group[$group[0]]) {
+      group { $group[0]:
+        ensure => present,
+        gid    => $group[1]
       }
     }
   }
@@ -37,11 +52,29 @@ class puphpet::server {
 
   realize(User[$puphpet::params::ssh_username])
 
-  each( ['apache', 'nginx', 'httpd', 'www-data', 'www-user'] ) |$key| {
+  each( ['apache', 'nginx', 'httpd'] ) |$key| {
     if ! defined(User[$key]) {
       user { $key:
         ensure  => present,
         shell   => '/bin/bash',
+        groups  => 'www-data',
+        require => Group['www-data']
+      }
+    }
+  }
+
+  # Setup www users
+  $users = {'www-data' => 2000, 'www-user' => 2001}
+  if array_true($server, 'users') {
+    $users = merge($users, $server['users'])
+  }
+
+  each( $users ) |$user| {
+    if ! defined(User[$user[0]]) {
+      user { $user[0]:
+        ensure  => present,
+        shell   => '/bin/bash',
+        uid     => $user[1],
         groups  => 'www-data',
         require => Group['www-data']
       }
