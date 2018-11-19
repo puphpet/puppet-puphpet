@@ -39,20 +39,8 @@ class puphpet::elasticsearch::install
     elsif versioncmp($version, '5') >= 0 {
       $repo_version = '5.x'
     }
-    elsif versioncmp($version, '2.4') >= 0 {
-      $repo_version = '2.4'
-    }
-    elsif versioncmp($version, '2.3') >= 0 {
-      $repo_version = '2.3'
-    }
-    elsif versioncmp($version, '2.2') >= 0 {
-      $repo_version = '2.2'
-    }
-    elsif versioncmp($version, '2.1') >= 0 {
-      $repo_version = '2.1'
-    }
-    elsif versioncmp($version, '2.0') >= 0 {
-      $repo_version = '2.0'
+    elsif versioncmp($version, '2') >= 0 {
+      $repo_version = '2.x'
     }
   }
 
