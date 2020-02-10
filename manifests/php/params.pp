@@ -83,7 +83,7 @@ class puphpet::php::params
   }
 
   $pid_file = $::osfamily ? {
-    'debian' => '/run/php-fpm.pid',
+    'debian' => '/run/php/php${version_match}-fpm.pid',
     'redhat' => '/var/run/php-fpm.pid',
   }
 
